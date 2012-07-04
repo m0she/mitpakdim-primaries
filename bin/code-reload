@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+cd $(dirname $0)/..
+coffee -c *.coffee
