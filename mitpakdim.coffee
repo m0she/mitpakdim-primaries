@@ -13,19 +13,28 @@ class root.MemberList extends Backbone.Collection
 class root.MemberView extends Backbone.View
     template: ->
         _.template( $("#member_template").html() )(arguments...)
+    render: =>
+        console.log "t: ", @template(@model.toJSON()), "el:", @$el
+        @$el.html( @template(@model.toJSON()) )
+        console.log "z: ", @, "z html", @$el.html()
+        @
 
 class root.AppView extends Backbone.View
+    el: '#app_root'
     initialize: =>
         @memberList = new root.MemberList()
         @memberList.bind "add", @addOne
         @memberList.bind "reset", @addAll
+        @memberList.fetch()
 
     addOne: (member) =>
-        view = new MemberView(member)
-        @$(".members").append view.render().el
+        console.log 'Adding', member
+        view = new root.MemberView({ model:member })
+        @$(".members").append view.render().$el
 
     addAll: =>
         @memberList.each(@addOne)
 
 $ ->
-    root.appView = new root.Appview
+    root.appView = new root.AppView
+    return
