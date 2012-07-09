@@ -30,24 +30,48 @@
     }
     return Member;
   })();
-  root.JSONPCollection = (function() {
-    __extends(JSONPCollection, Backbone.Collection);
-    function JSONPCollection() {
-      JSONPCollection.__super__.constructor.apply(this, arguments);
+  root.JSONCollection = (function() {
+    __extends(JSONCollection, Backbone.Collection);
+    function JSONCollection() {
+      JSONCollection.__super__.constructor.apply(this, arguments);
     }
-    JSONPCollection.prototype.initialize = function(options) {
+    JSONCollection.prototype.initialize = function(options) {
       if (options != null ? options.url : void 0) {
         return this.url = options.url;
       }
     };
+    JSONCollection.prototype.parse = function(response) {
+      return response.objects;
+    };
+    return JSONCollection;
+  })();
+  root.JSONPCollection = (function() {
+    __extends(JSONPCollection, root.JSONCollection);
+    function JSONPCollection() {
+      JSONPCollection.__super__.constructor.apply(this, arguments);
+    }
     JSONPCollection.prototype.sync = function(method, model, options) {
       options.dataType = "jsonp";
       return Backbone.sync(method, model, options);
     };
-    JSONPCollection.prototype.parse = function(response) {
-      return response.objects;
-    };
     return JSONPCollection;
+  })();
+  root.LocalVarCollection = (function() {
+    __extends(LocalVarCollection, root.JSONCollection);
+    function LocalVarCollection() {
+      LocalVarCollection.__super__.constructor.apply(this, arguments);
+    }
+    LocalVarCollection.prototype.initialize = function(options) {
+      if (options != null ? options.localObject : void 0) {
+        return this.localObject = options.localObject;
+      }
+    };
+    LocalVarCollection.prototype.sync = function(method, model, options) {
+      setTimeout(__bind(function() {
+        return options.success(this.localObject, null);
+      }, this));
+    };
+    return LocalVarCollection;
   })();
   root.MemberList = (function() {
     __extends(MemberList, root.JSONPCollection);
@@ -64,7 +88,6 @@
       this.render = __bind(this.render, this);
       TemplateView.__super__.constructor.apply(this, arguments);
     }
-    TemplateView.prototype.className = "member_instance";
     TemplateView.prototype.render = function() {
       this.$el.html(this.template(this.model.toJSON()));
       return this;
@@ -76,10 +99,22 @@
     function MemberView() {
       MemberView.__super__.constructor.apply(this, arguments);
     }
+    MemberView.prototype.className = "member_instance";
     MemberView.prototype.template = function() {
       return _.template($("#member_template").html()).apply(null, arguments);
     };
     return MemberView;
+  })();
+  root.ListViewItem = (function() {
+    __extends(ListViewItem, root.TemplateView);
+    function ListViewItem() {
+      ListViewItem.__super__.constructor.apply(this, arguments);
+    }
+    ListViewItem.prototype.tagName = "div";
+    ListViewItem.prototype.template = function() {
+      return _.template("<a href='#'><%= name %></a>").apply(null, arguments);
+    };
+    return ListViewItem;
   })();
   root.ListView = (function() {
     __extends(ListView, root.TemplateView);
@@ -90,6 +125,10 @@
       ListView.__super__.constructor.apply(this, arguments);
     }
     ListView.prototype.initialize = function() {
+      var _base, _ref2;
+      if ((_ref2 = (_base = this.options).itemView) == null) {
+        _base.itemView = root.ListViewItem;
+      }
       if (this.options.collection) {
         this.options.collection.bind("add", this.addOne);
         this.options.collection.bind("reset", this.addAll);
@@ -109,7 +148,7 @@
     return ListView;
   })();
   root.DropdownItem = (function() {
-    __extends(DropdownItem, root.TemplateView);
+    __extends(DropdownItem, Backbone.View);
     function DropdownItem() {
       this.render = __bind(this.render, this);
       DropdownItem.__super__.constructor.apply(this, arguments);
@@ -129,13 +168,11 @@
   root.DropdownContainer = (function() {
     __extends(DropdownContainer, root.ListView);
     function DropdownContainer() {
-      this.initialize = __bind(this.initialize, this);
       DropdownContainer.__super__.constructor.apply(this, arguments);
     }
     DropdownContainer.prototype.tagName = "select";
-    DropdownContainer.prototype.initialize = function() {
-      this.options.itemView = root.DropdownItem;
-      return root.ListView.prototype.initialize.apply(this, arguments);
+    DropdownContainer.prototype.options = {
+      itemView: root.DropdownItem
     };
     return DropdownContainer;
   })();
@@ -143,17 +180,16 @@
     __extends(AppView, Backbone.View);
     function AppView() {
       this.partyChange = __bind(this.partyChange, this);
-      this.addAll = __bind(this.addAll, this);
-      this.addOne = __bind(this.addOne, this);
       this.initialize = __bind(this.initialize, this);
       AppView.__super__.constructor.apply(this, arguments);
     }
     AppView.prototype.el = '#app_root';
     AppView.prototype.initialize = function() {
-      this.memberList = new root.MemberList();
-      this.memberList.bind("add", this.addOne);
-      this.memberList.bind("reset", this.addAll);
-      this.memberList.fetch();
+      this.memberList = new root.ListView({
+        collection: new root.MemberList,
+        itemView: root.MemberView
+      });
+      this.$(".members").append(this.memberList.$el);
       this.partyList = new root.DropdownContainer({
         collection: new root.JSONPCollection({
           model: root.MiscModel,
@@ -161,18 +197,16 @@
         })
       });
       this.$(".parties").append(this.partyList.$el);
-      return this.partyList.$el.bind('change', this.partyChange);
-    };
-    AppView.prototype.addOne = function(member) {
-      var view;
-      console.log('Adding', member);
-      view = new root.MemberView({
-        model: member
+      this.partyList.$el.bind('change', this.partyChange);
+      this.agendaList = new root.ListView({
+        collection: new root.LocalVarCollection({
+          model: root.MiscModel,
+          url: "data/agendas.jsonp",
+          localObject: window.mit_agendas
+        })
       });
-      return this.$(".members").append(view.render().$el);
-    };
-    AppView.prototype.addAll = function() {
-      return this.memberList.each(this.addOne);
+      this.$(".agendas").append(this.agendaList.$el);
+      return this.agendaList.$el.bind('change', this.agendaChange);
     };
     AppView.prototype.partyChange = function() {
       return console.log("Changed: ", this, arguments);
