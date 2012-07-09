@@ -1,23 +1,65 @@
 root = window.mit ?= {}
+
+############### MODELS ##############
+
+class root.MiscModel extends Backbone.Model
 class root.Agenda extends Backbone.Model
 class root.Member extends Backbone.Model
-class root.MemberList extends Backbone.Collection
-    model: root.Member
-    url: "http://api.dev.oknesset.org/api/v2/member/?format=jsonp"
+
+############### COLLECTIONS ##############
+
+class root.JSONPCollection extends Backbone.Collection
+    initialize: (options) ->
+        if options?.url
+            @url = options.url
     sync: (method, model, options) ->
         options.dataType = "jsonp"
         return Backbone.sync(method, model, options)
     parse: (response) ->
         return response.objects
 
-class root.MemberView extends Backbone.View
+class root.MemberList extends root.JSONPCollection
+    model: root.Member
+    url: "http://api.dev.oknesset.org/api/v2/member/?format=jsonp"
+
+############### VIEWS ##############
+
+class root.TemplateView extends Backbone.View
+    className: "member_instance"
+    render: =>
+        @$el.html( @template(@model.toJSON()) )
+        @
+
+class root.MemberView extends root.TemplateView
     template: ->
         _.template( $("#member_template").html() )(arguments...)
+
+class root.ListView extends root.TemplateView
+    tagName: "li"
+    template: (data) ->
+        data.name
+
+class root.DropdownItem extends root.TemplateView
+    tagName: "option"
     render: =>
-        console.log "t: ", @template(@model.toJSON()), "el:", @$el
-        @$el.html( @template(@model.toJSON()) )
-        console.log "z: ", @, "z html", @$el.html()
+        json = @model.toJSON()
+        @$el.html( json.name )
+        @$el.attr({ value: json.id })
         @
+
+class root.DropdownContainer extends root.TemplateView
+    tagName: "select"
+    initialize: =>
+        if @options.collection
+            @options.collection.bind "add", @addOne
+            @options.collection.bind "reset", @addAll
+            @options.collection.fetch()
+    addOne: (modelInstance) =>
+        view = new root.DropdownItem({ model:modelInstance })
+        @$el.append view.render().$el
+
+    addAll: =>
+        @options.collection.each(@addOne)
 
 class root.AppView extends Backbone.View
     el: '#app_root'
@@ -26,6 +68,11 @@ class root.AppView extends Backbone.View
         @memberList.bind "add", @addOne
         @memberList.bind "reset", @addAll
         @memberList.fetch()
+        @partyList = new root.DropdownContainer({collection: new root.JSONPCollection({
+            model: root.MiscModel,
+            url: "http://api.dev.oknesset.org/api/v2/party/?format=jsonp"
+        })})
+        @$(".parties").append(@partyList.$el)
 
     addOne: (member) =>
         console.log 'Adding', member
@@ -34,6 +81,8 @@ class root.AppView extends Backbone.View
 
     addAll: =>
         @memberList.each(@addOne)
+
+############### INIT ##############
 
 $ ->
     root.appView = new root.AppView

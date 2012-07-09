@@ -9,6 +9,13 @@
     return child;
   }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   root = (_ref = window.mit) != null ? _ref : window.mit = {};
+  root.MiscModel = (function() {
+    __extends(MiscModel, Backbone.Model);
+    function MiscModel() {
+      MiscModel.__super__.constructor.apply(this, arguments);
+    }
+    return MiscModel;
+  })();
   root.Agenda = (function() {
     __extends(Agenda, Backbone.Model);
     function Agenda() {
@@ -23,38 +30,113 @@
     }
     return Member;
   })();
+  root.JSONPCollection = (function() {
+    __extends(JSONPCollection, Backbone.Collection);
+    function JSONPCollection() {
+      JSONPCollection.__super__.constructor.apply(this, arguments);
+    }
+    JSONPCollection.prototype.initialize = function(options) {
+      if (options != null ? options.url : void 0) {
+        return this.url = options.url;
+      }
+    };
+    JSONPCollection.prototype.sync = function(method, model, options) {
+      options.dataType = "jsonp";
+      return Backbone.sync(method, model, options);
+    };
+    JSONPCollection.prototype.parse = function(response) {
+      return response.objects;
+    };
+    return JSONPCollection;
+  })();
   root.MemberList = (function() {
-    __extends(MemberList, Backbone.Collection);
+    __extends(MemberList, root.JSONPCollection);
     function MemberList() {
       MemberList.__super__.constructor.apply(this, arguments);
     }
     MemberList.prototype.model = root.Member;
     MemberList.prototype.url = "http://api.dev.oknesset.org/api/v2/member/?format=jsonp";
-    MemberList.prototype.sync = function(method, model, options) {
-      options.dataType = "jsonp";
-      return Backbone.sync(method, model, options);
-    };
-    MemberList.prototype.parse = function(response) {
-      return response.objects;
-    };
     return MemberList;
   })();
-  root.MemberView = (function() {
-    __extends(MemberView, Backbone.View);
-    function MemberView() {
+  root.TemplateView = (function() {
+    __extends(TemplateView, Backbone.View);
+    function TemplateView() {
       this.render = __bind(this.render, this);
+      TemplateView.__super__.constructor.apply(this, arguments);
+    }
+    TemplateView.prototype.className = "member_instance";
+    TemplateView.prototype.render = function() {
+      this.$el.html(this.template(this.model.toJSON()));
+      return this;
+    };
+    return TemplateView;
+  })();
+  root.MemberView = (function() {
+    __extends(MemberView, root.TemplateView);
+    function MemberView() {
       MemberView.__super__.constructor.apply(this, arguments);
     }
     MemberView.prototype.template = function() {
       return _.template($("#member_template").html()).apply(null, arguments);
     };
-    MemberView.prototype.render = function() {
-      console.log("t: ", this.template(this.model.toJSON()), "el:", this.$el);
-      this.$el.html(this.template(this.model.toJSON()));
-      console.log("z: ", this, "z html", this.$el.html());
+    return MemberView;
+  })();
+  root.ListView = (function() {
+    __extends(ListView, root.TemplateView);
+    function ListView() {
+      ListView.__super__.constructor.apply(this, arguments);
+    }
+    ListView.prototype.tagName = "li";
+    ListView.prototype.template = function(data) {
+      return data.name;
+    };
+    return ListView;
+  })();
+  root.DropdownItem = (function() {
+    __extends(DropdownItem, root.TemplateView);
+    function DropdownItem() {
+      this.render = __bind(this.render, this);
+      DropdownItem.__super__.constructor.apply(this, arguments);
+    }
+    DropdownItem.prototype.tagName = "option";
+    DropdownItem.prototype.render = function() {
+      var json;
+      json = this.model.toJSON();
+      this.$el.html(json.name);
+      this.$el.attr({
+        value: json.id
+      });
       return this;
     };
-    return MemberView;
+    return DropdownItem;
+  })();
+  root.DropdownContainer = (function() {
+    __extends(DropdownContainer, root.TemplateView);
+    function DropdownContainer() {
+      this.addAll = __bind(this.addAll, this);
+      this.addOne = __bind(this.addOne, this);
+      this.initialize = __bind(this.initialize, this);
+      DropdownContainer.__super__.constructor.apply(this, arguments);
+    }
+    DropdownContainer.prototype.tagName = "select";
+    DropdownContainer.prototype.initialize = function() {
+      if (this.options.collection) {
+        this.options.collection.bind("add", this.addOne);
+        this.options.collection.bind("reset", this.addAll);
+        return this.options.collection.fetch();
+      }
+    };
+    DropdownContainer.prototype.addOne = function(modelInstance) {
+      var view;
+      view = new root.DropdownItem({
+        model: modelInstance
+      });
+      return this.$el.append(view.render().$el);
+    };
+    DropdownContainer.prototype.addAll = function() {
+      return this.options.collection.each(this.addOne);
+    };
+    return DropdownContainer;
   })();
   root.AppView = (function() {
     __extends(AppView, Backbone.View);
@@ -69,7 +151,14 @@
       this.memberList = new root.MemberList();
       this.memberList.bind("add", this.addOne);
       this.memberList.bind("reset", this.addAll);
-      return this.memberList.fetch();
+      this.memberList.fetch();
+      this.partyList = new root.DropdownContainer({
+        collection: new root.JSONPCollection({
+          model: root.MiscModel,
+          url: "http://api.dev.oknesset.org/api/v2/party/?format=jsonp"
+        })
+      });
+      return this.$(".parties").append(this.partyList.$el);
     };
     AppView.prototype.addOne = function(member) {
       var view;

@@ -1,4 +1,5 @@
 #!/bin/zsh
 
 cd $(dirname $0)/..
-coffee -c *.coffee
+rm mitpakdim.js
+coffee -c *.coffee || echo "ERROR!"
