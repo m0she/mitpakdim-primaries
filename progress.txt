@@ -1,0 +1,17 @@
+Done:
+* Git project
+* Environment + backbone, coffee
+* Basic integration with ok api_v2 (using jsonp)
+* Fetching of parties, members
+
+Todo:
+* Agendas list
+* UI for changing weights
+* Scored members list
+* Simple scoring algorithm
+
+
+Issues:
+* Flat API for containers
+* Party members(?)
+
