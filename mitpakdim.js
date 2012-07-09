@@ -84,11 +84,27 @@
   root.ListView = (function() {
     __extends(ListView, root.TemplateView);
     function ListView() {
+      this.addAll = __bind(this.addAll, this);
+      this.addOne = __bind(this.addOne, this);
+      this.initialize = __bind(this.initialize, this);
       ListView.__super__.constructor.apply(this, arguments);
     }
-    ListView.prototype.tagName = "li";
-    ListView.prototype.template = function(data) {
-      return data.name;
+    ListView.prototype.initialize = function() {
+      if (this.options.collection) {
+        this.options.collection.bind("add", this.addOne);
+        this.options.collection.bind("reset", this.addAll);
+        return this.options.collection.fetch();
+      }
+    };
+    ListView.prototype.addOne = function(modelInstance) {
+      var view;
+      view = new this.options.itemView({
+        model: modelInstance
+      });
+      return this.$el.append(view.render().$el);
+    };
+    ListView.prototype.addAll = function() {
+      return this.options.collection.each(this.addOne);
     };
     return ListView;
   })();
@@ -111,36 +127,22 @@
     return DropdownItem;
   })();
   root.DropdownContainer = (function() {
-    __extends(DropdownContainer, root.TemplateView);
+    __extends(DropdownContainer, root.ListView);
     function DropdownContainer() {
-      this.addAll = __bind(this.addAll, this);
-      this.addOne = __bind(this.addOne, this);
       this.initialize = __bind(this.initialize, this);
       DropdownContainer.__super__.constructor.apply(this, arguments);
     }
     DropdownContainer.prototype.tagName = "select";
     DropdownContainer.prototype.initialize = function() {
-      if (this.options.collection) {
-        this.options.collection.bind("add", this.addOne);
-        this.options.collection.bind("reset", this.addAll);
-        return this.options.collection.fetch();
-      }
-    };
-    DropdownContainer.prototype.addOne = function(modelInstance) {
-      var view;
-      view = new root.DropdownItem({
-        model: modelInstance
-      });
-      return this.$el.append(view.render().$el);
-    };
-    DropdownContainer.prototype.addAll = function() {
-      return this.options.collection.each(this.addOne);
+      this.options.itemView = root.DropdownItem;
+      return root.ListView.prototype.initialize.apply(this, arguments);
     };
     return DropdownContainer;
   })();
   root.AppView = (function() {
     __extends(AppView, Backbone.View);
     function AppView() {
+      this.partyChange = __bind(this.partyChange, this);
       this.addAll = __bind(this.addAll, this);
       this.addOne = __bind(this.addOne, this);
       this.initialize = __bind(this.initialize, this);
@@ -158,7 +160,8 @@
           url: "http://api.dev.oknesset.org/api/v2/party/?format=jsonp"
         })
       });
-      return this.$(".parties").append(this.partyList.$el);
+      this.$(".parties").append(this.partyList.$el);
+      return this.partyList.$el.bind('change', this.partyChange);
     };
     AppView.prototype.addOne = function(member) {
       var view;
@@ -170,6 +173,9 @@
     };
     AppView.prototype.addAll = function() {
       return this.memberList.each(this.addOne);
+    };
+    AppView.prototype.partyChange = function() {
+      return console.log("Changed: ", this, arguments);
     };
     return AppView;
   })();

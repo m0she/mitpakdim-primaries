@@ -35,9 +35,17 @@ class root.MemberView extends root.TemplateView
         _.template( $("#member_template").html() )(arguments...)
 
 class root.ListView extends root.TemplateView
-    tagName: "li"
-    template: (data) ->
-        data.name
+    initialize: =>
+        if @options.collection
+            @options.collection.bind "add", @addOne
+            @options.collection.bind "reset", @addAll
+            @options.collection.fetch()
+    addOne: (modelInstance) =>
+        view = new @options.itemView({ model:modelInstance })
+        @$el.append view.render().$el
+
+    addAll: =>
+        @options.collection.each(@addOne)
 
 class root.DropdownItem extends root.TemplateView
     tagName: "option"
@@ -47,19 +55,11 @@ class root.DropdownItem extends root.TemplateView
         @$el.attr({ value: json.id })
         @
 
-class root.DropdownContainer extends root.TemplateView
+class root.DropdownContainer extends root.ListView
     tagName: "select"
     initialize: =>
-        if @options.collection
-            @options.collection.bind "add", @addOne
-            @options.collection.bind "reset", @addAll
-            @options.collection.fetch()
-    addOne: (modelInstance) =>
-        view = new root.DropdownItem({ model:modelInstance })
-        @$el.append view.render().$el
-
-    addAll: =>
-        @options.collection.each(@addOne)
+        @options.itemView = root.DropdownItem
+        root.ListView.prototype.initialize.apply this, arguments
 
 class root.AppView extends Backbone.View
     el: '#app_root'
@@ -73,14 +73,17 @@ class root.AppView extends Backbone.View
             url: "http://api.dev.oknesset.org/api/v2/party/?format=jsonp"
         })})
         @$(".parties").append(@partyList.$el)
+        @partyList.$el.bind('change', @partyChange)
 
     addOne: (member) =>
-        console.log 'Adding', member
         view = new root.MemberView({ model:member })
         @$(".members").append view.render().$el
 
     addAll: =>
         @memberList.each(@addOne)
+
+    partyChange: =>
+        console.log "Changed: ", this, arguments
 
 ############### INIT ##############
 
