@@ -9,7 +9,7 @@ class root.Member extends Backbone.Model
 ############### COLLECTIONS ##############
 
 class root.JSONCollection extends Backbone.Collection
-    initialize: (options) ->
+    initialize: (models, options) ->
         if options?.url
             @url = options.url
     parse: (response) ->
@@ -21,7 +21,7 @@ class root.JSONPCollection extends root.JSONCollection
         return Backbone.sync(method, model, options)
 
 class root.LocalVarCollection extends root.JSONCollection
-    initialize: (options) ->
+    initialize: (models, options) ->
         if options?.localObject
             @localObject = options.localObject
     sync: (method, model, options) ->
@@ -54,11 +54,14 @@ class root.ListViewItem extends root.TemplateView
 
 class root.ListView extends root.TemplateView
     initialize: =>
+        root.TemplateView.prototype.initialize.apply(this, arguments)
         @options.itemView ?= root.ListViewItem
+        @options.autofetch ?= true
         if @options.collection
             @options.collection.bind "add", @addOne
             @options.collection.bind "reset", @addAll
-            @options.collection.fetch()
+            if @options.autofetch
+                @options.collection.fetch()
     addOne: (modelInstance) =>
         view = new @options.itemView({ model:modelInstance })
         @$el.append view.render().$el
@@ -87,32 +90,48 @@ class root.DropdownContainer extends root.ListView
 class root.AppView extends Backbone.View
     el: '#app_root'
     initialize: =>
-        @memberList = new root.ListView
-            collection: new root.MemberList
-            itemView: root.MemberView
-        @$(".members").append(@memberList.$el)
-
-        @partyList = new root.DropdownContainer
-            collection: new root.JSONPCollection
+        @memberList = new root.MemberList
+        @memberList.fetch()
+        @partyListView = new root.DropdownContainer
+            collection: new root.JSONPCollection(null,
                 model: root.MiscModel
                 url: "http://api.dev.oknesset.org/api/v2/party/?format=jsonp"
-        @$(".parties").append(@partyList.$el)
-        @partyList.$el.bind('change', @partyChange)
+            )
+        @$(".parties").append(@partyListView.$el)
+        @partyListView.$el.bind('change', @partyChange)
 
-        @agendaList = new root.ListView
-            collection: new root.LocalVarCollection
+        @agendaListView = new root.ListView
+            collection: new root.LocalVarCollection(null,
                 model: root.MiscModel
                 url: "data/agendas.jsonp" # not used yet
                 localObject: window.mit_agendas
+            )
             itemView: class extends root.ListViewItem
                 get_template: ->
                     $("#agenda_template").html()
-        @$(".agendas").append(@agendaList.$el)
-        @agendaList.$el.bind('change', @agendaChange)
+        @$(".agendas").append(@agendaListView.$el)
+        @agendaListView.$el.bind('change', @agendaChange)
+        @$("input:button").click(@calculate)
 
     partyChange: =>
         console.log "Changed: ", this, arguments
+        @partyListView.options.selected = @partyListView.$('option:selected').text()
         @$('.agendas_container').show()
+        @reevaluateMembers()
+
+    reevaluateMembers: =>
+        @memberListView = new root.ListView
+            collection: new root.MemberList(@memberList.filter (object) =>
+                object.get('party_name') == @partyListView.options.selected)
+            itemView: root.MemberView
+            autofetch: false
+        @$(".members").empty().append(@memberListView.$el)
+        @memberListView.options.collection.trigger "reset"
+
+    calculate: =>
+        console.log "Calculate: ", this, arguments
+        @$(".members_container").show()
+
 
 ############### INIT ##############
 

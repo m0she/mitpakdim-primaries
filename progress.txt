@@ -5,6 +5,7 @@ Done:
 * Fetching of parties, members
 * Agendas list
 * UI for changing weights
+* Divide members by parties
 
 Todo:
 * Scored members list

@@ -35,7 +35,7 @@
     function JSONCollection() {
       JSONCollection.__super__.constructor.apply(this, arguments);
     }
-    JSONCollection.prototype.initialize = function(options) {
+    JSONCollection.prototype.initialize = function(models, options) {
       if (options != null ? options.url : void 0) {
         return this.url = options.url;
       }
@@ -61,7 +61,7 @@
     function LocalVarCollection() {
       LocalVarCollection.__super__.constructor.apply(this, arguments);
     }
-    LocalVarCollection.prototype.initialize = function(options) {
+    LocalVarCollection.prototype.initialize = function(models, options) {
       if (options != null ? options.localObject : void 0) {
         return this.localObject = options.localObject;
       }
@@ -129,14 +129,20 @@
       ListView.__super__.constructor.apply(this, arguments);
     }
     ListView.prototype.initialize = function() {
-      var _base, _ref2;
+      var _base, _base2, _ref2, _ref3;
+      root.TemplateView.prototype.initialize.apply(this, arguments);
       if ((_ref2 = (_base = this.options).itemView) == null) {
         _base.itemView = root.ListViewItem;
+      }
+      if ((_ref3 = (_base2 = this.options).autofetch) == null) {
+        _base2.autofetch = true;
       }
       if (this.options.collection) {
         this.options.collection.bind("add", this.addOne);
         this.options.collection.bind("reset", this.addAll);
-        return this.options.collection.fetch();
+        if (this.options.autofetch) {
+          return this.options.collection.fetch();
+        }
       }
     };
     ListView.prototype.addOne = function(modelInstance) {
@@ -191,27 +197,26 @@
   root.AppView = (function() {
     __extends(AppView, Backbone.View);
     function AppView() {
+      this.calculate = __bind(this.calculate, this);
+      this.reevaluateMembers = __bind(this.reevaluateMembers, this);
       this.partyChange = __bind(this.partyChange, this);
       this.initialize = __bind(this.initialize, this);
       AppView.__super__.constructor.apply(this, arguments);
     }
     AppView.prototype.el = '#app_root';
     AppView.prototype.initialize = function() {
-      this.memberList = new root.ListView({
-        collection: new root.MemberList,
-        itemView: root.MemberView
-      });
-      this.$(".members").append(this.memberList.$el);
-      this.partyList = new root.DropdownContainer({
-        collection: new root.JSONPCollection({
+      this.memberList = new root.MemberList;
+      this.memberList.fetch();
+      this.partyListView = new root.DropdownContainer({
+        collection: new root.JSONPCollection(null, {
           model: root.MiscModel,
           url: "http://api.dev.oknesset.org/api/v2/party/?format=jsonp"
         })
       });
-      this.$(".parties").append(this.partyList.$el);
-      this.partyList.$el.bind('change', this.partyChange);
-      this.agendaList = new root.ListView({
-        collection: new root.LocalVarCollection({
+      this.$(".parties").append(this.partyListView.$el);
+      this.partyListView.$el.bind('change', this.partyChange);
+      this.agendaListView = new root.ListView({
+        collection: new root.LocalVarCollection(null, {
           model: root.MiscModel,
           url: "data/agendas.jsonp",
           localObject: window.mit_agendas
@@ -227,12 +232,30 @@
           return _Class;
         })()
       });
-      this.$(".agendas").append(this.agendaList.$el);
-      return this.agendaList.$el.bind('change', this.agendaChange);
+      this.$(".agendas").append(this.agendaListView.$el);
+      this.agendaListView.$el.bind('change', this.agendaChange);
+      return this.$("input:button").click(this.calculate);
     };
     AppView.prototype.partyChange = function() {
       console.log("Changed: ", this, arguments);
-      return this.$('.agendas_container').show();
+      this.partyListView.options.selected = this.partyListView.$('option:selected').text();
+      this.$('.agendas_container').show();
+      return this.reevaluateMembers();
+    };
+    AppView.prototype.reevaluateMembers = function() {
+      this.memberListView = new root.ListView({
+        collection: new root.MemberList(this.memberList.filter(__bind(function(object) {
+          return object.get('party_name') === this.partyListView.options.selected;
+        }, this))),
+        itemView: root.MemberView,
+        autofetch: false
+      });
+      this.$(".members").empty().append(this.memberListView.$el);
+      return this.memberListView.options.collection.trigger("reset");
+    };
+    AppView.prototype.calculate = function() {
+      console.log("Calculate: ", this, arguments);
+      return this.$(".members_container").show();
     };
     return AppView;
   })();
