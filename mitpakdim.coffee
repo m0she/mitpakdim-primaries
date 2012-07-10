@@ -36,19 +36,21 @@ class root.MemberList extends root.JSONPCollection
 ############### VIEWS ##############
 
 class root.TemplateView extends Backbone.View
+    template: ->
+        _.template( @get_template() )(arguments...)
     render: =>
         @$el.html( @template(@model.toJSON()) )
         @
 
 class root.MemberView extends root.TemplateView
     className: "member_instance"
-    template: ->
-        _.template( $("#member_template").html() )(arguments...)
+    get_template: ->
+        $("#member_template").html()
 
 class root.ListViewItem extends root.TemplateView
     tagName: "div"
-    template: ->
-        _.template("<a href='#'><%= name %></a>")(arguments...)
+    get_template: ->
+        "<a href='#'><%= name %></a>"
 
 class root.ListView extends root.TemplateView
     initialize: =>
@@ -62,7 +64,10 @@ class root.ListView extends root.TemplateView
         @$el.append view.render().$el
 
     addAll: =>
+        @initEmptyView()
         @options.collection.each(@addOne)
+    initEmptyView: =>
+        @$el.empty()
 
 class root.DropdownItem extends Backbone.View
     tagName: "option"
@@ -76,6 +81,8 @@ class root.DropdownContainer extends root.ListView
     tagName: "select"
     options:
         itemView: root.DropdownItem
+    initEmptyView: =>
+        @$el.html("<option>-----</option>")
 
 class root.AppView extends Backbone.View
     el: '#app_root'
@@ -97,11 +104,15 @@ class root.AppView extends Backbone.View
                 model: root.MiscModel
                 url: "data/agendas.jsonp" # not used yet
                 localObject: window.mit_agendas
+            itemView: class extends root.ListViewItem
+                get_template: ->
+                    $("#agenda_template").html()
         @$(".agendas").append(@agendaList.$el)
         @agendaList.$el.bind('change', @agendaChange)
 
     partyChange: =>
         console.log "Changed: ", this, arguments
+        @$('.agendas_container').show()
 
 ############### INIT ##############
 

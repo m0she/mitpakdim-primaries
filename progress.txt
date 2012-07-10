@@ -3,10 +3,10 @@ Done:
 * Environment + backbone, coffee
 * Basic integration with ok api_v2 (using jsonp)
 * Fetching of parties, members
-
-Todo:
 * Agendas list
 * UI for changing weights
+
+Todo:
 * Scored members list
 * Simple scoring algorithm
 

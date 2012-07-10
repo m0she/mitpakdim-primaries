@@ -88,6 +88,9 @@
       this.render = __bind(this.render, this);
       TemplateView.__super__.constructor.apply(this, arguments);
     }
+    TemplateView.prototype.template = function() {
+      return _.template(this.get_template()).apply(null, arguments);
+    };
     TemplateView.prototype.render = function() {
       this.$el.html(this.template(this.model.toJSON()));
       return this;
@@ -100,8 +103,8 @@
       MemberView.__super__.constructor.apply(this, arguments);
     }
     MemberView.prototype.className = "member_instance";
-    MemberView.prototype.template = function() {
-      return _.template($("#member_template").html()).apply(null, arguments);
+    MemberView.prototype.get_template = function() {
+      return $("#member_template").html();
     };
     return MemberView;
   })();
@@ -111,14 +114,15 @@
       ListViewItem.__super__.constructor.apply(this, arguments);
     }
     ListViewItem.prototype.tagName = "div";
-    ListViewItem.prototype.template = function() {
-      return _.template("<a href='#'><%= name %></a>").apply(null, arguments);
+    ListViewItem.prototype.get_template = function() {
+      return "<a href='#'><%= name %></a>";
     };
     return ListViewItem;
   })();
   root.ListView = (function() {
     __extends(ListView, root.TemplateView);
     function ListView() {
+      this.initEmptyView = __bind(this.initEmptyView, this);
       this.addAll = __bind(this.addAll, this);
       this.addOne = __bind(this.addOne, this);
       this.initialize = __bind(this.initialize, this);
@@ -143,7 +147,11 @@
       return this.$el.append(view.render().$el);
     };
     ListView.prototype.addAll = function() {
+      this.initEmptyView();
       return this.options.collection.each(this.addOne);
+    };
+    ListView.prototype.initEmptyView = function() {
+      return this.$el.empty();
     };
     return ListView;
   })();
@@ -168,11 +176,15 @@
   root.DropdownContainer = (function() {
     __extends(DropdownContainer, root.ListView);
     function DropdownContainer() {
+      this.initEmptyView = __bind(this.initEmptyView, this);
       DropdownContainer.__super__.constructor.apply(this, arguments);
     }
     DropdownContainer.prototype.tagName = "select";
     DropdownContainer.prototype.options = {
       itemView: root.DropdownItem
+    };
+    DropdownContainer.prototype.initEmptyView = function() {
+      return this.$el.html("<option>-----</option>");
     };
     return DropdownContainer;
   })();
@@ -203,13 +215,24 @@
           model: root.MiscModel,
           url: "data/agendas.jsonp",
           localObject: window.mit_agendas
-        })
+        }),
+        itemView: (function() {
+          __extends(_Class, root.ListViewItem);
+          function _Class() {
+            _Class.__super__.constructor.apply(this, arguments);
+          }
+          _Class.prototype.get_template = function() {
+            return $("#agenda_template").html();
+          };
+          return _Class;
+        })()
       });
       this.$(".agendas").append(this.agendaList.$el);
       return this.agendaList.$el.bind('change', this.agendaChange);
     };
     AppView.prototype.partyChange = function() {
-      return console.log("Changed: ", this, arguments);
+      console.log("Changed: ", this, arguments);
+      return this.$('.agendas_container').show();
     };
     return AppView;
   })();
