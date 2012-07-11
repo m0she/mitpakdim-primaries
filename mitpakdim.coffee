@@ -29,9 +29,13 @@ class root.LocalVarCollection extends root.JSONCollection
             options.success @localObject, null # xhr
         return
 
-class root.MemberList extends root.JSONPCollection
+class root.MemberList extends root.LocalVarCollection
     model: root.Member
+    localObject: window.mit.members
     url: "http://api.dev.oknesset.org/api/v2/member/?format=jsonp"
+#class root.MemberList extends root.JSONPCollection
+#    model: root.Member
+#    url: "http://api.dev.oknesset.org/api/v2/member/?format=jsonp"
 
 ############### VIEWS ##############
 
@@ -93,9 +97,13 @@ class root.AppView extends Backbone.View
         @memberList = new root.MemberList
         @memberList.fetch()
         @partyListView = new root.DropdownContainer
-            collection: new root.JSONPCollection(null,
+#            collection: new root.JSONPCollection(null,
+#                model: root.MiscModel
+#                url: "http://api.dev.oknesset.org/api/v2/party/?format=jsonp"
+#            )
+            collection: new root.LocalVarCollection(null,
                 model: root.MiscModel
-                url: "http://api.dev.oknesset.org/api/v2/party/?format=jsonp"
+                localObject: window.mit.parties
             )
         @$(".parties").append(@partyListView.$el)
         @partyListView.$el.bind('change', @partyChange)
@@ -104,7 +112,7 @@ class root.AppView extends Backbone.View
             collection: new root.LocalVarCollection(null,
                 model: root.MiscModel
                 url: "data/agendas.jsonp" # not used yet
-                localObject: window.mit_agendas
+                localObject: window.mit.agendas
             )
             itemView: class extends root.ListViewItem
                 get_template: ->
@@ -131,6 +139,10 @@ class root.AppView extends Backbone.View
     calculate: =>
         console.log "Calculate: ", this, arguments
         @$(".members_container").show()
+
+
+    calcOne: (member, agendas) ->
+        score = member.reduce
 
 
 ############### INIT ##############

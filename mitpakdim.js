@@ -74,11 +74,12 @@
     return LocalVarCollection;
   })();
   root.MemberList = (function() {
-    __extends(MemberList, root.JSONPCollection);
+    __extends(MemberList, root.LocalVarCollection);
     function MemberList() {
       MemberList.__super__.constructor.apply(this, arguments);
     }
     MemberList.prototype.model = root.Member;
+    MemberList.prototype.localObject = window.mit.members;
     MemberList.prototype.url = "http://api.dev.oknesset.org/api/v2/member/?format=jsonp";
     return MemberList;
   })();
@@ -208,9 +209,9 @@
       this.memberList = new root.MemberList;
       this.memberList.fetch();
       this.partyListView = new root.DropdownContainer({
-        collection: new root.JSONPCollection(null, {
+        collection: new root.LocalVarCollection(null, {
           model: root.MiscModel,
-          url: "http://api.dev.oknesset.org/api/v2/party/?format=jsonp"
+          localObject: window.mit.parties
         })
       });
       this.$(".parties").append(this.partyListView.$el);
@@ -219,7 +220,7 @@
         collection: new root.LocalVarCollection(null, {
           model: root.MiscModel,
           url: "data/agendas.jsonp",
-          localObject: window.mit_agendas
+          localObject: window.mit.agendas
         }),
         itemView: (function() {
           __extends(_Class, root.ListViewItem);
@@ -256,6 +257,10 @@
     AppView.prototype.calculate = function() {
       console.log("Calculate: ", this, arguments);
       return this.$(".members_container").show();
+    };
+    AppView.prototype.calcOne = function(member, agendas) {
+      var score;
+      return score = member.reduce;
     };
     return AppView;
   })();
