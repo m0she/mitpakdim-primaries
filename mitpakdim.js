@@ -32,6 +32,9 @@
     function Member() {
       Member.__super__.constructor.apply(this, arguments);
     }
+    Member.prototype.defaults = {
+      score: 'N/A'
+    };
     return Member;
   })();
   root.MemberAgenda = (function() {
@@ -255,10 +258,15 @@
       return this.reevaluateMembers();
     };
     AppView.prototype.reevaluateMembers = function() {
+      this.filteredMemberList = new root.MemberList(this.memberList.filter(__bind(function(object) {
+        return object.get('party_name') === this.partyListView.options.selected;
+      }, this)), {
+        comparator: function(member) {
+          return -member.get('score');
+        }
+      });
       this.memberListView = new root.ListView({
-        collection: new root.MemberList(this.memberList.filter(__bind(function(object) {
-          return object.get('party_name') === this.partyListView.options.selected;
-        }, this))),
+        collection: this.filteredMemberList,
         itemView: root.MemberView,
         autofetch: false
       });
@@ -281,6 +289,7 @@
       console.log("Waiting for " + calcs.length + " member agendas");
       return $.when.apply($, calcs).done(__bind(function() {
         console.log("Got results!", this, arguments);
+        this.filteredMemberList.sort();
         return this.$(".members_container").show();
       }, this)).fail(__bind(function() {
         return console.log("Error getting results!", this, arguments);
@@ -288,20 +297,24 @@
     };
     AppView.prototype.calcOneAsync = function(member, agendasInput) {
       var calcOne, memberAgendas;
-      if (typeof (member.get('score')) === 'number') {
-        console.log('Already got score for ' + member.get('id'));
+      calcOne = function() {
+        return member.set('score', _.reduce(member.get('agendas'), function(memo, agenda) {
+          return memo += agendasInput[agenda.id] * agenda.score;
+        }, 0));
+      };
+      if (member.get('agendas')) {
+        console.log('Already got agendas for ' + member.get('id'));
+        calcOne();
         return $.Deferred().resolve();
       }
       memberAgendas = new root.MemberAgenda({
         id: member.get('id')
       });
-      calcOne = function() {
-        return member.set('score', _.reduce(memberAgendas.get('agendas'), function(memo, agenda) {
-          return memo += agendasInput[agenda.id] * agenda.score;
-        }, 0));
-      };
       return memberAgendas.fetch({
-        success: calcOne
+        success: function() {
+          member.set('agendas', memberAgendas.get('agendas'));
+          return calcOne();
+        }
       });
     };
     return AppView;

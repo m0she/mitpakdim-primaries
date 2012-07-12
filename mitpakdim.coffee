@@ -9,6 +9,8 @@ root.JSONPSync = (method, model, options) ->
 class root.MiscModel extends Backbone.Model
 class root.Agenda extends Backbone.Model
 class root.Member extends Backbone.Model
+    defaults:
+        score: 'N/A'
 class root.MemberAgenda extends Backbone.Model
     urlRoot: "http://api.dev.oknesset.org/api/v2/member-agendas/"
     sync: root.JSONPSync
@@ -134,9 +136,14 @@ class root.AppView extends Backbone.View
         @reevaluateMembers()
 
     reevaluateMembers: =>
+        @filteredMemberList = new root.MemberList (@memberList.filter (object) =>
+            object.get('party_name') == @partyListView.options.selected
+        ),
+            comparator: (member) ->
+                return -member.get 'score'
+
         @memberListView = new root.ListView
-            collection: new root.MemberList(@memberList.filter (object) =>
-                object.get('party_name') == @partyListView.options.selected)
+            collection: @filteredMemberList
             itemView: root.MemberView
             autofetch: false
         @$(".members").empty().append(@memberListView.$el)
@@ -155,22 +162,28 @@ class root.AppView extends Backbone.View
         console.log "Waiting for " + calcs.length + " member agendas"
         $.when(calcs...).done =>
             console.log "Got results!", this, arguments
+            @filteredMemberList.sort()
             @$(".members_container").show()
         .fail =>
             console.log "Error getting results!", this, arguments
 
     calcOneAsync: (member, agendasInput) ->
-        if typeof(member.get 'score') == 'number'
-            console.log 'Already got score for ' + member.get 'id'
-            return $.Deferred().resolve()
-        memberAgendas = new root.MemberAgenda
-            id: member.get 'id'
-        calcOne = ->
-            member.set 'score', _.reduce memberAgendas.get('agendas'), (memo, agenda) ->
+        calcOne = () ->
+            member.set 'score', _.reduce member.get('agendas'), (memo, agenda) ->
                 memo += agendasInput[agenda.id] * agenda.score
             , 0
+
+        if member.get 'agendas'
+            console.log 'Already got agendas for ' + member.get 'id'
+            calcOne()
+            return $.Deferred().resolve()
+
+        memberAgendas = new root.MemberAgenda
+            id: member.get 'id'
         memberAgendas.fetch
-            success: calcOne
+            success: ->
+                member.set 'agendas', memberAgendas.get('agendas')
+                calcOne()
 
 
 ############### INIT ##############
