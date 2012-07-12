@@ -9,6 +9,10 @@
     return child;
   }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   root = (_ref = window.mit) != null ? _ref : window.mit = {};
+  root.JSONPSync = function(method, model, options) {
+    options.dataType = "jsonp";
+    return Backbone.sync(method, model, options);
+  };
   root.MiscModel = (function() {
     __extends(MiscModel, Backbone.Model);
     function MiscModel() {
@@ -30,6 +34,15 @@
     }
     return Member;
   })();
+  root.MemberAgenda = (function() {
+    __extends(MemberAgenda, Backbone.Model);
+    function MemberAgenda() {
+      MemberAgenda.__super__.constructor.apply(this, arguments);
+    }
+    MemberAgenda.prototype.urlRoot = "http://api.dev.oknesset.org/api/v2/member-agendas/";
+    MemberAgenda.prototype.sync = root.JSONPSync;
+    return MemberAgenda;
+  })();
   root.JSONCollection = (function() {
     __extends(JSONCollection, Backbone.Collection);
     function JSONCollection() {
@@ -50,10 +63,7 @@
     function JSONPCollection() {
       JSONPCollection.__super__.constructor.apply(this, arguments);
     }
-    JSONPCollection.prototype.sync = function(method, model, options) {
-      options.dataType = "jsonp";
-      return Backbone.sync(method, model, options);
-    };
+    JSONPCollection.prototype.sync = root.JSONPSync;
     return JSONPCollection;
   })();
   root.LocalVarCollection = (function() {
@@ -151,6 +161,7 @@
       view = new this.options.itemView({
         model: modelInstance
       });
+      modelInstance.view = view;
       return this.$el.append(view.render().$el);
     };
     ListView.prototype.addAll = function() {
@@ -255,12 +266,43 @@
       return this.memberListView.options.collection.trigger("reset");
     };
     AppView.prototype.calculate = function() {
+      var agendasInput, calcs;
+      this.$(".members_container").hide();
       console.log("Calculate: ", this, arguments);
-      return this.$(".members_container").show();
+      agendasInput = {};
+      this.agendaListView.collection.each(__bind(function(agenda) {
+        return agendasInput[agenda.get('id')] = agenda.view.$('input:checked').val() || 0;
+      }, this));
+      console.log("Agendas input: ", agendasInput);
+      calcs = [];
+      this.memberListView.collection.each(__bind(function(member) {
+        return calcs.push(this.calcOneAsync(member, agendasInput));
+      }, this));
+      console.log("Waiting for " + calcs.length + " member agendas");
+      return $.when.apply($, calcs).done(__bind(function() {
+        console.log("Got results!", this, arguments);
+        return this.$(".members_container").show();
+      }, this)).fail(__bind(function() {
+        return console.log("Error getting results!", this, arguments);
+      }, this));
     };
-    AppView.prototype.calcOne = function(member, agendas) {
-      var score;
-      return score = member.reduce;
+    AppView.prototype.calcOneAsync = function(member, agendasInput) {
+      var calcOne, memberAgendas;
+      if (typeof (member.get('score')) === 'number') {
+        console.log('Already got score for ' + member.get('id'));
+        return $.Deferred().resolve();
+      }
+      memberAgendas = new root.MemberAgenda({
+        id: member.get('id')
+      });
+      calcOne = function() {
+        return member.set('score', _.reduce(memberAgendas.get('agendas'), function(memo, agenda) {
+          return memo += agendasInput[agenda.id] * agenda.score;
+        }, 0));
+      };
+      return memberAgendas.fetch({
+        success: calcOne
+      });
     };
     return AppView;
   })();

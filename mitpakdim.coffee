@@ -1,10 +1,17 @@
 root = window.mit ?= {}
 
+############### SYNC ##############
+root.JSONPSync = (method, model, options) ->
+    options.dataType = "jsonp"
+    return Backbone.sync(method, model, options)
 ############### MODELS ##############
 
 class root.MiscModel extends Backbone.Model
 class root.Agenda extends Backbone.Model
 class root.Member extends Backbone.Model
+class root.MemberAgenda extends Backbone.Model
+    urlRoot: "http://api.dev.oknesset.org/api/v2/member-agendas/"
+    sync: root.JSONPSync
 
 ############### COLLECTIONS ##############
 
@@ -16,9 +23,7 @@ class root.JSONCollection extends Backbone.Collection
         return response.objects
 
 class root.JSONPCollection extends root.JSONCollection
-    sync: (method, model, options) ->
-        options.dataType = "jsonp"
-        return Backbone.sync(method, model, options)
+    sync: root.JSONPSync
 
 class root.LocalVarCollection extends root.JSONCollection
     initialize: (models, options) ->
@@ -68,6 +73,7 @@ class root.ListView extends root.TemplateView
                 @options.collection.fetch()
     addOne: (modelInstance) =>
         view = new @options.itemView({ model:modelInstance })
+        modelInstance.view = view
         @$el.append view.render().$el
 
     addAll: =>
@@ -137,12 +143,34 @@ class root.AppView extends Backbone.View
         @memberListView.options.collection.trigger "reset"
 
     calculate: =>
+        @$(".members_container").hide()
         console.log "Calculate: ", this, arguments
-        @$(".members_container").show()
+        agendasInput = {}
+        @agendaListView.collection.each (agenda) =>
+            agendasInput[agenda.get('id')] = agenda.view.$('input:checked').val() || 0
+        console.log "Agendas input: ", agendasInput
+        calcs = []
+        @memberListView.collection.each (member) =>
+            calcs.push @calcOneAsync member, agendasInput
+        console.log "Waiting for " + calcs.length + " member agendas"
+        $.when(calcs...).done =>
+            console.log "Got results!", this, arguments
+            @$(".members_container").show()
+        .fail =>
+            console.log "Error getting results!", this, arguments
 
-
-    calcOne: (member, agendas) ->
-        score = member.reduce
+    calcOneAsync: (member, agendasInput) ->
+        if typeof(member.get 'score') == 'number'
+            console.log 'Already got score for ' + member.get 'id'
+            return $.Deferred().resolve()
+        memberAgendas = new root.MemberAgenda
+            id: member.get 'id'
+        calcOne = ->
+            member.set 'score', _.reduce memberAgendas.get('agendas'), (memo, agenda) ->
+                memo += agendasInput[agenda.id] * agenda.score
+            , 0
+        memberAgendas.fetch
+            success: calcOne
 
 
 ############### INIT ##############
