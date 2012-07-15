@@ -17,32 +17,32 @@ class root.MemberAgenda extends Backbone.Model
 
 ############### COLLECTIONS ##############
 
-class root.JSONCollection extends Backbone.Collection
-    initialize: (models, options) ->
-        if options?.url
-            @url = options.url
-    parse: (response) ->
-        return response.objects
-
-class root.JSONPCollection extends root.JSONCollection
-    sync: root.JSONPSync
-
-class root.LocalVarCollection extends root.JSONCollection
+class root.LocalVarCollection extends Backbone.Collection
     initialize: (models, options) ->
         if options?.localObject
             @localObject = options.localObject
-    sync: (method, model, options) ->
+        if options?.url
+            @url = options.url
+    sync: (method, model, options) =>
+        if @localObject == undefined
+            return @syncFunc arguments...
+
         setTimeout =>
             options.success @localObject, null # xhr
         return
 
-class root.MemberList extends root.LocalVarCollection
+    syncFunc: Backbone.sync
+
+    parse: (response) ->
+        return response.objects
+
+class root.JSONPCollection extends root.LocalVarCollection
+    syncFunc: root.JSONPSync
+
+class root.MemberList extends root.JSONPCollection
     model: root.Member
     localObject: window.mit.members
-    url: "http://api.dev.oknesset.org/api/v2/member/?format=jsonp"
-#class root.MemberList extends root.JSONPCollection
-#    model: root.Member
-#    url: "http://api.dev.oknesset.org/api/v2/member/?format=jsonp"
+    url: "http://api.dev.oknesset.org/api/v2/member/"
 
 ############### VIEWS ##############
 
@@ -105,21 +105,18 @@ class root.AppView extends Backbone.View
         @memberList = new root.MemberList
         @memberList.fetch()
         @partyListView = new root.DropdownContainer
-#            collection: new root.JSONPCollection(null,
-#                model: root.MiscModel
-#                url: "http://api.dev.oknesset.org/api/v2/party/?format=jsonp"
-#            )
-            collection: new root.LocalVarCollection(null,
+            collection: new root.JSONPCollection(null,
                 model: root.MiscModel
+                url: "http://api.dev.oknesset.org/api/v2/party/"
                 localObject: window.mit.parties
             )
         @$(".parties").append(@partyListView.$el)
         @partyListView.$el.bind('change', @partyChange)
 
         @agendaListView = new root.ListView
-            collection: new root.LocalVarCollection(null,
+            collection: new root.JSONPCollection(null,
                 model: root.MiscModel
-                url: "data/agendas.jsonp" # not used yet
+                url: "http://api.dev.oknesset.org/api/v2/agenda/"
                 localObject: window.mit.agendas
             )
             itemView: class extends root.ListViewItem

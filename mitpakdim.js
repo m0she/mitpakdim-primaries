@@ -46,54 +46,50 @@
     MemberAgenda.prototype.sync = root.JSONPSync;
     return MemberAgenda;
   })();
-  root.JSONCollection = (function() {
-    __extends(JSONCollection, Backbone.Collection);
-    function JSONCollection() {
-      JSONCollection.__super__.constructor.apply(this, arguments);
-    }
-    JSONCollection.prototype.initialize = function(models, options) {
-      if (options != null ? options.url : void 0) {
-        return this.url = options.url;
-      }
-    };
-    JSONCollection.prototype.parse = function(response) {
-      return response.objects;
-    };
-    return JSONCollection;
-  })();
-  root.JSONPCollection = (function() {
-    __extends(JSONPCollection, root.JSONCollection);
-    function JSONPCollection() {
-      JSONPCollection.__super__.constructor.apply(this, arguments);
-    }
-    JSONPCollection.prototype.sync = root.JSONPSync;
-    return JSONPCollection;
-  })();
   root.LocalVarCollection = (function() {
-    __extends(LocalVarCollection, root.JSONCollection);
+    __extends(LocalVarCollection, Backbone.Collection);
     function LocalVarCollection() {
+      this.sync = __bind(this.sync, this);
       LocalVarCollection.__super__.constructor.apply(this, arguments);
     }
     LocalVarCollection.prototype.initialize = function(models, options) {
       if (options != null ? options.localObject : void 0) {
-        return this.localObject = options.localObject;
+        this.localObject = options.localObject;
+      }
+      if (options != null ? options.url : void 0) {
+        return this.url = options.url;
       }
     };
     LocalVarCollection.prototype.sync = function(method, model, options) {
+      if (this.localObject === void 0) {
+        return this.syncFunc.apply(this, arguments);
+      }
       setTimeout(__bind(function() {
         return options.success(this.localObject, null);
       }, this));
     };
+    LocalVarCollection.prototype.syncFunc = Backbone.sync;
+    LocalVarCollection.prototype.parse = function(response) {
+      return response.objects;
+    };
     return LocalVarCollection;
   })();
+  root.JSONPCollection = (function() {
+    __extends(JSONPCollection, root.LocalVarCollection);
+    function JSONPCollection() {
+      JSONPCollection.__super__.constructor.apply(this, arguments);
+    }
+    JSONPCollection.prototype.syncFunc = root.JSONPSync;
+    return JSONPCollection;
+  })();
   root.MemberList = (function() {
-    __extends(MemberList, root.LocalVarCollection);
+    __extends(MemberList, root.JSONPCollection);
     function MemberList() {
       MemberList.__super__.constructor.apply(this, arguments);
     }
     MemberList.prototype.model = root.Member;
     MemberList.prototype.localObject = window.mit.members;
-    MemberList.prototype.url = "http://api.dev.oknesset.org/api/v2/member/?format=jsonp";
+    MemberList.prototype.url = "http://api.dev.oknesset.org/api/v2/member/";
     return MemberList;
   })();
   root.TemplateView = (function() {
@@ -223,17 +219,18 @@
       this.memberList = new root.MemberList;
       this.memberList.fetch();
       this.partyListView = new root.DropdownContainer({
-        collection: new root.LocalVarCollection(null, {
+        collection: new root.JSONPCollection(null, {
           model: root.MiscModel,
+          url: "http://api.dev.oknesset.org/api/v2/party/",
           localObject: window.mit.parties
         })
       });
       this.$(".parties").append(this.partyListView.$el);
       this.partyListView.$el.bind('change', this.partyChange);
       this.agendaListView = new root.ListView({
-        collection: new root.LocalVarCollection(null, {
+        collection: new root.JSONPCollection(null, {
           model: root.MiscModel,
-          url: "data/agendas.jsonp",
+          url: "http://api.dev.oknesset.org/api/v2/agenda/",
           localObject: window.mit.agendas
         }),
         itemView: (function() {
