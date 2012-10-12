@@ -120,6 +120,11 @@ class root.AppView extends Backbone.View
                 localObject: window.mit.agendas
             )
             itemView: class extends root.ListViewItem
+                render : ->
+                    super()
+                    @.$('.slider').slider
+                        value : 50
+                    @
                 get_template: ->
                     $("#agenda_template").html()
         @$(".agendas").append(@agendaListView.$el)
