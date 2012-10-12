@@ -123,10 +123,19 @@ class root.AppView extends Backbone.View
                 render : ->
                     super()
                     @.$('.slider').slider
-                        value : 50
+                        min : -100
+                        max : 100
+                        value : 0
+                        stop : @onStop
                     @
+                onStop : (event, ui) =>
+                    @model.set
+                        uservalue : ui.value
+
                 get_template: ->
                     $("#agenda_template").html()
+        @agendaListView.collection.on 'change', ->
+            console.log "Model changed", arguments
         @$(".agendas").append(@agendaListView.$el)
         @agendaListView.$el.bind('change', @agendaChange)
         @$("input:button").click(@calculate)
@@ -156,7 +165,7 @@ class root.AppView extends Backbone.View
         console.log "Calculate: ", this, arguments
         agendasInput = {}
         @agendaListView.collection.each (agenda) =>
-            agendasInput[agenda.get('id')] = agenda.view.$('input:checked').val() || 0
+            agendasInput[agenda.get('id')] = agenda.get("uservalue")
         console.log "Agendas input: ", agendasInput
         calcs = []
         @memberListView.collection.each (member) =>

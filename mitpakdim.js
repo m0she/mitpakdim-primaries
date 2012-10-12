@@ -339,15 +339,25 @@
           __extends(_Class, _super1);
 
           function _Class() {
+            this.onStop = __bind(this.onStop, this);
             return _Class.__super__.constructor.apply(this, arguments);
           }
 
           _Class.prototype.render = function() {
             _Class.__super__.render.call(this);
             this.$('.slider').slider({
-              value: 50
+              min: -100,
+              max: 100,
+              value: 0,
+              stop: this.onStop
             });
             return this;
+          };
+
+          _Class.prototype.onStop = function(event, ui) {
+            return this.model.set({
+              uservalue: ui.value
+            });
           };
 
           _Class.prototype.get_template = function() {
@@ -357,6 +367,9 @@
           return _Class;
 
         })(root.ListViewItem)
+      });
+      this.agendaListView.collection.on('change', function() {
+        return console.log("Model changed", arguments);
       });
       this.$(".agendas").append(this.agendaListView.$el);
       this.agendaListView.$el.bind('change', this.agendaChange);
@@ -395,7 +408,7 @@
       console.log("Calculate: ", this, arguments);
       agendasInput = {};
       this.agendaListView.collection.each(function(agenda) {
-        return agendasInput[agenda.get('id')] = agenda.view.$('input:checked').val() || 0;
+        return agendasInput[agenda.get('id')] = agenda.get("uservalue");
       });
       console.log("Agendas input: ", agendasInput);
       calcs = [];
