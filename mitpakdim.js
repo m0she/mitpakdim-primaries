@@ -32,6 +32,10 @@
       return Agenda.__super__.constructor.apply(this, arguments);
     }
 
+    Agenda.prototype.defaults = {
+      uservalue: 0
+    };
+
     return Agenda;
 
   })(Backbone.Model);
@@ -79,6 +83,7 @@
 
     LocalVarCollection.prototype.initialize = function(models, options) {
       if (options != null ? options.localObject : void 0) {
+        console.log("Using local objects for ", this);
         this.localObject = options.localObject;
       }
       if (options != null ? options.url : void 0) {
@@ -330,9 +335,9 @@
       this.partyListView.$el.bind('change', this.partyChange);
       this.agendaListView = new root.ListView({
         collection: new root.JSONPCollection(null, {
-          model: root.MiscModel,
-          url: "http://api.dev.oknesset.org/api/v2/agenda/",
-          localObject: window.mit.agendas
+          model: root.Agenda,
+          localObject: window.mit.agendas,
+          url: "http://api.dev.oknesset.org/api/v2/agenda/"
         }),
         itemView: (function(_super1) {
 
@@ -348,7 +353,7 @@
             this.$('.slider').slider({
               min: -100,
               max: 100,
-              value: 0,
+              value: this.model.get("uservalue"),
               stop: this.onStop
             });
             return this;

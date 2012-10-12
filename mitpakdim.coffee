@@ -8,6 +8,8 @@ root.JSONPSync = (method, model, options) ->
 
 class root.MiscModel extends Backbone.Model
 class root.Agenda extends Backbone.Model
+    defaults:
+        uservalue: 0
 class root.Member extends Backbone.Model
     defaults:
         score: 'N/A'
@@ -20,6 +22,7 @@ class root.MemberAgenda extends Backbone.Model
 class root.LocalVarCollection extends Backbone.Collection
     initialize: (models, options) ->
         if options?.localObject
+            console.log "Using local objects for ", this
             @localObject = options.localObject
         if options?.url
             @url = options.url
@@ -115,9 +118,9 @@ class root.AppView extends Backbone.View
 
         @agendaListView = new root.ListView
             collection: new root.JSONPCollection(null,
-                model: root.MiscModel
-                url: "http://api.dev.oknesset.org/api/v2/agenda/"
+                model: root.Agenda
                 localObject: window.mit.agendas
+                url: "http://api.dev.oknesset.org/api/v2/agenda/"
             )
             itemView: class extends root.ListViewItem
                 render : ->
@@ -125,7 +128,7 @@ class root.AppView extends Backbone.View
                     @.$('.slider').slider
                         min : -100
                         max : 100
-                        value : 0
+                        value : @model.get "uservalue"
                         stop : @onStop
                     @
                 onStop : (event, ui) =>
