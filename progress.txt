@@ -15,3 +15,17 @@ Todo:
 * Mutex on calculate
 * Add correlation percentage
 * Add member indicator on slider
+
+* Needs mitpakdim axx
+  * Facebook integration
+    - pass args (levels) in url
+    - add OG tags
+  * Google analytics
+    - Emit event for: level changes, (calculations - even if auto?), inspection of candidates correlation, fb share
+
+* New candidates
+  * DB
+  * Logic
+  * UI - apply
+  * Edit DB
+  * 
