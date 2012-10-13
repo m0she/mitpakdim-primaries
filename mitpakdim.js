@@ -322,6 +322,7 @@
     AppView.prototype.el = '#app_root';
 
     AppView.prototype.initialize = function() {
+      var _this = this;
       this.memberList = new root.MemberList;
       this.memberList.fetch();
       this.partyListView = new root.DropdownContainer({
@@ -374,7 +375,15 @@
         })(root.ListViewItem)
       });
       this.agendaListView.collection.on('change', function() {
-        return console.log("Model changed", arguments);
+        var recalc_timeout;
+        console.log("Model changed", arguments);
+        if (_this.recalc_timeout) {
+          clearTimeout(_this.recalc_timeout);
+        }
+        return recalc_timeout = setTimeout(function() {
+          _this.recalc_timeout = null;
+          return _this.calculate();
+        }, 100);
       });
       this.$(".agendas").append(this.agendaListView.$el);
       this.agendaListView.$el.bind('change', this.agendaChange);

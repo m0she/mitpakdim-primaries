@@ -137,8 +137,14 @@ class root.AppView extends Backbone.View
 
                 get_template: ->
                     $("#agenda_template").html()
-        @agendaListView.collection.on 'change', ->
+        @agendaListView.collection.on 'change', =>
             console.log "Model changed", arguments
+            if @recalc_timeout
+                clearTimeout @recalc_timeout
+            recalc_timeout = setTimeout =>
+                @recalc_timeout = null
+                @calculate()
+            , 100
         @$(".agendas").append(@agendaListView.$el)
         @agendaListView.$el.bind('change', @agendaChange)
         @$("input:button").click(@calculate)
