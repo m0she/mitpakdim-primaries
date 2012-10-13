@@ -6,13 +6,12 @@ Done:
 * Agendas list
 * UI for changing weights
 * Divide members by parties
-
-Todo:
 * Scored members list
 * Simple scoring algorithm
 
-
-Issues:
-* Flat API for containers
-* Party members(?)
-
+Todo:
+* Refactor MemberAgenda to be nested inside of Member
+* Fetch MemberAgenda's after partyChange
+* Mutex on calculate
+* Add correlation percentage
+* Add member indicator on slider
