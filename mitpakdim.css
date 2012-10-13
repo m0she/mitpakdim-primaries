@@ -1,3 +1,25 @@
 .hidden {
     display: none;
 }
+#app_root {
+    direction : rtl;
+    vertical-align : top;
+}
+.main_wrapper {
+    width : 960px;
+    margin : 0 auto;
+    white-space : nowrap;
+}
+.main_wrapper > * {
+    white-space : normal;
+}
+.agendas_container {
+    width : 410px;
+    display : inline-block;
+    vertical-align : top;
+}
+.members_container {
+    width : 510px;
+    display : inline-block;
+    vertical-align : top;
+}
