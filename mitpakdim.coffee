@@ -214,14 +214,16 @@ class root.AppView extends Backbone.View
     calculate_inner: ->
         console.log "Calculate: ", this, arguments
         agendasInput = {}
+        agendasSum = 0
         @agendaListView.collection.each (agenda) =>
-            agendasInput[agenda.get('id')] = agenda.get("uservalue")
+            uservalue = agenda.get("uservalue")
+            agendasInput[agenda.get('id')] = uservalue
+            agendasSum += Math.abs(uservalue)
+
         console.log "Agendas input: ", agendasInput
         @memberListView.collection.each (member) =>
-            console.log "Calcing member: ", member
             member.set 'score', _.reduce member.getAgendas(), (memo, agenda) ->
-                console.log "Calc step: ", agendasInput[agenda.id], agenda.score
-                memo += agendasInput[agenda.id] * agenda.score
+                memo += agendasInput[agenda.id] * agenda.score / agendasSum
             , 0
 
 ############### INIT ##############

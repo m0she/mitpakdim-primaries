@@ -355,37 +355,22 @@
       }, this));
     };
     AppView.prototype.calculate_inner = function() {
-      var agendasInput;
+      var agendasInput, agendasSum;
       console.log("Calculate: ", this, arguments);
       agendasInput = {};
+      agendasSum = 0;
       this.agendaListView.collection.each(__bind(function(agenda) {
-        return agendasInput[agenda.get('id')] = agenda.get("uservalue");
+        var uservalue;
+        uservalue = agenda.get("uservalue");
+        agendasInput[agenda.get('id')] = uservalue;
+        return agendasSum += Math.abs(uservalue);
       }, this));
       console.log("Agendas input: ", agendasInput);
       return this.memberListView.collection.each(__bind(function(member) {
-        console.log("Calcing member: ", member);
         return member.set('score', _.reduce(member.getAgendas(), function(memo, agenda) {
-          console.log("Calc step: ", agendasInput[agenda.id], agenda.score);
-          return memo += agendasInput[agenda.id] * agenda.score;
+          return memo += agendasInput[agenda.id] * agenda.score / agendasSum;
         }, 0));
       }, this));
-    };
-    AppView.prototype.calcOneAsync = function(member, agendasInput) {
-      var memberAgendas;
-      if (member.get('agendas')) {
-        console.log('Already got agendas for ' + member.get('id'));
-        calcOne();
-        return $.Deferred().resolve();
-      }
-      memberAgendas = new root.MemberAgenda({
-        id: member.get('id')
-      });
-      return memberAgendas.fetch({
-        success: function() {
-          member.set('agendas', memberAgendas.get('agendas'));
-          return calcOne();
-        }
-      });
     };
     return AppView;
   })();

@@ -8,12 +8,12 @@ Done:
 * Divide members by parties
 * Scored members list
 * Simple scoring algorithm
-
-Todo:
 * Refactor MemberAgenda to be nested inside of Member
 * Fetch MemberAgenda's after partyChange
-* Mutex on calculate
 * Add correlation percentage
+
+Todo:
+* Mutex on calculate
 * Add member indicator on slider
 
 * Needs mitpakdim axx
