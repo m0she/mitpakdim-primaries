@@ -63,6 +63,18 @@
 
   })(Backbone.Model);
 
+  root.Candidate = (function(_super) {
+
+    __extends(Candidate, _super);
+
+    function Candidate() {
+      return Candidate.__super__.constructor.apply(this, arguments);
+    }
+
+    return Candidate;
+
+  })(Backbone.Model);
+
   root.Member = (function(_super) {
     var MemberAgenda;
 
@@ -125,7 +137,19 @@
 
     return Member;
 
-  })(Backbone.Model);
+  })(root.Candidate);
+
+  root.NewCandidate = (function(_super) {
+
+    __extends(NewCandidate, _super);
+
+    function NewCandidate() {
+      return NewCandidate.__super__.constructor.apply(this, arguments);
+    }
+
+    return NewCandidate;
+
+  })(root.Candidate);
 
   root.LocalVarCollection = (function(_super) {
 
@@ -374,6 +398,23 @@
 
   })(root.ListView);
 
+  root.CandidatesMainView = (function(_super) {
+
+    __extends(CandidatesMainView, _super);
+
+    function CandidatesMainView() {
+      this.initialize = __bind(this.initialize, this);
+      return CandidatesMainView.__super__.constructor.apply(this, arguments);
+    }
+
+    CandidatesMainView.prototype.el = ".candidates_container";
+
+    CandidatesMainView.prototype.initialize = function() {};
+
+    return CandidatesMainView;
+
+  })(Backbone.View);
+
   root.AppView = (function(_super) {
 
     __extends(AppView, _super);
@@ -393,6 +434,7 @@
 
     AppView.prototype.initialize = function() {
       var _this = this;
+      this.candidatesView = new root.CandidatesMainView;
       this.memberList = new root.MemberList;
       this.memberList.fetch();
       this.partyListView = new root.DropdownContainer({

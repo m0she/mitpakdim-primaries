@@ -1,6 +1,3 @@
-.hidden {
-    display: none;
-}
 #app_root {
     direction : rtl;
     vertical-align : top;
@@ -36,7 +33,7 @@
     height : 100%;
     width : 0.5em;
 }
-.members_container {
+.candidates_container {
     width : 510px;
     display : inline-block;
     vertical-align : top;

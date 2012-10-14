@@ -29,7 +29,9 @@ class root.MiscModel extends Backbone.Model
 class root.Agenda extends Backbone.Model
     defaults:
         uservalue: 0
-class root.Member extends Backbone.Model
+
+class root.Candidate extends Backbone.Model
+class root.Member extends root.Candidate
     defaults:
         score: 'N/A'
 
@@ -59,6 +61,7 @@ class root.Member extends Backbone.Model
     initialize: ->
         @agendas_fetching = $.Deferred()
 
+class root.NewCandidate extends root.Candidate
 
 ############### COLLECTIONS ##############
 
@@ -155,9 +158,14 @@ class root.DropdownContainer extends root.ListView
     initEmptyView: =>
         @$el.html("<option>-----</option>")
 
+class root.CandidatesMainView extends Backbone.View
+    el: ".candidates_container"
+    initialize: =>
+
 class root.AppView extends Backbone.View
     el: '#app_root'
     initialize: =>
+        @candidatesView = new root.CandidatesMainView
         @memberList = new root.MemberList
         @memberList.fetch()
         @partyListView = new root.DropdownContainer
