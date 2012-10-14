@@ -1,4 +1,9 @@
 root = window.mit ?= {}
+################### UTILITIES #####################
+sum = (arr) ->
+    do_sum = (item, memo) ->
+        memo += item
+    _.reduce(arr, do_sum, 0)
 
 ############### JQUERY UI EXTENSIONS ##############
 
@@ -20,6 +25,7 @@ $.widget "mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {
 })
 
 ############### SYNC ##############
+
 root.JSONPSync = (method, model, options) ->
     options.dataType = "jsonp"
     return Backbone.sync(method, model, options)
@@ -123,15 +129,20 @@ class root.ListViewItem extends root.TemplateView
         "<a href='#'><%= name %></a>"
 
 class root.ListView extends root.TemplateView
-    initialize: =>
-        root.TemplateView.prototype.initialize.apply(this, arguments)
+    initialize: ->
+        super(arguments...)
         @options.itemView ?= root.ListViewItem
         @options.autofetch ?= true
         if @options.collection
-            @options.collection.bind "add", @addOne
-            @options.collection.bind "reset", @addAll
-            if @options.autofetch
-                @options.collection.fetch()
+            @setCollection(@options.collection)
+
+    setCollection: (collection) ->
+        @collection = collection
+        @collection.bind "add", @addOne
+        @collection.bind "reset", @addAll
+        if @options.autofetch
+            @collection.fetch()
+
     addOne: (modelInstance) =>
         view = new @options.itemView({ model:modelInstance })
         modelInstance.view = view
@@ -139,7 +150,8 @@ class root.ListView extends root.TemplateView
 
     addAll: =>
         @initEmptyView()
-        @options.collection.each(@addOne)
+        @collection.each(@addOne)
+
     initEmptyView: =>
         @$el.empty()
 
@@ -160,14 +172,47 @@ class root.DropdownContainer extends root.ListView
 
 class root.CandidatesMainView extends Backbone.View
     el: ".candidates_container"
-    initialize: =>
+    initialize: ->
+
+class root.MembersView extends root.ListView
+    el: ".members"
+    options:
+        itemView: root.MemberView
+        autofetch: false
+
+    initialize: ->
+        super(arguments...)
+        @memberList = new root.MemberList
+        @memberList.fetch()
+        @setCollection new root.MemberList undefined,
+            comparator: (member) ->
+                return -member.get 'score'
+
+    changeParty: (party) ->
+        @collection.reset @memberList.where(party_name: party)
+        @collection.fetchAgendas()
+
+    calculate: (weights) ->
+        if not @collection.agendas_fetching
+            throw "Agenda data not present yet"
+        @collection.agendas_fetching.done =>
+            @calculate_inner(weights)
+            @collection.sort()
+
+    calculate_inner: (weights) ->
+        weight_sum = sum(weights)
+
+        console.log "Weights: ", weights
+        @collection.each (member) =>
+            member.set 'score', _.reduce member.getAgendas(), (memo, agenda) ->
+                memo += weights[agenda.id] * agenda.score / weight_sum
+            , 0
 
 class root.AppView extends Backbone.View
     el: '#app_root'
     initialize: =>
         @candidatesView = new root.CandidatesMainView
-        @memberList = new root.MemberList
-        @memberList.fetch()
+        @membersView = new root.MembersView
         @partyListView = new root.DropdownContainer
             collection: new root.JSONPCollection(null,
                 model: root.MiscModel
@@ -198,6 +243,7 @@ class root.AppView extends Backbone.View
                         uservalue : ui.value
                 get_template: ->
                     $("#agenda_template").html()
+
         @agendaListView.showMarkersForMember = (member_model) ->
             member_agendas = {}
             for agenda in member_model.getAgendas()
@@ -206,6 +252,7 @@ class root.AppView extends Backbone.View
                 value = member_agendas[agenda.id] or 0
                 value = 50 + value / 2
                 @.$(".slider").eq(index).agendaSlider "setMemberMarker", value
+
         @agendaListView.collection.on 'change', =>
             console.log "Model changed", arguments
             if @recalc_timeout
@@ -219,26 +266,7 @@ class root.AppView extends Backbone.View
 
     partyChange: =>
         console.log "Changed: ", this, arguments
-        @partyListView.options.selected = @partyListView.$('option:selected').text()
-        @$('.agendas_container').show()
-        @reevaluateMembers()
-
-    reevaluateMembers: =>
-        @filteredMemberList = new root.MemberList (@memberList.filter (object) =>
-            object.get('party_name') == @partyListView.options.selected
-        ),
-            comparator: (member) ->
-                return -member.get 'score'
-
-        @filteredMemberList.fetchAgendas()
-
-        @memberListView = new root.ListView
-            collection: @filteredMemberList
-            itemView: root.MemberView
-            autofetch: false
-        @$(".members").empty().append(@memberListView.$el)
-        @memberListView.$el.on 'click', '.member_instance', @memberClicked
-        @memberListView.options.collection.trigger "reset"
+        @membersView.changeParty @partyListView.$('option:selected').text()
 
     memberClicked : (click_ev) =>
         instance_el = $(click_ev.target).closest('.member_instance')
@@ -247,26 +275,12 @@ class root.AppView extends Backbone.View
         @agendaListView.showMarkersForMember member_model
 
     calculate: ->
-        if not @filteredMemberList.agendas_fetching
-            throw "Agenda data not present yet"
-        @filteredMemberList.agendas_fetching.done =>
-            @calculate_inner()
-            @filteredMemberList.sort()
-
-    calculate_inner: ->
-        console.log "Calculate: ", this, arguments
-        agendasInput = {}
-        agendasSum = 0
+        weights = {}
         @agendaListView.collection.each (agenda) =>
             uservalue = agenda.get("uservalue")
-            agendasInput[agenda.get('id')] = uservalue
-            agendasSum += Math.abs(uservalue)
+            weights[agenda.get('id')] = uservalue
+        @membersView.calculate(weights)
 
-        console.log "Agendas input: ", agendasInput
-        @memberListView.collection.each (member) =>
-            member.set 'score', _.reduce member.getAgendas(), (memo, agenda) ->
-                memo += agendasInput[agenda.id] * agenda.score / agendasSum
-            , 0
 
 ############### INIT ##############
 
