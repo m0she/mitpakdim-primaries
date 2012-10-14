@@ -19,6 +19,15 @@
     display : inline-block;
     vertical-align : top;
 }
+.agenda_item .ui-slider-mid-marker {
+    background-color : #eee;
+    position : absolute;
+    top : 0;
+    left : 50%;
+    z-index : 1;
+    height : 100%;
+    width : 0.2em;
+}
 .members_container {
     width : 510px;
     display : inline-block;

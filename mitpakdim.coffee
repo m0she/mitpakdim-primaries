@@ -1,5 +1,17 @@
 root = window.mit ?= {}
 
+############### JQUERY UI EXTENSIONS ##############
+
+$.widget "mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {
+    _create : (->
+            cached_old_slider_create = $.ui.slider::_create
+            new_create_func = ->
+                @element.append '<div class="ui-slider-mid-marker"></div>'
+                cached_old_slider_create.apply @
+            new_create_func
+        )()
+})
+
 ############### SYNC ##############
 root.JSONPSync = (method, model, options) ->
     options.dataType = "jsonp"
@@ -157,9 +169,10 @@ class root.AppView extends Backbone.View
                 url: "http://api.dev.oknesset.org/api/v2/agenda/"
             )
             itemView: class extends root.ListViewItem
+                className : "agenda_item"
                 render : ->
                     super()
-                    @.$('.slider').slider
+                    @.$('.slider').agendaSlider
                         min : -100
                         max : 100
                         value : @model.get "uservalue"
