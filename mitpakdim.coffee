@@ -10,6 +10,13 @@ $.widget "mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {
                 cached_old_slider_create.apply @
             new_create_func
         )()
+    setMemberMarker : (value) ->
+        member_marker_classname = "ui-slider-member-marker"
+        if not @element.find(".#{member_marker_classname}").length
+            handle = @element.find(".ui-slider-handle")
+            handle.before "<div class='#{member_marker_classname}'></div>"
+        @element.find(".#{member_marker_classname}").css
+            left : value + "%"
 })
 
 ############### SYNC ##############

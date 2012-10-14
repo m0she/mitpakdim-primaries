@@ -28,6 +28,14 @@
     height : 100%;
     width : 0.2em;
 }
+.agenda_item .ui-slider-member-marker {
+    background-color : #d1e0be;
+    position : absolute;
+    top : 0;
+    z-index : 1;
+    height : 100%;
+    width : 0.5em;
+}
 .members_container {
     width : 510px;
     display : inline-block;

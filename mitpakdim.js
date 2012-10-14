@@ -16,7 +16,18 @@
         return cached_old_slider_create.apply(this);
       };
       return new_create_func;
-    })()
+    })(),
+    setMemberMarker: function(value) {
+      var handle, member_marker_classname;
+      member_marker_classname = "ui-slider-member-marker";
+      if (!this.element.find("." + member_marker_classname).length) {
+        handle = this.element.find(".ui-slider-handle");
+        handle.before("<div class='" + member_marker_classname + "'></div>");
+      }
+      return this.element.find("." + member_marker_classname).css({
+        left: value + "%"
+      });
+    }
   }));
 
   root.JSONPSync = function(method, model, options) {
