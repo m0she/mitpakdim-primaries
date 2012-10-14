@@ -4,13 +4,14 @@
 #app_root {
     direction : rtl;
     vertical-align : top;
-}
-.main_wrapper {
     width : 960px;
     margin : 0 auto;
+}
+.agendas_section {
+    width : 100%;
     white-space : nowrap;
 }
-.main_wrapper > * {
+.agendas_section > * {
     white-space : normal;
 }
 .agendas_container {
