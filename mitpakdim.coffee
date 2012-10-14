@@ -120,8 +120,13 @@ class root.TemplateView extends Backbone.View
 
 class root.MemberView extends root.TemplateView
     className: "member_instance"
+    initialize: ->
+        super(arguments...)
+        @$el.on 'click', @click
     get_template: ->
         $("#member_template").html()
+    click: =>
+        @trigger 'click', @model
 
 class root.ListViewItem extends root.TemplateView
     tagName: "div"
@@ -138,14 +143,14 @@ class root.ListView extends root.TemplateView
 
     setCollection: (collection) ->
         @collection = collection
-        @collection.bind "add", @addOne
-        @collection.bind "reset", @addAll
+        @collection.on "add", @addOne
+        @collection.on "reset", @addAll
         if @options.autofetch
             @collection.fetch()
 
     addOne: (modelInstance) =>
         view = new @options.itemView({ model:modelInstance })
-        modelInstance.view = view
+        view.on 'all', @itemEvent
         @$el.append view.render().$el
 
     addAll: =>
@@ -154,6 +159,10 @@ class root.ListView extends root.TemplateView
 
     initEmptyView: =>
         @$el.empty()
+
+    itemEvent: =>
+        @trigger arguments...
+
 
 class root.DropdownItem extends Backbone.View
     tagName: "option"
@@ -208,6 +217,39 @@ class root.MembersView extends root.ListView
                 memo += weights[agenda.id] * agenda.score / weight_sum
             , 0
 
+class root.AgendaListView extends root.ListView
+    options:
+        collection: new root.JSONPCollection(null,
+            model: root.Agenda
+            localObject: window.mit.agendas
+            url: "http://api.dev.oknesset.org/api/v2/agenda/"
+        )
+
+        itemView: class extends root.ListViewItem
+            className : "agenda_item"
+            render : ->
+                super()
+                @.$('.slider').agendaSlider
+                    min : -100
+                    max : 100
+                    value : @model.get "uservalue"
+                    stop : @onStop
+                @
+            onStop : (event, ui) =>
+                @model.set
+                    uservalue : ui.value
+            get_template: ->
+                $("#agenda_template").html()
+
+    showMarkersForMember: (member_model) ->
+        member_agendas = {}
+        for agenda in member_model.getAgendas()
+            member_agendas[agenda.id] = agenda.score
+        @collection.each (agenda, index) ->
+            value = member_agendas[agenda.id] or 0
+            value = 50 + value / 2
+            @.$(".slider").eq(index).agendaSlider "setMemberMarker", value
+
 class root.AppView extends Backbone.View
     el: '#app_root'
     initialize: =>
@@ -220,38 +262,9 @@ class root.AppView extends Backbone.View
                 localObject: window.mit.parties
             )
         @$(".parties").append(@partyListView.$el)
-        @partyListView.$el.bind('change', @partyChange)
+        @partyListView.$el.on 'change', @partyChange
 
-        @agendaListView = new root.ListView
-            collection: new root.JSONPCollection(null,
-                model: root.Agenda
-                localObject: window.mit.agendas
-                url: "http://api.dev.oknesset.org/api/v2/agenda/"
-            )
-            itemView: class extends root.ListViewItem
-                className : "agenda_item"
-                render : ->
-                    super()
-                    @.$('.slider').agendaSlider
-                        min : -100
-                        max : 100
-                        value : @model.get "uservalue"
-                        stop : @onStop
-                    @
-                onStop : (event, ui) =>
-                    @model.set
-                        uservalue : ui.value
-                get_template: ->
-                    $("#agenda_template").html()
-
-        @agendaListView.showMarkersForMember = (member_model) ->
-            member_agendas = {}
-            for agenda in member_model.getAgendas()
-                member_agendas[agenda.id] = agenda.score
-            @collection.each (agenda, index) ->
-                value = member_agendas[agenda.id] or 0
-                value = 50 + value / 2
-                @.$(".slider").eq(index).agendaSlider "setMemberMarker", value
+        @agendaListView = new root.AgendaListView
 
         @agendaListView.collection.on 'change', =>
             console.log "Model changed", arguments
@@ -262,17 +275,12 @@ class root.AppView extends Backbone.View
                 @calculate()
             , 100
         @$(".agendas").append(@agendaListView.$el)
-        @agendaListView.$el.bind('change', @agendaChange)
+        @membersView.on 'click', (member) =>
+            @agendaListView.showMarkersForMember member
 
     partyChange: =>
         console.log "Changed: ", this, arguments
         @membersView.changeParty @partyListView.$('option:selected').text()
-
-    memberClicked : (click_ev) =>
-        instance_el = $(click_ev.target).closest('.member_instance')
-        instance_index = @memberListView.$el.find(".member_instance").index(instance_el)
-        member_model = @filteredMemberList.at(instance_index)
-        @agendaListView.showMarkersForMember member_model
 
     calculate: ->
         weights = {}

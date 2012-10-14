@@ -272,13 +272,23 @@
     __extends(MemberView, _super);
 
     function MemberView() {
+      this.click = __bind(this.click, this);
       return MemberView.__super__.constructor.apply(this, arguments);
     }
 
     MemberView.prototype.className = "member_instance";
 
+    MemberView.prototype.initialize = function() {
+      MemberView.__super__.initialize.apply(this, arguments);
+      return this.$el.on('click', this.click);
+    };
+
     MemberView.prototype.get_template = function() {
       return $("#member_template").html();
+    };
+
+    MemberView.prototype.click = function() {
+      return this.trigger('click', this.model);
     };
 
     return MemberView;
@@ -308,6 +318,8 @@
     __extends(ListView, _super);
 
     function ListView() {
+      this.itemEvent = __bind(this.itemEvent, this);
+
       this.initEmptyView = __bind(this.initEmptyView, this);
 
       this.addAll = __bind(this.addAll, this);
@@ -332,8 +344,8 @@
 
     ListView.prototype.setCollection = function(collection) {
       this.collection = collection;
-      this.collection.bind("add", this.addOne);
-      this.collection.bind("reset", this.addAll);
+      this.collection.on("add", this.addOne);
+      this.collection.on("reset", this.addAll);
       if (this.options.autofetch) {
         return this.collection.fetch();
       }
@@ -344,7 +356,7 @@
       view = new this.options.itemView({
         model: modelInstance
       });
-      modelInstance.view = view;
+      view.on('all', this.itemEvent);
       return this.$el.append(view.render().$el);
     };
 
@@ -355,6 +367,10 @@
 
     ListView.prototype.initEmptyView = function() {
       return this.$el.empty();
+    };
+
+    ListView.prototype.itemEvent = function() {
+      return this.trigger.apply(this, arguments);
     };
 
     return ListView;
@@ -485,13 +501,82 @@
 
   })(root.ListView);
 
+  root.AgendaListView = (function(_super) {
+
+    __extends(AgendaListView, _super);
+
+    function AgendaListView() {
+      return AgendaListView.__super__.constructor.apply(this, arguments);
+    }
+
+    AgendaListView.prototype.options = {
+      collection: new root.JSONPCollection(null, {
+        model: root.Agenda,
+        localObject: window.mit.agendas,
+        url: "http://api.dev.oknesset.org/api/v2/agenda/"
+      }),
+      itemView: (function(_super1) {
+
+        __extends(_Class, _super1);
+
+        function _Class() {
+          this.onStop = __bind(this.onStop, this);
+          return _Class.__super__.constructor.apply(this, arguments);
+        }
+
+        _Class.prototype.className = "agenda_item";
+
+        _Class.prototype.render = function() {
+          _Class.__super__.render.call(this);
+          this.$('.slider').agendaSlider({
+            min: -100,
+            max: 100,
+            value: this.model.get("uservalue"),
+            stop: this.onStop
+          });
+          return this;
+        };
+
+        _Class.prototype.onStop = function(event, ui) {
+          return this.model.set({
+            uservalue: ui.value
+          });
+        };
+
+        _Class.prototype.get_template = function() {
+          return $("#agenda_template").html();
+        };
+
+        return _Class;
+
+      })(root.ListViewItem)
+    };
+
+    AgendaListView.prototype.showMarkersForMember = function(member_model) {
+      var agenda, member_agendas, _i, _len, _ref1;
+      member_agendas = {};
+      _ref1 = member_model.getAgendas();
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        agenda = _ref1[_i];
+        member_agendas[agenda.id] = agenda.score;
+      }
+      return this.collection.each(function(agenda, index) {
+        var value;
+        value = member_agendas[agenda.id] || 0;
+        value = 50 + value / 2;
+        return this.$(".slider").eq(index).agendaSlider("setMemberMarker", value);
+      });
+    };
+
+    return AgendaListView;
+
+  }).call(this, root.ListView);
+
   root.AppView = (function(_super) {
 
     __extends(AppView, _super);
 
     function AppView() {
-      this.memberClicked = __bind(this.memberClicked, this);
-
       this.partyChange = __bind(this.partyChange, this);
 
       this.initialize = __bind(this.initialize, this);
@@ -512,64 +597,8 @@
         })
       });
       this.$(".parties").append(this.partyListView.$el);
-      this.partyListView.$el.bind('change', this.partyChange);
-      this.agendaListView = new root.ListView({
-        collection: new root.JSONPCollection(null, {
-          model: root.Agenda,
-          localObject: window.mit.agendas,
-          url: "http://api.dev.oknesset.org/api/v2/agenda/"
-        }),
-        itemView: (function(_super1) {
-
-          __extends(_Class, _super1);
-
-          function _Class() {
-            this.onStop = __bind(this.onStop, this);
-            return _Class.__super__.constructor.apply(this, arguments);
-          }
-
-          _Class.prototype.className = "agenda_item";
-
-          _Class.prototype.render = function() {
-            _Class.__super__.render.call(this);
-            this.$('.slider').agendaSlider({
-              min: -100,
-              max: 100,
-              value: this.model.get("uservalue"),
-              stop: this.onStop
-            });
-            return this;
-          };
-
-          _Class.prototype.onStop = function(event, ui) {
-            return this.model.set({
-              uservalue: ui.value
-            });
-          };
-
-          _Class.prototype.get_template = function() {
-            return $("#agenda_template").html();
-          };
-
-          return _Class;
-
-        })(root.ListViewItem)
-      });
-      this.agendaListView.showMarkersForMember = function(member_model) {
-        var agenda, member_agendas, _i, _len, _ref1;
-        member_agendas = {};
-        _ref1 = member_model.getAgendas();
-        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-          agenda = _ref1[_i];
-          member_agendas[agenda.id] = agenda.score;
-        }
-        return this.collection.each(function(agenda, index) {
-          var value;
-          value = member_agendas[agenda.id] || 0;
-          value = 50 + value / 2;
-          return this.$(".slider").eq(index).agendaSlider("setMemberMarker", value);
-        });
-      };
+      this.partyListView.$el.on('change', this.partyChange);
+      this.agendaListView = new root.AgendaListView;
       this.agendaListView.collection.on('change', function() {
         var recalc_timeout;
         console.log("Model changed", arguments);
@@ -582,20 +611,14 @@
         }, 100);
       });
       this.$(".agendas").append(this.agendaListView.$el);
-      return this.agendaListView.$el.bind('change', this.agendaChange);
+      return this.membersView.on('click', function(member) {
+        return _this.agendaListView.showMarkersForMember(member);
+      });
     };
 
     AppView.prototype.partyChange = function() {
       console.log("Changed: ", this, arguments);
       return this.membersView.changeParty(this.partyListView.$('option:selected').text());
-    };
-
-    AppView.prototype.memberClicked = function(click_ev) {
-      var instance_el, instance_index, member_model;
-      instance_el = $(click_ev.target).closest('.member_instance');
-      instance_index = this.memberListView.$el.find(".member_instance").index(instance_el);
-      member_model = this.filteredMemberList.at(instance_index);
-      return this.agendaListView.showMarkersForMember(member_model);
     };
 
     AppView.prototype.calculate = function() {
