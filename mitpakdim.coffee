@@ -13,9 +13,33 @@ class root.Agenda extends Backbone.Model
 class root.Member extends Backbone.Model
     defaults:
         score: 'N/A'
-class root.MemberAgenda extends Backbone.Model
-    urlRoot: "http://api.dev.oknesset.org/api/v2/member-agendas/"
-    sync: root.JSONPSync
+
+    class MemberAgenda extends Backbone.Model
+        urlRoot: "http://api.dev.oknesset.org/api/v2/member-agendas/"
+        sync: root.JSONPSync
+
+    fetchAgendas: (force) ->
+        if @agendas_fetching.state() != "resolved" or force
+            @memberAgendas = new MemberAgenda
+                id: @get 'id'
+            @memberAgendas.fetch
+                success: =>
+                    @agendas_fetching.resolve()
+                error: =>
+                    console.log "Error fetching member agendas", @, arguments
+                    @agendas_fetching.reject()
+
+        return @agendas_fetching
+
+    getAgendas: ->
+        if @agendas_fetching.state() != "resolved"
+            console.log "Trying to use member agendas before fetched", @, @agendas_fetching
+            throw "Agendas not fetched yet!"
+        @memberAgendas.get('agendas')
+
+    initialize: ->
+        @agendas_fetching = $.Deferred()
+
 
 ############### COLLECTIONS ##############
 
@@ -46,6 +70,16 @@ class root.MemberList extends root.JSONPCollection
     model: root.Member
     localObject: window.mit.members
     url: "http://api.dev.oknesset.org/api/v2/member/"
+    fetchAgendas: ->
+        fetches = []
+        @each (member) =>
+            fetches.push member.fetchAgendas()
+        console.log "Waiting for " + fetches.length + " member agendas"
+        @agendas_fetching = $.when(fetches...)
+        .done =>
+            console.log "Got results!", this, arguments
+        .fail =>
+            console.log "Error getting results!", this, arguments
 
 ############### VIEWS ##############
 
@@ -147,7 +181,6 @@ class root.AppView extends Backbone.View
             , 100
         @$(".agendas").append(@agendaListView.$el)
         @agendaListView.$el.bind('change', @agendaChange)
-        @$("input:button").click(@calculate)
 
     partyChange: =>
         console.log "Changed: ", this, arguments
@@ -162,6 +195,8 @@ class root.AppView extends Backbone.View
             comparator: (member) ->
                 return -member.get 'score'
 
+        @filteredMemberList.fetchAgendas()
+
         @memberListView = new root.ListView
             collection: @filteredMemberList
             itemView: root.MemberView
@@ -169,42 +204,25 @@ class root.AppView extends Backbone.View
         @$(".members").empty().append(@memberListView.$el)
         @memberListView.options.collection.trigger "reset"
 
-    calculate: =>
-        @$(".members_container").hide()
+    calculate: ->
+        if not @filteredMemberList.agendas_fetching
+            throw "Agenda data not present yet"
+        @filteredMemberList.agendas_fetching.done =>
+            @calculate_inner()
+            @filteredMemberList.sort()
+
+    calculate_inner: ->
         console.log "Calculate: ", this, arguments
         agendasInput = {}
         @agendaListView.collection.each (agenda) =>
             agendasInput[agenda.get('id')] = agenda.get("uservalue")
         console.log "Agendas input: ", agendasInput
-        calcs = []
         @memberListView.collection.each (member) =>
-            calcs.push @calcOneAsync member, agendasInput
-        console.log "Waiting for " + calcs.length + " member agendas"
-        $.when(calcs...).done =>
-            console.log "Got results!", this, arguments
-            @filteredMemberList.sort()
-            @$(".members_container").show()
-        .fail =>
-            console.log "Error getting results!", this, arguments
-
-    calcOneAsync: (member, agendasInput) ->
-        calcOne = () ->
-            member.set 'score', _.reduce member.get('agendas'), (memo, agenda) ->
+            console.log "Calcing member: ", member
+            member.set 'score', _.reduce member.getAgendas(), (memo, agenda) ->
+                console.log "Calc step: ", agendasInput[agenda.id], agenda.score
                 memo += agendasInput[agenda.id] * agenda.score
             , 0
-
-        if member.get 'agendas'
-            console.log 'Already got agendas for ' + member.get 'id'
-            calcOne()
-            return $.Deferred().resolve()
-
-        memberAgendas = new root.MemberAgenda
-            id: member.get 'id'
-        memberAgendas.fetch
-            success: ->
-                member.set 'agendas', memberAgendas.get('agendas')
-                calcOne()
-
 
 ############### INIT ##############
 
