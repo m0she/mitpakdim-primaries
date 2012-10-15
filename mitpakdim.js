@@ -48,11 +48,13 @@
     dataType: 'jsonp'
   });
 
-  root.JSONPCachableSync = root.syncEx({
-    cache: true,
-    dataType: 'jsonp',
-    jsonpCallback: 'cachable'
-  });
+  root.JSONPCachableSync = function(callback_name) {
+    return root.syncEx({
+      cache: true,
+      dataType: 'jsonp',
+      jsonpCallback: callback_name || 'cachable'
+    });
+  };
 
   root.MiscModel = (function(_super) {
 
@@ -112,6 +114,7 @@
       __extends(MemberAgenda, _super1);
 
       function MemberAgenda() {
+        this.sync = __bind(this.sync, this);
         return MemberAgenda.__super__.constructor.apply(this, arguments);
       }
 
@@ -121,7 +124,9 @@
         return MemberAgenda.__super__.url.apply(this, arguments) + '/';
       };
 
-      MemberAgenda.prototype.sync = root.JSONPSync;
+      MemberAgenda.prototype.sync = function() {
+        return root.JSONPCachableSync("memberagenda_" + (this.get('id'))).apply(null, arguments);
+      };
 
       return MemberAgenda;
 
@@ -160,7 +165,7 @@
 
     return Member;
 
-  })(root.Candidate);
+  }).call(this, root.Candidate);
 
   root.NewCandidate = (function(_super) {
 
@@ -185,8 +190,10 @@
 
     LocalVarCollection.prototype.initialize = function(models, options) {
       if (options != null ? options.localObject : void 0) {
-        console.log("Using local objects for ", this);
         this.localObject = options.localObject;
+      }
+      if (this.localObject) {
+        console.log("Using local objects for ", this);
       }
       if (options != null ? options.url : void 0) {
         return this.url = options.url;
@@ -239,7 +246,9 @@
 
     MemberList.prototype.url = "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name";
 
-    MemberList.prototype.sync = root.syncEx({
+    MemberList.prototype.localObject = window.mit.member;
+
+    MemberList.prototype.syncFunc = root.syncEx({
       cache: true,
       dataType: 'jsonp',
       jsonpCallback: 'members'
@@ -531,6 +540,7 @@
     AgendaListView.prototype.options = {
       collection: new root.JSONPCollection(null, {
         model: root.Agenda,
+        localObject: window.mit.agenda,
         url: "http://www.oknesset.org/api/v2/agenda/"
       }),
       itemView: (function(_super1) {
@@ -610,7 +620,8 @@
       this.partyListView = new root.DropdownContainer({
         collection: new root.JSONPCollection(null, {
           model: root.MiscModel,
-          url: "http://www.oknesset.org/api/v2/party/"
+          url: "http://www.oknesset.org/api/v2/party/",
+          localObject: window.mit.party
         })
       });
       this.$(".parties").append(this.partyListView.$el);

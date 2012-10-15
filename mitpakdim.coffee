@@ -31,11 +31,11 @@ root.syncEx = (options_override) ->
         Backbone.sync(method, model, _.extend({}, options, options_override))
 
 root.JSONPSync = root.syncEx({dataType: 'jsonp'})
-root.JSONPCachableSync = root.syncEx
-    cache: true
-    dataType: 'jsonp'
-    ## TODO - need to demux model/id
-    jsonpCallback: 'cachable'
+root.JSONPCachableSync = (callback_name) ->
+    root.syncEx
+        cache: true
+        dataType: 'jsonp'
+        jsonpCallback: callback_name or 'cachable'
 ############### MODELS ##############
 
 class root.MiscModel extends Backbone.Model
@@ -52,7 +52,8 @@ class root.Member extends root.Candidate
         urlRoot: "http://www.oknesset.org/api/v2/member-agendas/"
         url: ->
             super(arguments...) + '/'
-        sync: root.JSONPSync
+        sync: =>
+            root.JSONPCachableSync("memberagenda_#{ @get('id') }")(arguments...)
 
     fetchAgendas: (force) ->
         if @agendas_fetching.state() != "resolved" or force
@@ -83,8 +84,9 @@ class root.NewCandidate extends root.Candidate
 class root.LocalVarCollection extends Backbone.Collection
     initialize: (models, options) ->
         if options?.localObject
-            console.log "Using local objects for ", this
             @localObject = options.localObject
+        if @localObject
+            console.log "Using local objects for ", this
         if options?.url
             @url = options.url
     sync: (method, model, options) =>
@@ -105,12 +107,14 @@ class root.JSONPCollection extends root.LocalVarCollection
 
 class root.MemberList extends root.JSONPCollection
     model: root.Member
-#    localObject: window.mit.members
     url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name"
-    sync: root.syncEx
+    localObject: window.mit.member
+
+    syncFunc: root.syncEx
         cache: true
         dataType: 'jsonp'
         jsonpCallback: 'members'
+
     fetchAgendas: ->
         fetches = []
         @each (member) =>
@@ -234,7 +238,7 @@ class root.AgendaListView extends root.ListView
     options:
         collection: new root.JSONPCollection(null,
             model: root.Agenda
-            #localObject: window.mit.agendas
+            localObject: window.mit.agenda
             url: "http://www.oknesset.org/api/v2/agenda/"
         )
 
@@ -272,7 +276,7 @@ class root.AppView extends Backbone.View
             collection: new root.JSONPCollection(null,
                 model: root.MiscModel
                 url: "http://www.oknesset.org/api/v2/party/"
-                #localObject: window.mit.parties
+                localObject: window.mit.party
             )
         @$(".parties").append(@partyListView.$el)
         @partyListView.$el.on 'change', @partyChange
