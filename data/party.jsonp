@@ -1,2 +1,129 @@
 if (!window.mit) window.mit = {};
-window.mit.parties = {"meta": {"limit": 1000, "next": null, "offset": 0, "previous": null, "total_count": 13}, "objects": [{"absolute_url": "/party/6/%D7%A7%D7%93%D7%99%D7%9E%D7%94/", "id": 6, "is_coalition": false, "name": "קדימה", "number_of_members": 29, "number_of_seats": 28, "resource_uri": "/api/v2/party/6/"}, {"absolute_url": "/party/2/%D7%94%D7%9C%D7%99%D7%9B%D7%95%D7%93/", "id": 2, "is_coalition": true, "name": "הליכוד", "number_of_members": 27, "number_of_seats": 27, "resource_uri": "/api/v2/party/2/"}, {"absolute_url": "/party/5/%D7%99%D7%A9%D7%A8%D7%90%D7%9C-%D7%91%D7%99%D7%AA%D7%A0%D7%95/", "id": 5, "is_coalition": true, "name": "ישראל ביתנו", "number_of_members": 15, "number_of_seats": 15, "resource_uri": "/api/v2/party/5/"}, {"absolute_url": "/party/7/%D7%A9%22%D7%A1/", "id": 7, "is_coalition": true, "name": "ש\"ס", "number_of_members": 11, "number_of_seats": 11, "resource_uri": "/api/v2/party/7/"}, {"absolute_url": "/party/3/%D7%94%D7%A2%D7%91%D7%95%D7%93%D7%94/", "id": 3, "is_coalition": false, "name": "העבודה", "number_of_members": 9, "number_of_seats": 8, "resource_uri": "/api/v2/party/3/"}, {"absolute_url": "/party/4/%D7%99%D7%94%D7%93%D7%95%D7%AA-%D7%94%D7%AA%D7%95%D7%A8%D7%94/", "id": 4, "is_coalition": true, "name": "יהדות התורה", "number_of_members": 5, "number_of_seats": 5, "resource_uri": "/api/v2/party/4/"}, {"absolute_url": "/party/13/%D7%94%D7%A2%D7%A6%D7%9E%D7%90%D7%95%D7%AA/", "id": 13, "is_coalition": true, "name": "העצמאות", "number_of_members": 5, "number_of_seats": 5, "resource_uri": "/api/v2/party/13/"}, {"absolute_url": "/party/10/%D7%A8%D7%A2%22%D7%9E-%D7%AA%D7%A2%22%D7%9C/", "id": 10, "is_coalition": false, "name": "רע\"מ-תע\"ל", "number_of_members": 4, "number_of_seats": 4, "resource_uri": "/api/v2/party/10/"}, {"absolute_url": "/party/1/%D7%94%D7%90%D7%99%D7%97%D7%95%D7%93-%D7%94%D7%9C%D7%90%D7%95%D7%9E%D7%99/", "id": 1, "is_coalition": false, "name": "האיחוד הלאומי", "number_of_members": 4, "number_of_seats": 4, "resource_uri": "/api/v2/party/1/"}, {"absolute_url": "/party/8/%D7%97%D7%93%22%D7%A9/", "id": 8, "is_coalition": false, "name": "חד\"ש", "number_of_members": 4, "number_of_seats": 4, "resource_uri": "/api/v2/party/8/"}, {"absolute_url": "/party/12/%D7%94%D7%91%D7%99%D7%AA-%D7%94%D7%99%D7%94%D7%95%D7%93%D7%99/", "id": 12, "is_coalition": true, "name": "הבית היהודי", "number_of_members": 3, "number_of_seats": 3, "resource_uri": "/api/v2/party/12/"}, {"absolute_url": "/party/11/%D7%9E%D7%A8%D7%A6/", "id": 11, "is_coalition": false, "name": "מרצ", "number_of_members": 3, "number_of_seats": 3, "resource_uri": "/api/v2/party/11/"}, {"absolute_url": "/party/9/%D7%91%D7%9C%22%D7%93/", "id": 9, "is_coalition": false, "name": "בל\"ד", "number_of_members": 3, "number_of_seats": 3, "resource_uri": "/api/v2/party/9/"}]}
+window.mit.party = {
+    "meta": {
+        "previous": null, 
+        "total_count": 13, 
+        "offset": 0, 
+        "limit": 1000, 
+        "next": null
+    }, 
+    "objects": [
+        {
+            "number_of_seats": 28, 
+            "name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
+            "absolute_url": "/party/6/%D7%A7%D7%93%D7%99%D7%9E%D7%94/", 
+            "is_coalition": false, 
+            "number_of_members": 29, 
+            "id": 6, 
+            "resource_uri": "/api/v2/party/6/"
+        }, 
+        {
+            "number_of_seats": 27, 
+            "name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
+            "absolute_url": "/party/2/%D7%94%D7%9C%D7%99%D7%9B%D7%95%D7%93/", 
+            "is_coalition": true, 
+            "number_of_members": 27, 
+            "id": 2, 
+            "resource_uri": "/api/v2/party/2/"
+        }, 
+        {
+            "number_of_seats": 15, 
+            "name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
+            "absolute_url": "/party/5/%D7%99%D7%A9%D7%A8%D7%90%D7%9C-%D7%91%D7%99%D7%AA%D7%A0%D7%95/", 
+            "is_coalition": true, 
+            "number_of_members": 15, 
+            "id": 5, 
+            "resource_uri": "/api/v2/party/5/"
+        }, 
+        {
+            "number_of_seats": 11, 
+            "name": "\u05e9\"\u05e1", 
+            "absolute_url": "/party/7/%D7%A9%22%D7%A1/", 
+            "is_coalition": true, 
+            "number_of_members": 11, 
+            "id": 7, 
+            "resource_uri": "/api/v2/party/7/"
+        }, 
+        {
+            "number_of_seats": 8, 
+            "name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
+            "absolute_url": "/party/3/%D7%94%D7%A2%D7%91%D7%95%D7%93%D7%94/", 
+            "is_coalition": false, 
+            "number_of_members": 9, 
+            "id": 3, 
+            "resource_uri": "/api/v2/party/3/"
+        }, 
+        {
+            "number_of_seats": 5, 
+            "name": "\u05d9\u05d4\u05d3\u05d5\u05ea \u05d4\u05ea\u05d5\u05e8\u05d4", 
+            "absolute_url": "/party/4/%D7%99%D7%94%D7%93%D7%95%D7%AA-%D7%94%D7%AA%D7%95%D7%A8%D7%94/", 
+            "is_coalition": true, 
+            "number_of_members": 5, 
+            "id": 4, 
+            "resource_uri": "/api/v2/party/4/"
+        }, 
+        {
+            "number_of_seats": 5, 
+            "name": "\u05d4\u05e2\u05e6\u05de\u05d0\u05d5\u05ea", 
+            "absolute_url": "/party/13/%D7%94%D7%A2%D7%A6%D7%9E%D7%90%D7%95%D7%AA/", 
+            "is_coalition": true, 
+            "number_of_members": 5, 
+            "id": 13, 
+            "resource_uri": "/api/v2/party/13/"
+        }, 
+        {
+            "number_of_seats": 4, 
+            "name": "\u05d4\u05d0\u05d9\u05d7\u05d5\u05d3 \u05d4\u05dc\u05d0\u05d5\u05de\u05d9", 
+            "absolute_url": "/party/1/%D7%94%D7%90%D7%99%D7%97%D7%95%D7%93-%D7%94%D7%9C%D7%90%D7%95%D7%9E%D7%99/", 
+            "is_coalition": false, 
+            "number_of_members": 4, 
+            "id": 1, 
+            "resource_uri": "/api/v2/party/1/"
+        }, 
+        {
+            "number_of_seats": 4, 
+            "name": "\u05d7\u05d3\"\u05e9", 
+            "absolute_url": "/party/8/%D7%97%D7%93%22%D7%A9/", 
+            "is_coalition": false, 
+            "number_of_members": 4, 
+            "id": 8, 
+            "resource_uri": "/api/v2/party/8/"
+        }, 
+        {
+            "number_of_seats": 4, 
+            "name": "\u05e8\u05e2\"\u05de-\u05ea\u05e2\"\u05dc", 
+            "absolute_url": "/party/10/%D7%A8%D7%A2%22%D7%9E-%D7%AA%D7%A2%22%D7%9C/", 
+            "is_coalition": false, 
+            "number_of_members": 4, 
+            "id": 10, 
+            "resource_uri": "/api/v2/party/10/"
+        }, 
+        {
+            "number_of_seats": 3, 
+            "name": "\u05d4\u05d1\u05d9\u05ea \u05d4\u05d9\u05d4\u05d5\u05d3\u05d9", 
+            "absolute_url": "/party/12/%D7%94%D7%91%D7%99%D7%AA-%D7%94%D7%99%D7%94%D7%95%D7%93%D7%99/", 
+            "is_coalition": true, 
+            "number_of_members": 3, 
+            "id": 12, 
+            "resource_uri": "/api/v2/party/12/"
+        }, 
+        {
+            "number_of_seats": 3, 
+            "name": "\u05de\u05e8\u05e6", 
+            "absolute_url": "/party/11/%D7%9E%D7%A8%D7%A6/", 
+            "is_coalition": false, 
+            "number_of_members": 3, 
+            "id": 11, 
+            "resource_uri": "/api/v2/party/11/"
+        }, 
+        {
+            "number_of_seats": 3, 
+            "name": "\u05d1\u05dc\"\u05d3", 
+            "absolute_url": "/party/9/%D7%91%D7%9C%22%D7%93/", 
+            "is_coalition": false, 
+            "number_of_members": 3, 
+            "id": 9, 
+            "resource_uri": "/api/v2/party/9/"
+        }
+    ]
+}
