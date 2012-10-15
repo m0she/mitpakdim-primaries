@@ -41,3 +41,6 @@
     display : inline-block;
     vertical-align : top;
 }
+.member_instance {
+    cursor : pointer;
+}

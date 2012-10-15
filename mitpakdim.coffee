@@ -188,9 +188,16 @@ class root.AppView extends Backbone.View
                 onStop : (event, ui) =>
                     @model.set
                         uservalue : ui.value
-
                 get_template: ->
                     $("#agenda_template").html()
+        @agendaListView.showMarkersForMember = (member_model) ->
+            member_agendas = {}
+            for agenda in member_model.getAgendas()
+                member_agendas[agenda.id] = agenda.score
+            @collection.each (agenda, index) ->
+                value = member_agendas[agenda.id] or 0
+                value = 50 + value / 2
+                @.$(".slider").eq(index).agendaSlider "setMemberMarker", value
         @agendaListView.collection.on 'change', =>
             console.log "Model changed", arguments
             if @recalc_timeout
@@ -222,7 +229,14 @@ class root.AppView extends Backbone.View
             itemView: root.MemberView
             autofetch: false
         @$(".members").empty().append(@memberListView.$el)
+        @memberListView.$el.on 'click', '.member_instance', @memberClicked
         @memberListView.options.collection.trigger "reset"
+
+    memberClicked : (click_ev) =>
+        instance_el = $(click_ev.target).closest('.member_instance')
+        instance_index = @memberListView.$el.find(".member_instance").index(instance_el)
+        member_model = @filteredMemberList.at(instance_index)
+        @agendaListView.showMarkersForMember member_model
 
     calculate: ->
         if not @filteredMemberList.agendas_fetching

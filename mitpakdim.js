@@ -379,6 +379,8 @@
     __extends(AppView, _super);
 
     function AppView() {
+      this.memberClicked = __bind(this.memberClicked, this);
+
       this.reevaluateMembers = __bind(this.reevaluateMembers, this);
 
       this.partyChange = __bind(this.partyChange, this);
@@ -444,6 +446,21 @@
 
         })(root.ListViewItem)
       });
+      this.agendaListView.showMarkersForMember = function(member_model) {
+        var agenda, member_agendas, _i, _len, _ref1;
+        member_agendas = {};
+        _ref1 = member_model.getAgendas();
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          agenda = _ref1[_i];
+          member_agendas[agenda.id] = agenda.score;
+        }
+        return this.collection.each(function(agenda, index) {
+          var value;
+          value = member_agendas[agenda.id] || 0;
+          value = 50 + value / 2;
+          return this.$(".slider").eq(index).agendaSlider("setMemberMarker", value);
+        });
+      };
       this.agendaListView.collection.on('change', function() {
         var recalc_timeout;
         console.log("Model changed", arguments);
@@ -482,7 +499,16 @@
         autofetch: false
       });
       this.$(".members").empty().append(this.memberListView.$el);
+      this.memberListView.$el.on('click', '.member_instance', this.memberClicked);
       return this.memberListView.options.collection.trigger("reset");
+    };
+
+    AppView.prototype.memberClicked = function(click_ev) {
+      var instance_el, instance_index, member_model;
+      instance_el = $(click_ev.target).closest('.member_instance');
+      instance_index = this.memberListView.$el.find(".member_instance").index(instance_el);
+      member_model = this.filteredMemberList.at(instance_index);
+      return this.agendaListView.showMarkersForMember(member_model);
     };
 
     AppView.prototype.calculate = function() {
