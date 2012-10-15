@@ -38,10 +38,21 @@
     }
   }));
 
-  root.JSONPSync = function(method, model, options) {
-    options.dataType = "jsonp";
-    return Backbone.sync(method, model, options);
+  root.syncEx = function(options_override) {
+    return function(method, model, options) {
+      return Backbone.sync(method, model, _.extend({}, options, options_override));
+    };
   };
+
+  root.JSONPSync = root.syncEx({
+    dataType: 'jsonp'
+  });
+
+  root.JSONPCachableSync = root.syncEx({
+    cache: true,
+    dataType: 'jsonp',
+    jsonpCallback: 'cachable'
+  });
 
   root.MiscModel = (function(_super) {
 
@@ -104,7 +115,11 @@
         return MemberAgenda.__super__.constructor.apply(this, arguments);
       }
 
-      MemberAgenda.prototype.urlRoot = "http://api.dev.oknesset.org/api/v2/member-agendas/";
+      MemberAgenda.prototype.urlRoot = "http://www.oknesset.org/api/v2/member-agendas/";
+
+      MemberAgenda.prototype.url = function() {
+        return MemberAgenda.__super__.url.apply(this, arguments) + '/';
+      };
 
       MemberAgenda.prototype.sync = root.JSONPSync;
 
@@ -222,9 +237,13 @@
 
     MemberList.prototype.model = root.Member;
 
-    MemberList.prototype.localObject = window.mit.members;
+    MemberList.prototype.url = "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name";
 
-    MemberList.prototype.url = "http://api.dev.oknesset.org/api/v2/member/";
+    MemberList.prototype.sync = root.syncEx({
+      cache: true,
+      dataType: 'jsonp',
+      jsonpCallback: 'members'
+    });
 
     MemberList.prototype.fetchAgendas = function() {
       var fetches,
@@ -512,8 +531,7 @@
     AgendaListView.prototype.options = {
       collection: new root.JSONPCollection(null, {
         model: root.Agenda,
-        localObject: window.mit.agendas,
-        url: "http://api.dev.oknesset.org/api/v2/agenda/"
+        url: "http://www.oknesset.org/api/v2/agenda/"
       }),
       itemView: (function(_super1) {
 
@@ -592,8 +610,7 @@
       this.partyListView = new root.DropdownContainer({
         collection: new root.JSONPCollection(null, {
           model: root.MiscModel,
-          url: "http://api.dev.oknesset.org/api/v2/party/",
-          localObject: window.mit.parties
+          url: "http://www.oknesset.org/api/v2/party/"
         })
       });
       this.$(".parties").append(this.partyListView.$el);
