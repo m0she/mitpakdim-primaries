@@ -139,11 +139,11 @@ class root.MemberView extends root.TemplateView
     className: "member_instance"
     initialize: ->
         super(arguments...)
-        @$el.on 'click', @click
     get_template: ->
         $("#member_template").html()
-    click: =>
-        @trigger 'click', @model
+    events:
+        'click': ->
+            @trigger 'click', @model
 
 class root.ListViewItem extends root.TemplateView
     tagName: "div"
@@ -199,6 +199,19 @@ class root.DropdownContainer extends root.ListView
 class root.CandidatesMainView extends Backbone.View
     el: ".candidates_container"
     initialize: ->
+        @membersView = new root.MembersView
+        @membersView.on 'all', @propagate
+
+    propagate: =>
+        @trigger arguments...
+
+root.CandidatesMainView.create_delegation = (func_name) ->
+    delegate = ->
+        @membersView[func_name](arguments...)
+    @::[func_name] = delegate
+
+root.CandidatesMainView.create_delegation 'changeParty'
+root.CandidatesMainView.create_delegation 'calculate'
 
 class root.MembersView extends root.ListView
     el: ".members"
@@ -271,7 +284,6 @@ class root.AppView extends Backbone.View
     el: '#app_root'
     initialize: =>
         @candidatesView = new root.CandidatesMainView
-        @membersView = new root.MembersView
         @partyListView = new root.DropdownContainer
             collection: new root.JSONPCollection(null,
                 model: root.MiscModel
@@ -292,19 +304,19 @@ class root.AppView extends Backbone.View
                 @calculate()
             , 100
         @$(".agendas").append(@agendaListView.$el)
-        @membersView.on 'click', (member) =>
+        @candidatesView.on 'click', (member) =>
             @agendaListView.showMarkersForMember member
 
     partyChange: =>
         console.log "Changed: ", this, arguments
-        @membersView.changeParty @partyListView.$('option:selected').text()
+        @candidatesView.changeParty @partyListView.$('option:selected').text()
 
     calculate: ->
         weights = {}
         @agendaListView.collection.each (agenda) =>
             uservalue = agenda.get("uservalue")
             weights[agenda.get('id')] = uservalue
-        @membersView.calculate(weights)
+        @candidatesView.calculate(weights)
 
 
 ############### INIT ##############

@@ -300,23 +300,23 @@
     __extends(MemberView, _super);
 
     function MemberView() {
-      this.click = __bind(this.click, this);
       return MemberView.__super__.constructor.apply(this, arguments);
     }
 
     MemberView.prototype.className = "member_instance";
 
     MemberView.prototype.initialize = function() {
-      MemberView.__super__.initialize.apply(this, arguments);
-      return this.$el.on('click', this.click);
+      return MemberView.__super__.initialize.apply(this, arguments);
     };
 
     MemberView.prototype.get_template = function() {
       return $("#member_template").html();
     };
 
-    MemberView.prototype.click = function() {
-      return this.trigger('click', this.model);
+    MemberView.prototype.events = {
+      'click': function() {
+        return this.trigger('click', this.model);
+      }
     };
 
     return MemberView;
@@ -458,16 +458,37 @@
     __extends(CandidatesMainView, _super);
 
     function CandidatesMainView() {
+      this.propagate = __bind(this.propagate, this);
       return CandidatesMainView.__super__.constructor.apply(this, arguments);
     }
 
     CandidatesMainView.prototype.el = ".candidates_container";
 
-    CandidatesMainView.prototype.initialize = function() {};
+    CandidatesMainView.prototype.initialize = function() {
+      this.membersView = new root.MembersView;
+      return this.membersView.on('all', this.propagate);
+    };
+
+    CandidatesMainView.prototype.propagate = function() {
+      return this.trigger.apply(this, arguments);
+    };
 
     return CandidatesMainView;
 
   })(Backbone.View);
+
+  root.CandidatesMainView.create_delegation = function(func_name) {
+    var delegate;
+    delegate = function() {
+      var _ref1;
+      return (_ref1 = this.membersView)[func_name].apply(_ref1, arguments);
+    };
+    return this.prototype[func_name] = delegate;
+  };
+
+  root.CandidatesMainView.create_delegation('changeParty');
+
+  root.CandidatesMainView.create_delegation('calculate');
 
   root.MembersView = (function(_super) {
 
@@ -616,7 +637,6 @@
     AppView.prototype.initialize = function() {
       var _this = this;
       this.candidatesView = new root.CandidatesMainView;
-      this.membersView = new root.MembersView;
       this.partyListView = new root.DropdownContainer({
         collection: new root.JSONPCollection(null, {
           model: root.MiscModel,
@@ -639,14 +659,14 @@
         }, 100);
       });
       this.$(".agendas").append(this.agendaListView.$el);
-      return this.membersView.on('click', function(member) {
+      return this.candidatesView.on('click', function(member) {
         return _this.agendaListView.showMarkersForMember(member);
       });
     };
 
     AppView.prototype.partyChange = function() {
       console.log("Changed: ", this, arguments);
-      return this.membersView.changeParty(this.partyListView.$('option:selected').text());
+      return this.candidatesView.changeParty(this.partyListView.$('option:selected').text());
     };
 
     AppView.prototype.calculate = function() {
@@ -658,7 +678,7 @@
         uservalue = agenda.get("uservalue");
         return weights[agenda.get('id')] = uservalue;
       });
-      return this.membersView.calculate(weights);
+      return this.candidatesView.calculate(weights);
     };
 
     return AppView;

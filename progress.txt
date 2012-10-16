@@ -11,11 +11,11 @@ Done:
 * Refactor MemberAgenda to be nested inside of Member
 * Fetch MemberAgenda's after partyChange
 * Add correlation percentage
-* Mutex on calculate
+* Add member indicator on slider
 
 Todo:
-* Add member indicator on slider
 * Add spinners
+* Mutex on calculate - make retriable
 
 * Needs mitpakdim axx
   * Facebook integration
