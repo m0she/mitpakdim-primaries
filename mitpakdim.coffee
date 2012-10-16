@@ -44,6 +44,15 @@ class root.Agenda extends Backbone.Model
         uservalue: 0
 
 class root.Candidate extends Backbone.Model
+    getAgendas: ->
+        if @agendas_fetching.state() != "resolved"
+            console.log "Trying to use member agendas before fetched", @, @agendas_fetching
+            throw "Agendas not fetched yet!"
+        @get('agendas')
+
+    initialize: ->
+        @agendas_fetching = $.Deferred()
+
 class root.Member extends root.Candidate
     defaults:
         score: 'N/A'
@@ -54,6 +63,11 @@ class root.Member extends root.Candidate
             super(arguments...) + '/'
         sync: =>
             root.JSONPCachableSync("memberagenda_#{ @get('id') }")(arguments...)
+        getAgendas: ->
+            ret = {}
+            _.each @get('agendas'), (agenda) ->
+                ret[agenda.id] = agenda.score
+            ret
 
     fetchAgendas: (force) ->
         if @agendas_fetching.state() != "resolved" or force
@@ -61,6 +75,7 @@ class root.Member extends root.Candidate
                 id: @get 'id'
             @memberAgendas.fetch
                 success: =>
+                    @set 'agendas', @memberAgendas.getAgendas()
                     @agendas_fetching.resolve()
                 error: =>
                     console.log "Error fetching member agendas", @, arguments
@@ -68,16 +83,11 @@ class root.Member extends root.Candidate
 
         return @agendas_fetching
 
+class root.Newbie extends root.Candidate
     getAgendas: ->
-        if @agendas_fetching.state() != "resolved"
-            console.log "Trying to use member agendas before fetched", @, @agendas_fetching
-            throw "Agendas not fetched yet!"
-        @memberAgendas.get('agendas')
-
-    initialize: ->
-        @agendas_fetching = $.Deferred()
-
-class root.NewCandidate extends root.Candidate
+        r = {}
+        r[i] = i*1000 % 57
+        r
 
 ############### COLLECTIONS ##############
 
@@ -125,6 +135,14 @@ class root.MemberList extends root.JSONPCollection
             console.log "Got results!", this, arguments
         .fail =>
             console.log "Error getting results!", this, arguments
+
+class root.NewbiesList extends root.JSONPCollection
+    model: root.Newbie
+    localObject: window.mit.newbie
+    url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name"
+    fetch: ->
+    fetchAgendas: ->
+        @agendas_fetching = $.Deferred().resolve()
 
 ############### VIEWS ##############
 
@@ -200,7 +218,14 @@ class root.CandidatesMainView extends Backbone.View
     el: ".candidates_container"
     initialize: ->
         @membersView = new root.MembersView
+            el: ".members"
+            collectionClass: root.MemberList
+        @newbiesView = new root.MembersView
+            el: ".newbies"
+            collectionClass: root.NewbiesList
+
         @membersView.on 'all', @propagate
+        @newbiesView.on 'all', @propagate
 
     propagate: =>
         @trigger arguments...
@@ -208,22 +233,22 @@ class root.CandidatesMainView extends Backbone.View
 root.CandidatesMainView.create_delegation = (func_name) ->
     delegate = ->
         @membersView[func_name](arguments...)
+        @newbiesView[func_name](arguments...)
     @::[func_name] = delegate
 
 root.CandidatesMainView.create_delegation 'changeParty'
 root.CandidatesMainView.create_delegation 'calculate'
 
 class root.MembersView extends root.ListView
-    el: ".members"
     options:
         itemView: root.MemberView
         autofetch: false
 
     initialize: ->
         super(arguments...)
-        @memberList = new root.MemberList
+        @memberList = new @.options.collectionClass
         @memberList.fetch()
-        @setCollection new root.MemberList undefined,
+        @setCollection new @.options.collectionClass undefined,
             comparator: (member) ->
                 return -member.get 'score'
 
@@ -243,8 +268,8 @@ class root.MembersView extends root.ListView
 
         console.log "Weights: ", weights
         @collection.each (member) =>
-            member.set 'score', _.reduce member.getAgendas(), (memo, agenda) ->
-                memo += weights[agenda.id] * agenda.score / weight_sum
+            member.set 'score', _.reduce member.getAgendas(), (memo, score, id) ->
+                memo += weights[id] * score / weight_sum
             , 0
 
 class root.AgendaListView extends root.ListView
@@ -272,9 +297,7 @@ class root.AgendaListView extends root.ListView
                 $("#agenda_template").html()
 
     showMarkersForMember: (member_model) ->
-        member_agendas = {}
-        for agenda in member_model.getAgendas()
-            member_agendas[agenda.id] = agenda.score
+        member_agendas = member_model.getAgendas()
         @collection.each (agenda, index) ->
             value = member_agendas[agenda.id] or 0
             value = 50 + value / 2

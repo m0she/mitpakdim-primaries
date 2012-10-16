@@ -92,6 +92,18 @@
       return Candidate.__super__.constructor.apply(this, arguments);
     }
 
+    Candidate.prototype.getAgendas = function() {
+      if (this.agendas_fetching.state() !== "resolved") {
+        console.log("Trying to use member agendas before fetched", this, this.agendas_fetching);
+        throw "Agendas not fetched yet!";
+      }
+      return this.get('agendas');
+    };
+
+    Candidate.prototype.initialize = function() {
+      return this.agendas_fetching = $.Deferred();
+    };
+
     return Candidate;
 
   })(Backbone.Model);
@@ -128,6 +140,15 @@
         return root.JSONPCachableSync("memberagenda_" + (this.get('id'))).apply(null, arguments);
       };
 
+      MemberAgenda.prototype.getAgendas = function() {
+        var ret;
+        ret = {};
+        _.each(this.get('agendas'), function(agenda) {
+          return ret[agenda.id] = agenda.score;
+        });
+        return ret;
+      };
+
       return MemberAgenda;
 
     })(Backbone.Model);
@@ -140,6 +161,7 @@
         });
         this.memberAgendas.fetch({
           success: function() {
+            _this.set('agendas', _this.memberAgendas.getAgendas());
             return _this.agendas_fetching.resolve();
           },
           error: function() {
@@ -151,31 +173,26 @@
       return this.agendas_fetching;
     };
 
-    Member.prototype.getAgendas = function() {
-      if (this.agendas_fetching.state() !== "resolved") {
-        console.log("Trying to use member agendas before fetched", this, this.agendas_fetching);
-        throw "Agendas not fetched yet!";
-      }
-      return this.memberAgendas.get('agendas');
-    };
-
-    Member.prototype.initialize = function() {
-      return this.agendas_fetching = $.Deferred();
-    };
-
     return Member;
 
   }).call(this, root.Candidate);
 
-  root.NewCandidate = (function(_super) {
+  root.Newbie = (function(_super) {
 
-    __extends(NewCandidate, _super);
+    __extends(Newbie, _super);
 
-    function NewCandidate() {
-      return NewCandidate.__super__.constructor.apply(this, arguments);
+    function Newbie() {
+      return Newbie.__super__.constructor.apply(this, arguments);
     }
 
-    return NewCandidate;
+    Newbie.prototype.getAgendas = function() {
+      var r;
+      r = {};
+      r[i] = i * 1000 % 57;
+      return r;
+    };
+
+    return Newbie;
 
   })(root.Candidate);
 
@@ -270,6 +287,30 @@
     };
 
     return MemberList;
+
+  })(root.JSONPCollection);
+
+  root.NewbiesList = (function(_super) {
+
+    __extends(NewbiesList, _super);
+
+    function NewbiesList() {
+      return NewbiesList.__super__.constructor.apply(this, arguments);
+    }
+
+    NewbiesList.prototype.model = root.Newbie;
+
+    NewbiesList.prototype.localObject = window.mit.newbie;
+
+    NewbiesList.prototype.url = "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name";
+
+    NewbiesList.prototype.fetch = function() {};
+
+    NewbiesList.prototype.fetchAgendas = function() {
+      return this.agendas_fetching = $.Deferred().resolve();
+    };
+
+    return NewbiesList;
 
   })(root.JSONPCollection);
 
@@ -465,8 +506,16 @@
     CandidatesMainView.prototype.el = ".candidates_container";
 
     CandidatesMainView.prototype.initialize = function() {
-      this.membersView = new root.MembersView;
-      return this.membersView.on('all', this.propagate);
+      this.membersView = new root.MembersView({
+        el: ".members",
+        collectionClass: root.MemberList
+      });
+      this.newbiesView = new root.MembersView({
+        el: ".newbies",
+        collectionClass: root.NewbiesList
+      });
+      this.membersView.on('all', this.propagate);
+      return this.newbiesView.on('all', this.propagate);
     };
 
     CandidatesMainView.prototype.propagate = function() {
@@ -480,8 +529,9 @@
   root.CandidatesMainView.create_delegation = function(func_name) {
     var delegate;
     delegate = function() {
-      var _ref1;
-      return (_ref1 = this.membersView)[func_name].apply(_ref1, arguments);
+      var _ref1, _ref2;
+      (_ref1 = this.membersView)[func_name].apply(_ref1, arguments);
+      return (_ref2 = this.newbiesView)[func_name].apply(_ref2, arguments);
     };
     return this.prototype[func_name] = delegate;
   };
@@ -498,8 +548,6 @@
       return MembersView.__super__.constructor.apply(this, arguments);
     }
 
-    MembersView.prototype.el = ".members";
-
     MembersView.prototype.options = {
       itemView: root.MemberView,
       autofetch: false
@@ -507,9 +555,9 @@
 
     MembersView.prototype.initialize = function() {
       MembersView.__super__.initialize.apply(this, arguments);
-      this.memberList = new root.MemberList;
+      this.memberList = new this.options.collectionClass;
       this.memberList.fetch();
-      return this.setCollection(new root.MemberList(void 0, {
+      return this.setCollection(new this.options.collectionClass(void 0, {
         comparator: function(member) {
           return -member.get('score');
         }
@@ -540,8 +588,8 @@
       weight_sum = sum(weights);
       console.log("Weights: ", weights);
       return this.collection.each(function(member) {
-        return member.set('score', _.reduce(member.getAgendas(), function(memo, agenda) {
-          return memo += weights[agenda.id] * agenda.score / weight_sum;
+        return member.set('score', _.reduce(member.getAgendas(), function(memo, score, id) {
+          return memo += weights[id] * score / weight_sum;
         }, 0));
       });
     };
@@ -602,13 +650,8 @@
     };
 
     AgendaListView.prototype.showMarkersForMember = function(member_model) {
-      var agenda, member_agendas, _i, _len, _ref1;
-      member_agendas = {};
-      _ref1 = member_model.getAgendas();
-      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-        agenda = _ref1[_i];
-        member_agendas[agenda.id] = agenda.score;
-      }
+      var member_agendas;
+      member_agendas = member_model.getAgendas();
       return this.collection.each(function(agenda, index) {
         var value;
         value = member_agendas[agenda.id] || 0;
