@@ -92,6 +92,10 @@
       return Candidate.__super__.constructor.apply(this, arguments);
     }
 
+    Candidate.prototype.defaults = {
+      score: 'N/A'
+    };
+
     Candidate.prototype.getAgendas = function() {
       if (this.agendas_fetching.state() !== "resolved") {
         console.log("Trying to use member agendas before fetched", this, this.agendas_fetching);
@@ -116,10 +120,6 @@
     function Member() {
       return Member.__super__.constructor.apply(this, arguments);
     }
-
-    Member.prototype.defaults = {
-      score: 'N/A'
-    };
 
     MemberAgenda = (function(_super1) {
 
@@ -185,11 +185,9 @@
       return Newbie.__super__.constructor.apply(this, arguments);
     }
 
-    Newbie.prototype.getAgendas = function() {
-      var r;
-      r = {};
-      r[i] = i * 1000 % 57;
-      return r;
+    Newbie.prototype.initialize = function() {
+      Newbie.__super__.initialize.apply(this, arguments);
+      return this.agendas_fetching.resolve();
     };
 
     return Newbie;
@@ -300,11 +298,9 @@
 
     NewbiesList.prototype.model = root.Newbie;
 
-    NewbiesList.prototype.localObject = window.mit.newbie;
+    NewbiesList.prototype.localObject = window.mit.combined_newbies;
 
     NewbiesList.prototype.url = "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name";
-
-    NewbiesList.prototype.fetch = function() {};
 
     NewbiesList.prototype.fetchAgendas = function() {
       return this.agendas_fetching = $.Deferred().resolve();
@@ -336,31 +332,31 @@
 
   })(Backbone.View);
 
-  root.MemberView = (function(_super) {
+  root.CandidateView = (function(_super) {
 
-    __extends(MemberView, _super);
+    __extends(CandidateView, _super);
 
-    function MemberView() {
-      return MemberView.__super__.constructor.apply(this, arguments);
+    function CandidateView() {
+      return CandidateView.__super__.constructor.apply(this, arguments);
     }
 
-    MemberView.prototype.className = "member_instance";
+    CandidateView.prototype.className = "member_instance";
 
-    MemberView.prototype.initialize = function() {
-      return MemberView.__super__.initialize.apply(this, arguments);
+    CandidateView.prototype.initialize = function() {
+      return CandidateView.__super__.initialize.apply(this, arguments);
     };
 
-    MemberView.prototype.get_template = function() {
+    CandidateView.prototype.get_template = function() {
       return $("#member_template").html();
     };
 
-    MemberView.prototype.events = {
+    CandidateView.prototype.events = {
       'click': function() {
         return this.trigger('click', this.model);
       }
     };
 
-    return MemberView;
+    return CandidateView;
 
   })(root.TemplateView);
 
@@ -506,11 +502,11 @@
     CandidatesMainView.prototype.el = ".candidates_container";
 
     CandidatesMainView.prototype.initialize = function() {
-      this.membersView = new root.MembersView({
+      this.membersView = new root.CandidateListView({
         el: ".members",
         collectionClass: root.MemberList
       });
-      this.newbiesView = new root.MembersView({
+      this.newbiesView = new root.CandidateListView({
         el: ".newbies",
         collectionClass: root.NewbiesList
       });
@@ -540,38 +536,38 @@
 
   root.CandidatesMainView.create_delegation('calculate');
 
-  root.MembersView = (function(_super) {
+  root.CandidateListView = (function(_super) {
 
-    __extends(MembersView, _super);
+    __extends(CandidateListView, _super);
 
-    function MembersView() {
-      return MembersView.__super__.constructor.apply(this, arguments);
+    function CandidateListView() {
+      return CandidateListView.__super__.constructor.apply(this, arguments);
     }
 
-    MembersView.prototype.options = {
-      itemView: root.MemberView,
+    CandidateListView.prototype.options = {
+      itemView: root.CandidateView,
       autofetch: false
     };
 
-    MembersView.prototype.initialize = function() {
-      MembersView.__super__.initialize.apply(this, arguments);
-      this.memberList = new this.options.collectionClass;
-      this.memberList.fetch();
+    CandidateListView.prototype.initialize = function() {
+      CandidateListView.__super__.initialize.apply(this, arguments);
+      this.candidateList = new this.options.collectionClass;
+      this.candidateList.fetch();
       return this.setCollection(new this.options.collectionClass(void 0, {
-        comparator: function(member) {
-          return -member.get('score');
+        comparator: function(candidate) {
+          return -candidate.get('score');
         }
       }));
     };
 
-    MembersView.prototype.changeParty = function(party) {
-      this.collection.reset(this.memberList.where({
+    CandidateListView.prototype.changeParty = function(party) {
+      this.collection.reset(this.candidateList.where({
         party_name: party
       }));
       return this.collection.fetchAgendas();
     };
 
-    MembersView.prototype.calculate = function(weights) {
+    CandidateListView.prototype.calculate = function(weights) {
       var _this = this;
       if (!this.collection.agendas_fetching) {
         throw "Agenda data not present yet";
@@ -582,19 +578,19 @@
       });
     };
 
-    MembersView.prototype.calculate_inner = function(weights) {
+    CandidateListView.prototype.calculate_inner = function(weights) {
       var weight_sum,
         _this = this;
       weight_sum = sum(weights);
       console.log("Weights: ", weights);
-      return this.collection.each(function(member) {
-        return member.set('score', _.reduce(member.getAgendas(), function(memo, score, id) {
-          return memo += weights[id] * score / weight_sum;
+      return this.collection.each(function(candidate) {
+        return candidate.set('score', _.reduce(candidate.getAgendas(), function(memo, score, id) {
+          return memo += (weights[id] || 0) * score / weight_sum;
         }, 0));
       });
     };
 
-    return MembersView;
+    return CandidateListView;
 
   })(root.ListView);
 

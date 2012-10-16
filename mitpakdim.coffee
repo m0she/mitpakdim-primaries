@@ -44,6 +44,9 @@ class root.Agenda extends Backbone.Model
         uservalue: 0
 
 class root.Candidate extends Backbone.Model
+    defaults:
+        score: 'N/A'
+
     getAgendas: ->
         if @agendas_fetching.state() != "resolved"
             console.log "Trying to use member agendas before fetched", @, @agendas_fetching
@@ -54,9 +57,6 @@ class root.Candidate extends Backbone.Model
         @agendas_fetching = $.Deferred()
 
 class root.Member extends root.Candidate
-    defaults:
-        score: 'N/A'
-
     class MemberAgenda extends Backbone.Model
         urlRoot: "http://www.oknesset.org/api/v2/member-agendas/"
         url: ->
@@ -84,10 +84,9 @@ class root.Member extends root.Candidate
         return @agendas_fetching
 
 class root.Newbie extends root.Candidate
-    getAgendas: ->
-        r = {}
-        r[i] = i*1000 % 57
-        r
+    initialize: ->
+        super(arguments...)
+        @agendas_fetching.resolve()
 
 ############### COLLECTIONS ##############
 
@@ -138,9 +137,8 @@ class root.MemberList extends root.JSONPCollection
 
 class root.NewbiesList extends root.JSONPCollection
     model: root.Newbie
-    localObject: window.mit.newbie
+    localObject: window.mit.combined_newbies
     url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name"
-    fetch: ->
     fetchAgendas: ->
         @agendas_fetching = $.Deferred().resolve()
 
@@ -153,7 +151,7 @@ class root.TemplateView extends Backbone.View
         @$el.html( @template(@model.toJSON()) )
         @
 
-class root.MemberView extends root.TemplateView
+class root.CandidateView extends root.TemplateView
     className: "member_instance"
     initialize: ->
         super(arguments...)
@@ -217,10 +215,10 @@ class root.DropdownContainer extends root.ListView
 class root.CandidatesMainView extends Backbone.View
     el: ".candidates_container"
     initialize: ->
-        @membersView = new root.MembersView
+        @membersView = new root.CandidateListView
             el: ".members"
             collectionClass: root.MemberList
-        @newbiesView = new root.MembersView
+        @newbiesView = new root.CandidateListView
             el: ".newbies"
             collectionClass: root.NewbiesList
 
@@ -239,21 +237,21 @@ root.CandidatesMainView.create_delegation = (func_name) ->
 root.CandidatesMainView.create_delegation 'changeParty'
 root.CandidatesMainView.create_delegation 'calculate'
 
-class root.MembersView extends root.ListView
+class root.CandidateListView extends root.ListView
     options:
-        itemView: root.MemberView
+        itemView: root.CandidateView
         autofetch: false
 
     initialize: ->
         super(arguments...)
-        @memberList = new @.options.collectionClass
-        @memberList.fetch()
+        @candidateList = new @.options.collectionClass
+        @candidateList.fetch()
         @setCollection new @.options.collectionClass undefined,
-            comparator: (member) ->
-                return -member.get 'score'
+            comparator: (candidate) ->
+                return -candidate.get 'score'
 
     changeParty: (party) ->
-        @collection.reset @memberList.where(party_name: party)
+        @collection.reset @candidateList.where(party_name: party)
         @collection.fetchAgendas()
 
     calculate: (weights) ->
@@ -267,9 +265,9 @@ class root.MembersView extends root.ListView
         weight_sum = sum(weights)
 
         console.log "Weights: ", weights
-        @collection.each (member) =>
-            member.set 'score', _.reduce member.getAgendas(), (memo, score, id) ->
-                memo += weights[id] * score / weight_sum
+        @collection.each (candidate) =>
+            candidate.set 'score', _.reduce candidate.getAgendas(), (memo, score, id) ->
+                memo += (weights[id] or 0) * score / weight_sum
             , 0
 
 class root.AgendaListView extends root.ListView
