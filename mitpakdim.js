@@ -292,7 +292,7 @@
 
     NewbiesList.prototype.localObject = window.mit.combined_newbies;
 
-    NewbiesList.prototype.url = "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name";
+    NewbiesList.prototype.url = "http://www.mitpakdim.co.il/site/primaries/data/newbies.jsonp";
 
     NewbiesList.prototype.fetchAgendas = function() {
       return this.agendas_fetching = $.Deferred().resolve();
@@ -496,11 +496,11 @@
     CandidatesMainView.prototype.initialize = function() {
       this.membersView = new root.CandidateListView({
         el: ".members",
-        collectionClass: root.MemberList
+        collection: this.options.members
       });
       this.newbiesView = new root.CandidateListView({
         el: ".newbies",
-        collectionClass: root.NewbiesList
+        collection: this.options.newbies
       });
       this.membersView.on('all', this.propagate);
       return this.newbiesView.on('all', this.propagate);
@@ -543,9 +543,9 @@
 
     CandidateListView.prototype.initialize = function() {
       CandidateListView.__super__.initialize.apply(this, arguments);
-      this.candidateList = new this.options.collectionClass;
-      this.candidateList.fetch();
-      return this.setCollection(new this.options.collectionClass(void 0, {
+      this.unfilteredCollection = this.collection;
+      this.unfilteredCollection.fetch();
+      return this.setCollection(new this.unfilteredCollection.constructor(void 0, {
         comparator: function(candidate) {
           return -candidate.get('score');
         }
@@ -553,7 +553,7 @@
     };
 
     CandidateListView.prototype.changeParty = function(party) {
-      this.collection.reset(this.candidateList.where({
+      this.collection.reset(this.unfilteredCollection.where({
         party_name: party
       }));
       return this.collection.fetchAgendas();
@@ -600,6 +600,8 @@
     function AgendaListView() {
       return AgendaListView.__super__.constructor.apply(this, arguments);
     }
+
+    AgendaListView.prototype.el = '.agendas';
 
     AgendaListView.prototype.options = {
       collection: new root.JSONPCollection(null, {
@@ -674,7 +676,6 @@
 
     AppView.prototype.initialize = function() {
       var _this = this;
-      this.candidatesView = new root.CandidatesMainView;
       this.partyListView = new root.DropdownContainer({
         collection: new root.JSONPCollection(null, {
           model: root.MiscModel,
@@ -696,9 +697,20 @@
           return _this.calculate();
         }, 100);
       });
-      this.$(".agendas").append(this.agendaListView.$el);
-      return this.candidatesView.on('click', function(member) {
+      this.members = new root.MemberList;
+      this.newbies = new root.NewbiesList;
+      this.candidatesView = new root.CandidatesMainView({
+        members: this.members,
+        newbies: this.newbies
+      });
+      this.candidatesView.on('click', function(member) {
         return _this.agendaListView.showMarkersForMember(member);
+      });
+      this.recommendations = new root.RecommendationList;
+      return this.recommendationsView = new root.RecommendationsView({
+        collection: this.recommendations,
+        members: this.members,
+        newbies: this.newbies
       });
     };
 

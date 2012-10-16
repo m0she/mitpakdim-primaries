@@ -133,7 +133,7 @@ class root.MemberList extends root.JSONPCollection
 class root.NewbiesList extends root.JSONPCollection
     model: root.Newbie
     localObject: window.mit.combined_newbies
-    url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name"
+    url: "http://www.mitpakdim.co.il/site/primaries/data/newbies.jsonp"
     fetchAgendas: ->
         @agendas_fetching = $.Deferred().resolve()
 
@@ -212,10 +212,10 @@ class root.CandidatesMainView extends Backbone.View
     initialize: ->
         @membersView = new root.CandidateListView
             el: ".members"
-            collectionClass: root.MemberList
+            collection: @.options.members
         @newbiesView = new root.CandidateListView
             el: ".newbies"
-            collectionClass: root.NewbiesList
+            collection: @.options.newbies
 
         @membersView.on 'all', @propagate
         @newbiesView.on 'all', @propagate
@@ -239,14 +239,14 @@ class root.CandidateListView extends root.ListView
 
     initialize: ->
         super(arguments...)
-        @candidateList = new @.options.collectionClass
-        @candidateList.fetch()
-        @setCollection new @.options.collectionClass undefined,
+        @unfilteredCollection = @.collection
+        @unfilteredCollection.fetch()
+        @setCollection new @unfilteredCollection.constructor undefined,
             comparator: (candidate) ->
                 return -candidate.get 'score'
 
     changeParty: (party) ->
-        @collection.reset @candidateList.where(party_name: party)
+        @collection.reset @unfilteredCollection.where(party_name: party)
         @collection.fetchAgendas()
 
     calculate: (weights) ->
@@ -272,6 +272,7 @@ class root.CandidateListView extends root.ListView
             , 0
 
 class root.AgendaListView extends root.ListView
+    el: '.agendas'
     options:
         collection: new root.JSONPCollection(null,
             model: root.Agenda
@@ -305,7 +306,6 @@ class root.AgendaListView extends root.ListView
 class root.AppView extends Backbone.View
     el: '#app_root'
     initialize: =>
-        @candidatesView = new root.CandidatesMainView
         @partyListView = new root.DropdownContainer
             collection: new root.JSONPCollection(null,
                 model: root.MiscModel
@@ -325,9 +325,20 @@ class root.AppView extends Backbone.View
                 @recalc_timeout = null
                 @calculate()
             , 100
-        @$(".agendas").append(@agendaListView.$el)
+
+        @members = new root.MemberList
+        @newbies = new root.NewbiesList
+        @candidatesView = new root.CandidatesMainView
+            members: @members
+            newbies: @newbies
+
         @candidatesView.on 'click', (member) =>
             @agendaListView.showMarkersForMember member
+        @recommendations = new root.RecommendationList
+        @recommendationsView = new root.RecommendationsView
+            collection: @recommendations
+            members: @members
+            newbies: @newbies
 
     partyChange: =>
         console.log "Changed: ", this, arguments
