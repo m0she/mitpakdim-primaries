@@ -1,9 +1,4 @@
 root = window.mit ?= {}
-################### UTILITIES #####################
-sum = (arr) ->
-    do_sum = (item, memo) ->
-        memo += item
-    _.reduce(arr, do_sum, 0)
 
 ############### JQUERY UI EXTENSIONS ##############
 
@@ -262,11 +257,17 @@ class root.CandidateListView extends root.ListView
             @collection.sort()
 
     calculate_inner: (weights) ->
-        weight_sum = sum(weights)
+        abs_sum = (arr) ->
+            do_sum = (memo, item) ->
+                memo += Math.abs item
+            _.reduce(arr, do_sum, 0)
+        weight_sum = abs_sum(weights)
 
-        console.log "Weights: ", weights
+        console.log "Weights: ", weights, weight_sum
         @collection.each (candidate) =>
+            #console.log "calc: ", candidate, candidate.get('name')
             candidate.set 'score', _.reduce candidate.getAgendas(), (memo, score, id) ->
+                #console.log "agenda: ", (weights[id] or 0), score, weight_sum, (weights[id] or 0) * score / weight_sum
                 memo += (weights[id] or 0) * score / weight_sum
             , 0
 
