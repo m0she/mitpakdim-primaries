@@ -83,6 +83,8 @@ class root.Newbie extends root.Candidate
         super(arguments...)
         @agendas_fetching.resolve()
 
+class root.Recommendation extends Backbone.Model
+
 ############### COLLECTIONS ##############
 
 class root.LocalVarCollection extends Backbone.Collection
@@ -137,6 +139,11 @@ class root.NewbiesList extends root.JSONPCollection
     fetchAgendas: ->
         @agendas_fetching = $.Deferred().resolve()
 
+class root.RecommendationList extends root.JSONPCollection
+    model: root.Recommendation
+    localObject: window.mit.recommendations
+    url: "http://www.mitpakdim.co.il/site/primaries/data/recommendations.jsonp"
+
 ############### VIEWS ##############
 
 class root.TemplateView extends Backbone.View
@@ -150,6 +157,8 @@ class root.CandidateView extends root.TemplateView
     className: "member_instance"
     initialize: ->
         super(arguments...)
+        @model.on 'change', ->
+            console.log 'candidate changed: ', @, arguments
     get_template: ->
         $("#member_template").html()
     events:
@@ -231,9 +240,8 @@ root.CandidatesMainView.create_delegation = (func_name) ->
 
 root.CandidatesMainView.create_delegation 'calculate'
 
-class root.CandidateListView extends root.ListView
+class root.PartyFilteredListView extends root.ListView
     options:
-        itemView: root.CandidateView
         autofetch: false
 
     initialize: ->
@@ -247,6 +255,13 @@ class root.CandidateListView extends root.ListView
 
     partyChange: (party) =>
         @collection.reset @unfilteredCollection.where(party_name: party)
+
+class root.CandidateListView extends root.PartyFilteredListView
+    options:
+        itemView: root.CandidateView
+
+    partyChange: (party) =>
+        super(party)
         @collection.fetchAgendas()
 
     calculate: (weights) ->
@@ -302,6 +317,29 @@ class root.AgendaListView extends root.ListView
             value = member_agendas[agenda.id] or 0
             value = 50 + value / 2
             @.$(".slider").eq(index).agendaSlider "setMemberMarker", value
+
+class root.RecommendationsView extends root.PartyFilteredListView
+    el: '.recommendations'
+    options:
+        itemView: class extends root.ListViewItem
+            catchEvents: =>
+                console.log 'change', @, arguments
+                @trigger 'change', @model, Boolean(@$el.find(':checkbox:checked').length)
+            events:
+                'change': 'catchEvents'
+            get_template: ->
+                $("#recommendation_template").html()
+    initialize: ->
+        super(arguments...)
+        @on 'change', @applyChange
+
+    applyChange: (recommendation, status) ->
+        console.log 'change2', @, arguments
+        changeModelFunc = (collection, attribute) ->
+            (model_id, status) ->
+                collection.get(model_id).set(attribute, status)
+        _.each recommendation.get('positive_list'), changeModelFunc(@options.members, 'recommendation_positive')
+        _.each recommendation.get('negative_list'), changeModelFunc(@options.members, 'recommendation_negative')
 
 class root.AppView extends Backbone.View
     el: '#app_root'

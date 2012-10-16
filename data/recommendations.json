@@ -1,0 +1,15 @@
+{
+    "objects" : [
+        {
+            "name": "My cool kadima list",
+            "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
+            "positive_list": [ 771, 852 ],
+            "negative_list": [ 822, 854 ]
+        }, {
+            "name": "My spanish something",
+            "party_name": "\u05e9\"\u05e1", 
+            "positive_list": [ 63 ],
+            "negative_list": [ 210, 791, 7 ]
+        }
+    ]
+}

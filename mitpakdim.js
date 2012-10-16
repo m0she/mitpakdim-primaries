@@ -186,6 +186,18 @@
 
   })(root.Candidate);
 
+  root.Recommendation = (function(_super) {
+
+    __extends(Recommendation, _super);
+
+    function Recommendation() {
+      return Recommendation.__super__.constructor.apply(this, arguments);
+    }
+
+    return Recommendation;
+
+  })(Backbone.Model);
+
   root.LocalVarCollection = (function(_super) {
 
     __extends(LocalVarCollection, _super);
@@ -302,6 +314,24 @@
 
   })(root.JSONPCollection);
 
+  root.RecommendationList = (function(_super) {
+
+    __extends(RecommendationList, _super);
+
+    function RecommendationList() {
+      return RecommendationList.__super__.constructor.apply(this, arguments);
+    }
+
+    RecommendationList.prototype.model = root.Recommendation;
+
+    RecommendationList.prototype.localObject = window.mit.recommendations;
+
+    RecommendationList.prototype.url = "http://www.mitpakdim.co.il/site/primaries/data/recommendations.jsonp";
+
+    return RecommendationList;
+
+  })(root.JSONPCollection);
+
   root.TemplateView = (function(_super) {
 
     __extends(TemplateView, _super);
@@ -335,7 +365,10 @@
     CandidateView.prototype.className = "member_instance";
 
     CandidateView.prototype.initialize = function() {
-      return CandidateView.__super__.initialize.apply(this, arguments);
+      CandidateView.__super__.initialize.apply(this, arguments);
+      return this.model.on('change', function() {
+        return console.log('candidate changed: ', this, arguments);
+      });
     };
 
     CandidateView.prototype.get_template = function() {
@@ -526,22 +559,21 @@
 
   root.CandidatesMainView.create_delegation('calculate');
 
-  root.CandidateListView = (function(_super) {
+  root.PartyFilteredListView = (function(_super) {
 
-    __extends(CandidateListView, _super);
+    __extends(PartyFilteredListView, _super);
 
-    function CandidateListView() {
+    function PartyFilteredListView() {
       this.partyChange = __bind(this.partyChange, this);
-      return CandidateListView.__super__.constructor.apply(this, arguments);
+      return PartyFilteredListView.__super__.constructor.apply(this, arguments);
     }
 
-    CandidateListView.prototype.options = {
-      itemView: root.CandidateView,
+    PartyFilteredListView.prototype.options = {
       autofetch: false
     };
 
-    CandidateListView.prototype.initialize = function() {
-      CandidateListView.__super__.initialize.apply(this, arguments);
+    PartyFilteredListView.prototype.initialize = function() {
+      PartyFilteredListView.__super__.initialize.apply(this, arguments);
       this.unfilteredCollection = this.collection;
       this.unfilteredCollection.fetch();
       this.setCollection(new this.unfilteredCollection.constructor(void 0, {
@@ -552,10 +584,31 @@
       return root.global_events.on('change_party', this.partyChange);
     };
 
-    CandidateListView.prototype.partyChange = function(party) {
-      this.collection.reset(this.unfilteredCollection.where({
+    PartyFilteredListView.prototype.partyChange = function(party) {
+      return this.collection.reset(this.unfilteredCollection.where({
         party_name: party
       }));
+    };
+
+    return PartyFilteredListView;
+
+  })(root.ListView);
+
+  root.CandidateListView = (function(_super) {
+
+    __extends(CandidateListView, _super);
+
+    function CandidateListView() {
+      this.partyChange = __bind(this.partyChange, this);
+      return CandidateListView.__super__.constructor.apply(this, arguments);
+    }
+
+    CandidateListView.prototype.options = {
+      itemView: root.CandidateView
+    };
+
+    CandidateListView.prototype.partyChange = function(party) {
+      CandidateListView.__super__.partyChange.call(this, party);
       return this.collection.fetchAgendas();
     };
 
@@ -575,7 +628,7 @@
         _this = this;
       abs_sum = function(arr) {
         var do_sum;
-        do_sum = function(item, memo) {
+        do_sum = function(memo, item) {
           return memo += Math.abs(item);
         };
         return _.reduce(arr, do_sum, 0);
@@ -591,7 +644,7 @@
 
     return CandidateListView;
 
-  })(root.ListView);
+  })(root.PartyFilteredListView);
 
   root.AgendaListView = (function(_super) {
 
@@ -660,6 +713,65 @@
     return AgendaListView;
 
   }).call(this, root.ListView);
+
+  root.RecommendationsView = (function(_super) {
+
+    __extends(RecommendationsView, _super);
+
+    function RecommendationsView() {
+      return RecommendationsView.__super__.constructor.apply(this, arguments);
+    }
+
+    RecommendationsView.prototype.el = '.recommendations';
+
+    RecommendationsView.prototype.options = {
+      itemView: (function(_super1) {
+
+        __extends(_Class, _super1);
+
+        function _Class() {
+          this.catchEvents = __bind(this.catchEvents, this);
+          return _Class.__super__.constructor.apply(this, arguments);
+        }
+
+        _Class.prototype.catchEvents = function() {
+          console.log('change', this, arguments);
+          return this.trigger('change', this.model, Boolean(this.$el.find(':checkbox:checked').length));
+        };
+
+        _Class.prototype.events = {
+          'change': 'catchEvents'
+        };
+
+        _Class.prototype.get_template = function() {
+          return $("#recommendation_template").html();
+        };
+
+        return _Class;
+
+      })(root.ListViewItem)
+    };
+
+    RecommendationsView.prototype.initialize = function() {
+      RecommendationsView.__super__.initialize.apply(this, arguments);
+      return this.on('change', this.applyChange);
+    };
+
+    RecommendationsView.prototype.applyChange = function(recommendation, status) {
+      var changeModelFunc;
+      console.log('change2', this, arguments);
+      changeModelFunc = function(collection, attribute) {
+        return function(model_id, status) {
+          return collection.get(model_id).set(attribute, status);
+        };
+      };
+      _.each(recommendation.get('positive_list'), changeModelFunc(this.options.members, 'recommendation_positive'));
+      return _.each(recommendation.get('negative_list'), changeModelFunc(this.options.members, 'recommendation_negative'));
+    };
+
+    return RecommendationsView;
+
+  }).call(this, root.PartyFilteredListView);
 
   root.AppView = (function(_super) {
 
