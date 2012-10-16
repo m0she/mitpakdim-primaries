@@ -229,7 +229,6 @@ root.CandidatesMainView.create_delegation = (func_name) ->
         @newbiesView[func_name](arguments...)
     @::[func_name] = delegate
 
-root.CandidatesMainView.create_delegation 'changeParty'
 root.CandidatesMainView.create_delegation 'calculate'
 
 class root.CandidateListView extends root.ListView
@@ -244,8 +243,9 @@ class root.CandidateListView extends root.ListView
         @setCollection new @unfilteredCollection.constructor undefined,
             comparator: (candidate) ->
                 return -candidate.get 'score'
+        root.global_events.on 'change_party', @partyChange
 
-    changeParty: (party) ->
+    partyChange: (party) =>
         @collection.reset @unfilteredCollection.where(party_name: party)
         @collection.fetchAgendas()
 
@@ -342,7 +342,7 @@ class root.AppView extends Backbone.View
 
     partyChange: =>
         console.log "Changed: ", this, arguments
-        @candidatesView.changeParty @partyListView.$('option:selected').text()
+        root.global_events.trigger 'change_party', @partyListView.$('option:selected').text()
 
     calculate: ->
         weights = {}
@@ -355,5 +355,6 @@ class root.AppView extends Backbone.View
 ############### INIT ##############
 
 $ ->
+    root.global_events = _.extend({}, Backbone.Events)
     root.appView = new root.AppView
     return

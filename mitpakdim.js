@@ -524,8 +524,6 @@
     return this.prototype[func_name] = delegate;
   };
 
-  root.CandidatesMainView.create_delegation('changeParty');
-
   root.CandidatesMainView.create_delegation('calculate');
 
   root.CandidateListView = (function(_super) {
@@ -533,6 +531,7 @@
     __extends(CandidateListView, _super);
 
     function CandidateListView() {
+      this.partyChange = __bind(this.partyChange, this);
       return CandidateListView.__super__.constructor.apply(this, arguments);
     }
 
@@ -545,14 +544,15 @@
       CandidateListView.__super__.initialize.apply(this, arguments);
       this.unfilteredCollection = this.collection;
       this.unfilteredCollection.fetch();
-      return this.setCollection(new this.unfilteredCollection.constructor(void 0, {
+      this.setCollection(new this.unfilteredCollection.constructor(void 0, {
         comparator: function(candidate) {
           return -candidate.get('score');
         }
       }));
+      return root.global_events.on('change_party', this.partyChange);
     };
 
-    CandidateListView.prototype.changeParty = function(party) {
+    CandidateListView.prototype.partyChange = function(party) {
       this.collection.reset(this.unfilteredCollection.where({
         party_name: party
       }));
@@ -716,7 +716,7 @@
 
     AppView.prototype.partyChange = function() {
       console.log("Changed: ", this, arguments);
-      return this.candidatesView.changeParty(this.partyListView.$('option:selected').text());
+      return root.global_events.trigger('change_party', this.partyListView.$('option:selected').text());
     };
 
     AppView.prototype.calculate = function() {
@@ -736,6 +736,7 @@
   })(Backbone.View);
 
   $(function() {
+    root.global_events = _.extend({}, Backbone.Events);
     root.appView = new root.AppView;
   });
 
