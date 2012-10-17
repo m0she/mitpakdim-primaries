@@ -7,6 +7,10 @@
 
   root = (_ref = window.mit) != null ? _ref : window.mit = {};
 
+  String.prototype.repeat = function(num) {
+    return new Array(num + 1).join(this);
+  };
+
   $.widget("mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {
     _create: (function() {
       var cached_old_slider_create, new_create_func;
@@ -374,9 +378,11 @@
     CandidateView.prototype.className = "candidate_instance";
 
     CandidateView.prototype.initialize = function() {
+      var _this = this;
       CandidateView.__super__.initialize.apply(this, arguments);
       return this.model.on('change', function() {
-        return console.log('candidate changed: ', this, arguments);
+        console.log('candidate changed: ', _this, arguments);
+        return _this.render();
       });
     };
 

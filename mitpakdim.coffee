@@ -1,5 +1,10 @@
 root = window.mit ?= {}
 
+############### UTILITIES ##############
+
+String::repeat = ( num ) ->
+    new Array( num + 1 ).join( this )
+
 ############### JQUERY UI EXTENSIONS ##############
 
 $.widget "mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {
@@ -164,8 +169,9 @@ class root.CandidateView extends root.TemplateView
     className: "candidate_instance"
     initialize: ->
         super(arguments...)
-        @model.on 'change', ->
+        @model.on 'change', =>
             console.log 'candidate changed: ', @, arguments
+            @render()
     get_template: ->
         $("#candidate_template").html()
     events:
