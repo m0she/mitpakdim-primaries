@@ -151,6 +151,34 @@ class root.MemberList extends root.JSONPCollection
         repo: window.mit.member
         sync: root.JSONPCachableSync('members')
 
+    sync: (method, model, options) ->
+        members_options = _.extend {}, options,
+            success: undefined,
+            error: undefined,
+        members = smartSync(method, model, options)
+
+        extra_options = _.extend {}, members_options,
+            repo: window.mit.member_extra
+            url: "data/member_extra.jsonp"
+        extra = smartSync(method, model, extra_options)
+
+        $.when(members, extra).done (orig_args, extra_args) ->
+            extendArrayWithId = (dest, sources...) ->
+                for src in sources
+                    for item in src
+                        id = item.id
+                        if dest_item = _.where(dest, id: id)[0]
+                            _.extend dest_item, item
+                        else
+                            dest.push item
+            extendArrayWithId orig_args[0].objects, extra_args[0].objects
+
+            if _.isFunction options.success
+                options.success orig_args...
+        .fail (orig_args, extra_args) ->
+            if _.isFunction options.error
+                options.error orig_args...
+
     fetchAgendas: ->
         fetches = []
         @each (member) =>

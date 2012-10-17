@@ -1,0 +1,13 @@
+{
+    "objects" : [
+        {
+            "id": 214,
+            "district": "north"
+        },
+        {
+            "id": 771,
+            "participating": false
+        }
+    ]
+}
+

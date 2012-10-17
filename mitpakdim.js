@@ -3,7 +3,8 @@
   var root, smartSync, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __slice = [].slice;
 
   root = (_ref = window.mit) != null ? _ref : window.mit = {};
 
@@ -67,13 +68,15 @@
       }
       return _.where(repo.objects, {
         id: model.id
-      });
+      })[0];
     };
-    if (localCopy = getLocalCopy()) {
+    if (localCopy = _.clone(getLocalCopy())) {
       promise = $.Deferred();
       _.defer(function() {
-        options.success(localCopy, null);
-        return promise.resolve();
+        if (_.isFunction(options.success)) {
+          options.success(localCopy, null);
+        }
+        return promise.resolve(localCopy, null);
       });
       return promise;
     }
@@ -317,6 +320,56 @@
     MemberList.prototype.syncOptions = {
       repo: window.mit.member,
       sync: root.JSONPCachableSync('members')
+    };
+
+    MemberList.prototype.sync = function(method, model, options) {
+      var extra, extra_options, members, members_options;
+      members_options = _.extend({}, options, {
+        success: void 0,
+        error: void 0
+      });
+      members = smartSync(method, model, options);
+      extra_options = _.extend({}, members_options, {
+        repo: window.mit.member_extra,
+        url: "data/member_extra.jsonp"
+      });
+      extra = smartSync(method, model, extra_options);
+      return $.when(members, extra).done(function(orig_args, extra_args) {
+        var extendArrayWithId;
+        extendArrayWithId = function() {
+          var dest, dest_item, id, item, sources, src, _i, _len, _results;
+          dest = arguments[0], sources = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+          _results = [];
+          for (_i = 0, _len = sources.length; _i < _len; _i++) {
+            src = sources[_i];
+            _results.push((function() {
+              var _j, _len1, _results1;
+              _results1 = [];
+              for (_j = 0, _len1 = src.length; _j < _len1; _j++) {
+                item = src[_j];
+                id = item.id;
+                if (dest_item = _.where(dest, {
+                  id: id
+                })[0]) {
+                  _results1.push(_.extend(dest_item, item));
+                } else {
+                  _results1.push(dest.push(item));
+                }
+              }
+              return _results1;
+            })());
+          }
+          return _results;
+        };
+        extendArrayWithId(orig_args[0].objects, extra_args[0].objects);
+        if (_.isFunction(options.success)) {
+          return options.success.apply(options, orig_args);
+        }
+      }).fail(function(orig_args, extra_args) {
+        if (_.isFunction(options.error)) {
+          return options.error.apply(options, orig_args);
+        }
+      });
     };
 
     MemberList.prototype.fetchAgendas = function() {

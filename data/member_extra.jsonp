@@ -1,0 +1,13 @@
+if (!window.mit) window.mit = {};
+window.mit.member_extra = {
+    "objects": [
+        {
+            "id": 214, 
+            "district": "north"
+        }, 
+        {
+            "participating": false, 
+            "id": 771
+        }
+    ]
+}
