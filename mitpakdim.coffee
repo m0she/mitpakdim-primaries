@@ -30,12 +30,37 @@ root.syncEx = (options_override) ->
     (method, model, options) ->
         Backbone.sync(method, model, _.extend({}, options, options_override))
 
-root.JSONPSync = root.syncEx({dataType: 'jsonp'})
 root.JSONPCachableSync = (callback_name) ->
     root.syncEx
         cache: true
         dataType: 'jsonp'
         jsonpCallback: callback_name or 'cachable'
+
+root.syncOptions =
+    dataType: 'jsonp'
+
+# Assume a repo has a key named objects with a list of objects identifiable by an id key
+smartSync = (method, model, options) ->
+    options = _.extend {}, root.syncOptions, model.syncOptions, options
+    getLocalCopy = ->
+        repo = options.repo
+        repo = if _.isString(repo) then root[repo] else repo
+        if method isnt 'read' or not repo
+            return null
+        if model instanceof Backbone.Collection
+            return repo
+        # Assume could only be a Model
+        _.where(repo.objects, id: model.id)[0]
+
+    if localCopy = _.clone getLocalCopy()
+        promise = $.Deferred()
+        _.defer ->
+            if _.isFunction options.success
+                options.success localCopy, null # xhr
+            promise.resolve localCopy, null
+        return promise
+    return (options.sync or Backbone.sync)(method, model, options)
+
 ############### MODELS ##############
 
 class root.MiscModel extends Backbone.Model
@@ -46,6 +71,7 @@ class root.Agenda extends Backbone.Model
 class root.Candidate extends Backbone.Model
     defaults:
         score: 'N/A'
+        participating: true
 
     getAgendas: ->
         if @agendas_fetching.state() != "resolved"
@@ -99,39 +125,31 @@ class root.Recommendation extends Backbone.Model
 
 ############### COLLECTIONS ##############
 
-class root.LocalVarCollection extends Backbone.Collection
-    initialize: (models, options) ->
-        if options?.localObject
-            @localObject = options.localObject
-        if @localObject
-            console.log "Using local objects for ", this
-        if options?.url
-            @url = options.url
-    sync: (method, model, options) =>
-        if @localObject == undefined
-            return @syncFunc arguments...
-
-        setTimeout =>
-            options.success @localObject, null # xhr
-        return
-
-    syncFunc: Backbone.sync
-
+class root.JSONPCollection extends Backbone.Collection
+    sync: smartSync
+    initialize: ->
+        super(arguments...)
     parse: (response) ->
         return response.objects
 
-class root.JSONPCollection extends root.LocalVarCollection
-    syncFunc: root.JSONPSync
+class root.PartyList extends root.JSONPCollection
+    model: root.MiscModel
+    url: "http://www.oknesset.org/api/v2/party/"
+    syncOptions:
+        repo: window.mit.party
+
+class root.AgendaList extends root.JSONPCollection
+    model: root.Agenda
+    url: "http://www.oknesset.org/api/v2/agenda/"
+    syncOptions:
+        repo: window.mit.agenda
 
 class root.MemberList extends root.JSONPCollection
     model: root.Member
     url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name"
-    localObject: window.mit.member
-
-    syncFunc: root.syncEx
-        cache: true
-        dataType: 'jsonp'
-        jsonpCallback: 'members'
+    syncOptions:
+        repo: window.mit.member
+        sync: root.JSONPCachableSync('members')
 
     fetchAgendas: ->
         fetches = []
@@ -146,14 +164,16 @@ class root.MemberList extends root.JSONPCollection
 
 class root.NewbiesList extends root.JSONPCollection
     model: root.Newbie
-    localObject: window.mit.combined_newbies
+    syncOptions:
+        repo: window.mit.combined_newbies
     url: "http://www.mitpakdim.co.il/site/primaries/data/newbies.jsonp"
     fetchAgendas: ->
         @agendas_fetching = $.Deferred().resolve()
 
 class root.RecommendationList extends root.JSONPCollection
     model: root.Recommendation
-    localObject: window.mit.recommendations
+    syncOptions:
+        repo: window.mit.recommendations
     url: "http://www.mitpakdim.co.il/site/primaries/data/recommendations.jsonp"
 
 ############### VIEWS ##############
@@ -302,11 +322,7 @@ class root.CandidateListView extends root.PartyFilteredListView
 class root.AgendaListView extends root.ListView
     el: '.agendas'
     options:
-        collection: new root.JSONPCollection(null,
-            model: root.Agenda
-            localObject: window.mit.agenda
-            url: "http://www.oknesset.org/api/v2/agenda/"
-        )
+        collection: new root.AgendaList
 
         itemView: class extends root.ListViewItem
             className : "agenda_item"
@@ -351,7 +367,7 @@ class root.RecommendationsView extends root.PartyFilteredListView
         changeModelFunc = (candidates, attribute) ->
             (model_id, status) ->
                 model = candidates.get(model_id)
-                list = _.extend {}, model.get attribute
+                list = _.clone model.get attribute
                 if recommendation.get('status')
                     list[recommendation.id] = true
                 else
@@ -366,11 +382,7 @@ class root.AppView extends Backbone.View
     el: '#app_root'
     initialize: =>
         @partyListView = new root.DropdownContainer
-            collection: new root.JSONPCollection(null,
-                model: root.MiscModel
-                url: "http://www.oknesset.org/api/v2/party/"
-                localObject: window.mit.party
-            )
+            collection: new root.PartyList
         @$(".parties").append(@partyListView.$el)
         @partyListView.$el.on 'change', @partyChange
 
