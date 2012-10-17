@@ -341,14 +341,6 @@ class root.RecommendationsView extends root.PartyFilteredListView
         super(arguments...)
         @collection.on 'change', @applyChange, @
 
-#    reevaluate: (changed_recommendation) ->
-#        console.log 'change2', @, arguments
-#        updateCandidate = (positives, negatives) ->
-#            (candidate) ->
-#                candidate.set 'status', _.every(collection.get
-#        @members.each updateCandidate, @
-#        _.each @collection.where(status: true), @applyChange, @
-
     applyChange: (recommendation) ->
         changeModelFunc = (candidates, attribute) ->
             (model_id, status) ->
@@ -359,8 +351,10 @@ class root.RecommendationsView extends root.PartyFilteredListView
                 else
                     delete list[recommendation.id]
                 model.set attribute, list
-        _.each recommendation.get('positive_list'), changeModelFunc(@options.members, 'recommendation_positive')
-        _.each recommendation.get('negative_list'), changeModelFunc(@options.members, 'recommendation_negative')
+        _.each recommendation.get('positive_list')['members'], changeModelFunc(@options.members, 'recommendation_positive')
+        _.each recommendation.get('negative_list')['members'], changeModelFunc(@options.members, 'recommendation_negative')
+        _.each recommendation.get('positive_list')['newbies'], changeModelFunc(@options.newbies, 'recommendation_positive')
+        _.each recommendation.get('negative_list')['newbies'], changeModelFunc(@options.newbies, 'recommendation_negative')
 
 class root.AppView extends Backbone.View
     el: '#app_root'

@@ -2,27 +2,48 @@ if (!window.mit) window.mit = {};
 window.mit.recommendations = {
     "objects": [
         {
-            "positive_list": [
-                771, 
-                852
-            ], 
-            "negative_list": [
-                822, 
-                854
-            ], 
+            "positive_list": {
+                "newbies": [
+                    822, 
+                    854
+                ], 
+                "members": [
+                    771, 
+                    852
+                ]
+            }, 
+            "negative_list": {
+                "newbies": [
+                    852
+                ], 
+                "members": [
+                    822, 
+                    854
+                ]
+            }, 
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "id": 1, 
             "name": "My cool kadima list"
         }, 
         {
-            "positive_list": [
-                63
-            ], 
-            "negative_list": [
-                210, 
-                791, 
-                7
-            ], 
+            "positive_list": {
+                "newbies": [
+                    210, 
+                    791, 
+                    7
+                ], 
+                "members": [
+                    63
+                ]
+            }, 
+            "negative_list": {
+                "newbies": [], 
+                "members": [
+                    210, 
+                    791, 
+                    7
+                ]
+            }, 
             "party_name": "\u05e9\"\u05e1", 
             "id": 2, 
             "name": "My spanish something"

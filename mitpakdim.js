@@ -783,8 +783,10 @@
           return model.set(attribute, list);
         };
       };
-      _.each(recommendation.get('positive_list'), changeModelFunc(this.options.members, 'recommendation_positive'));
-      return _.each(recommendation.get('negative_list'), changeModelFunc(this.options.members, 'recommendation_negative'));
+      _.each(recommendation.get('positive_list')['members'], changeModelFunc(this.options.members, 'recommendation_positive'));
+      _.each(recommendation.get('negative_list')['members'], changeModelFunc(this.options.members, 'recommendation_negative'));
+      _.each(recommendation.get('positive_list')['newbies'], changeModelFunc(this.options.newbies, 'recommendation_positive'));
+      return _.each(recommendation.get('negative_list')['newbies'], changeModelFunc(this.options.newbies, 'recommendation_negative'));
     };
 
     return RecommendationsView;
