@@ -97,7 +97,16 @@
     };
 
     Candidate.prototype.initialize = function() {
-      return this.agendas_fetching = $.Deferred();
+      var set_default,
+        _this = this;
+      this.agendas_fetching = $.Deferred();
+      set_default = function(attr, val) {
+        if (_this.get(attr) === void 0) {
+          return _this.set(attr, val);
+        }
+      };
+      set_default('recommendation_positive', {});
+      return set_default('recommendation_negative', {});
     };
 
     return Candidate;
@@ -129,7 +138,7 @@
       };
 
       MemberAgenda.prototype.sync = function() {
-        return root.JSONPCachableSync("memberagenda_" + (this.get('id'))).apply(null, arguments);
+        return root.JSONPCachableSync("memberagenda_" + this.id).apply(null, arguments);
       };
 
       MemberAgenda.prototype.getAgendas = function() {
@@ -149,7 +158,7 @@
       var _this = this;
       if (this.agendas_fetching.state() !== "resolved" || force) {
         this.memberAgendas = new MemberAgenda({
-          id: this.get('id')
+          id: this.id
         });
         this.memberAgendas.fetch({
           success: function() {
@@ -735,8 +744,10 @@
         }
 
         _Class.prototype.catchEvents = function() {
+          var status;
           console.log('change', this, arguments);
-          return this.trigger('change', this.model, Boolean(this.$el.find(':checkbox:checked').length));
+          status = Boolean(this.$el.find(':checkbox:checked').length);
+          return this.model.set('status', status);
         };
 
         _Class.prototype.events = {
@@ -754,15 +765,22 @@
 
     RecommendationsView.prototype.initialize = function() {
       RecommendationsView.__super__.initialize.apply(this, arguments);
-      return this.on('change', this.applyChange);
+      return this.collection.on('change', this.applyChange, this);
     };
 
-    RecommendationsView.prototype.applyChange = function(recommendation, status) {
+    RecommendationsView.prototype.applyChange = function(recommendation) {
       var changeModelFunc;
-      console.log('change2', this, arguments);
-      changeModelFunc = function(collection, attribute) {
+      changeModelFunc = function(candidates, attribute) {
         return function(model_id, status) {
-          return collection.get(model_id).set(attribute, status);
+          var list, model;
+          model = candidates.get(model_id);
+          list = _.extend({}, model.get(attribute));
+          if (recommendation.get('status')) {
+            list[recommendation.id] = true;
+          } else {
+            delete list[recommendation.id];
+          }
+          return model.set(attribute, list);
         };
       };
       _.each(recommendation.get('positive_list'), changeModelFunc(this.options.members, 'recommendation_positive'));
@@ -838,7 +856,7 @@
       this.agendaListView.collection.each(function(agenda) {
         var uservalue;
         uservalue = agenda.get("uservalue");
-        return weights[agenda.get('id')] = uservalue;
+        return weights[agenda.id] = uservalue;
       });
       return this.candidatesView.calculate(weights);
     };

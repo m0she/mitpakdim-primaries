@@ -51,13 +51,20 @@ class root.Candidate extends Backbone.Model
     initialize: ->
         @agendas_fetching = $.Deferred()
 
+        set_default = (attr, val) =>
+            # Good for not sharing same object for all instances
+            if @get(attr) is undefined
+                @set(attr, val)
+        set_default 'recommendation_positive', {}
+        set_default 'recommendation_negative', {}
+
 class root.Member extends root.Candidate
     class MemberAgenda extends Backbone.Model
         urlRoot: "http://www.oknesset.org/api/v2/member-agendas/"
         url: ->
             super(arguments...) + '/'
         sync: =>
-            root.JSONPCachableSync("memberagenda_#{ @get('id') }")(arguments...)
+            root.JSONPCachableSync("memberagenda_#{ @id }")(arguments...)
         getAgendas: ->
             ret = {}
             _.each @get('agendas'), (agenda) ->
@@ -67,7 +74,7 @@ class root.Member extends root.Candidate
     fetchAgendas: (force) ->
         if @agendas_fetching.state() != "resolved" or force
             @memberAgendas = new MemberAgenda
-                id: @get 'id'
+                id: @id
             @memberAgendas.fetch
                 success: =>
                     @set 'agendas', @memberAgendas.getAgendas()
@@ -324,20 +331,34 @@ class root.RecommendationsView extends root.PartyFilteredListView
         itemView: class extends root.ListViewItem
             catchEvents: =>
                 console.log 'change', @, arguments
-                @trigger 'change', @model, Boolean(@$el.find(':checkbox:checked').length)
+                status = Boolean(@$el.find(':checkbox:checked').length)
+                @model.set('status', status)
             events:
                 'change': 'catchEvents'
             get_template: ->
                 $("#recommendation_template").html()
     initialize: ->
         super(arguments...)
-        @on 'change', @applyChange
+        @collection.on 'change', @applyChange, @
 
-    applyChange: (recommendation, status) ->
-        console.log 'change2', @, arguments
-        changeModelFunc = (collection, attribute) ->
+#    reevaluate: (changed_recommendation) ->
+#        console.log 'change2', @, arguments
+#        updateCandidate = (positives, negatives) ->
+#            (candidate) ->
+#                candidate.set 'status', _.every(collection.get
+#        @members.each updateCandidate, @
+#        _.each @collection.where(status: true), @applyChange, @
+
+    applyChange: (recommendation) ->
+        changeModelFunc = (candidates, attribute) ->
             (model_id, status) ->
-                collection.get(model_id).set(attribute, status)
+                model = candidates.get(model_id)
+                list = _.extend {}, model.get attribute
+                if recommendation.get('status')
+                    list[recommendation.id] = true
+                else
+                    delete list[recommendation.id]
+                model.set attribute, list
         _.each recommendation.get('positive_list'), changeModelFunc(@options.members, 'recommendation_positive')
         _.each recommendation.get('negative_list'), changeModelFunc(@options.members, 'recommendation_negative')
 
@@ -386,7 +407,7 @@ class root.AppView extends Backbone.View
         weights = {}
         @agendaListView.collection.each (agenda) =>
             uservalue = agenda.get("uservalue")
-            weights[agenda.get('id')] = uservalue
+            weights[agenda.id] = uservalue
         @candidatesView.calculate(weights)
 
 
