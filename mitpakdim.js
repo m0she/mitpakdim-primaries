@@ -17,14 +17,14 @@
       };
       return new_create_func;
     })(),
-    setMemberMarker: function(value) {
-      var handle, member_marker_classname;
-      member_marker_classname = "ui-slider-member-marker";
-      if (!this.element.find("." + member_marker_classname).length) {
+    setCandidateMarker: function(value) {
+      var candidate_marker_classname, handle;
+      candidate_marker_classname = "ui-slider-candidate-marker";
+      if (!this.element.find("." + candidate_marker_classname).length) {
         handle = this.element.find(".ui-slider-handle");
-        handle.before("<div class='" + member_marker_classname + "'></div>");
+        handle.before("<div class='" + candidate_marker_classname + "'></div>");
       }
-      return this.element.find("." + member_marker_classname).css({
+      return this.element.find("." + candidate_marker_classname).css({
         left: value + "%"
       });
     }
@@ -90,7 +90,7 @@
 
     Candidate.prototype.getAgendas = function() {
       if (this.agendas_fetching.state() !== "resolved") {
-        console.log("Trying to use member agendas before fetched", this, this.agendas_fetching);
+        console.log("Trying to use candidate agendas before fetched", this, this.agendas_fetching);
         throw "Agendas not fetched yet!";
       }
       return this.get('agendas');
@@ -371,7 +371,7 @@
       return CandidateView.__super__.constructor.apply(this, arguments);
     }
 
-    CandidateView.prototype.className = "member_instance";
+    CandidateView.prototype.className = "candidate_instance";
 
     CandidateView.prototype.initialize = function() {
       CandidateView.__super__.initialize.apply(this, arguments);
@@ -381,7 +381,7 @@
     };
 
     CandidateView.prototype.get_template = function() {
-      return $("#member_template").html();
+      return $("#candidate_template").html();
     };
 
     CandidateView.prototype.events = {
@@ -708,14 +708,14 @@
       })(root.ListViewItem)
     };
 
-    AgendaListView.prototype.showMarkersForMember = function(member_model) {
-      var member_agendas;
-      member_agendas = member_model.getAgendas();
+    AgendaListView.prototype.showMarkersForCandidate = function(candidate_model) {
+      var candidate_agendas;
+      candidate_agendas = candidate_model.getAgendas();
       return this.collection.each(function(agenda, index) {
         var value;
-        value = member_agendas[agenda.id] || 0;
+        value = candidate_agendas[agenda.id] || 0;
         value = 50 + value / 2;
-        return this.$(".slider").eq(index).agendaSlider("setMemberMarker", value);
+        return this.$(".slider").eq(index).agendaSlider("setCandidateMarker", value);
       });
     };
 
@@ -835,8 +835,8 @@
         members: this.members,
         newbies: this.newbies
       });
-      this.candidatesView.on('click', function(member) {
-        return _this.agendaListView.showMarkersForMember(member);
+      this.candidatesView.on('click', function(candidate) {
+        return _this.agendaListView.showMarkersForCandidate(candidate);
       });
       this.recommendations = new root.RecommendationList;
       return this.recommendationsView = new root.RecommendationsView({

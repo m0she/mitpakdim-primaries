@@ -10,12 +10,12 @@ $.widget "mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {
                 cached_old_slider_create.apply @
             new_create_func
         )()
-    setMemberMarker : (value) ->
-        member_marker_classname = "ui-slider-member-marker"
-        if not @element.find(".#{member_marker_classname}").length
+    setCandidateMarker : (value) ->
+        candidate_marker_classname = "ui-slider-candidate-marker"
+        if not @element.find(".#{candidate_marker_classname}").length
             handle = @element.find(".ui-slider-handle")
-            handle.before "<div class='#{member_marker_classname}'></div>"
-        @element.find(".#{member_marker_classname}").css
+            handle.before "<div class='#{candidate_marker_classname}'></div>"
+        @element.find(".#{candidate_marker_classname}").css
             left : value + "%"
 })
 
@@ -44,7 +44,7 @@ class root.Candidate extends Backbone.Model
 
     getAgendas: ->
         if @agendas_fetching.state() != "resolved"
-            console.log "Trying to use member agendas before fetched", @, @agendas_fetching
+            console.log "Trying to use candidate agendas before fetched", @, @agendas_fetching
             throw "Agendas not fetched yet!"
         @get('agendas')
 
@@ -161,13 +161,13 @@ class root.TemplateView extends Backbone.View
         @
 
 class root.CandidateView extends root.TemplateView
-    className: "member_instance"
+    className: "candidate_instance"
     initialize: ->
         super(arguments...)
         @model.on 'change', ->
             console.log 'candidate changed: ', @, arguments
     get_template: ->
-        $("#member_template").html()
+        $("#candidate_template").html()
     events:
         'click': ->
             @trigger 'click', @model
@@ -318,12 +318,12 @@ class root.AgendaListView extends root.ListView
             get_template: ->
                 $("#agenda_template").html()
 
-    showMarkersForMember: (member_model) ->
-        member_agendas = member_model.getAgendas()
+    showMarkersForCandidate: (candidate_model) ->
+        candidate_agendas = candidate_model.getAgendas()
         @collection.each (agenda, index) ->
-            value = member_agendas[agenda.id] or 0
+            value = candidate_agendas[agenda.id] or 0
             value = 50 + value / 2
-            @.$(".slider").eq(index).agendaSlider "setMemberMarker", value
+            @.$(".slider").eq(index).agendaSlider "setCandidateMarker", value
 
 class root.RecommendationsView extends root.PartyFilteredListView
     el: '.recommendations'
@@ -385,8 +385,8 @@ class root.AppView extends Backbone.View
             members: @members
             newbies: @newbies
 
-        @candidatesView.on 'click', (member) =>
-            @agendaListView.showMarkersForMember member
+        @candidatesView.on 'click', (candidate) =>
+            @agendaListView.showMarkersForCandidate candidate
         @recommendations = new root.RecommendationList
         @recommendationsView = new root.RecommendationsView
             collection: @recommendations

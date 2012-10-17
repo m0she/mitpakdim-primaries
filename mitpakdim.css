@@ -25,7 +25,7 @@
     height : 100%;
     width : 0.2em;
 }
-.agenda_item .ui-slider-member-marker {
+.agenda_item .ui-slider-candidate-marker {
     background-color : #d1e0be;
     position : absolute;
     top : 0;
@@ -38,6 +38,6 @@
     display : inline-block;
     vertical-align : top;
 }
-.member_instance {
+.candidate_instance {
     cursor : pointer;
 }
