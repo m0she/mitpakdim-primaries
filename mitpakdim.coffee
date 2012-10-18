@@ -388,6 +388,11 @@ class root.AgendaListView extends root.ListView
             get_template: ->
                 $("#agenda_template").html()
 
+    reset: (weights) ->
+        @collection.each (agenda, index) ->
+            if _.isNumber(value = weights[agenda.id])
+                @.$(".slider").eq(index).agendaSlider "value", value
+
     showMarkersForCandidate: (candidate_model) ->
         candidate_agendas = candidate_model.getAgendas()
         @collection.each (agenda, index) ->
@@ -448,14 +453,6 @@ class root.FilterView extends root.DropdownContainer
 class root.AppView extends Backbone.View
     el: '#app_root'
     initialize: =>
-        @partyListView = new root.DropdownContainer
-            el: '.parties'
-            collection: new root.PartyList
-        @partyListView.on 'change', (model) =>
-            console.log "Changed: ", this, arguments
-            root.global.party = model
-            root.global.trigger 'change_party', model
-
         @districtListView = new root.DropdownContainer
             el: '.districts'
             collection: new Backbone.Collection
@@ -506,14 +503,64 @@ class root.AppView extends Backbone.View
     calculate: ->
         weights = {}
         @agendaListView.collection.each (agenda) =>
-            uservalue = agenda.get("uservalue")
-            weights[agenda.id] = uservalue
+            weights[agenda.id] = agenda.get("uservalue")
         @candidatesView.calculate(weights)
 
+############### ROUTERS ##############
+class root.Router extends Backbone.Router
+    routes:
+        '': 'entrance'
+        ':party': 'party'
+        ':party/:district': 'party'
+        ':party/:district/:weights': 'party'
+
+    entrance: ->
+        console.log 'main'
+        $('.main_page').show()
+        $('.party_page').hide()
+
+    party: (party, district, weights) ->
+        console.log 'party', arguments...
+        model = root.partyList.where(name: party)[0]
+        if not model
+            return root.router.navigate '', trigger: true
+        root.global.party = model
+        root.global.trigger 'change_party', model
+
+        if district_model = root.partyList.where(name: district)[0]
+            root.global.district = district_model
+
+        parse_weights = (weights) ->
+            if not _.isString weights
+                return
+            parsed = {}
+            _.each weights.split('i'), (item) ->
+                [key, value] = item.split('x')
+                parsed[Number(key)] = Number(value)
+            return parsed
+        if weights = parse_weights(weights)
+            root.appView.agendaListView.reset weights
+        $('.party_page').show()
 
 ############### INIT ##############
 
+setupPartyList = ->
+    root.partyList = new root.PartyList
+    partyListFetching = root.partyList.fetch()
+    root.partyListView = new root.DropdownContainer
+        el: '.parties'
+        collection: root.partyList
+        autofetch: false
+    root.partyListView.on 'change', (model) =>
+        console.log "Party changed: ", this, arguments
+        root.router.navigate model.get('name'), trigger: true
+    return partyListFetching
+
 $ ->
     root.global = _.extend({}, Backbone.Events)
+    root.router = new root.Router
     root.appView = new root.AppView
+    partyListFetching = setupPartyList()
+    $.when(partyListFetching).done ->
+        Backbone.history.start()
     return
