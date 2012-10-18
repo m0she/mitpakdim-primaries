@@ -282,11 +282,14 @@ class root.DropdownContainer extends root.ListView
         if @options.show_null_option
             @$el.html("<option>-----</option>")
     events: 'change': ->
-        @trigger 'change', @collection.at (@$el.children().index @$('option:selected')) - 1
+        index = @$el.children().index @$('option:selected')
+        index -= 1 if @options.show_null_option
+        @trigger 'change', @collection.at index
 
 class root.CandidatesMainView extends Backbone.View
     el: ".candidates_container"
     initialize: ->
+        @filteringView = new root.FilterView
         @membersView = new root.CandidateListView
             el: ".members"
             collection: @.options.members
@@ -296,6 +299,8 @@ class root.CandidatesMainView extends Backbone.View
 
         @membersView.on 'all', @propagate
         @newbiesView.on 'all', @propagate
+        @filteringView.on 'change', (filter) =>
+            @filterChange filter
 
     propagate: =>
         @trigger arguments...
@@ -307,6 +312,7 @@ root.CandidatesMainView.create_delegation = (func_name) ->
     @::[func_name] = delegate
 
 root.CandidatesMainView.create_delegation 'calculate'
+root.CandidatesMainView.create_delegation 'filterChange'
 
 class root.PartyFilteredListView extends root.ListView
     options:
@@ -319,7 +325,7 @@ class root.PartyFilteredListView extends root.ListView
         @setCollection new @unfilteredCollection.constructor undefined,
             comparator: (candidate) ->
                 return -candidate.get 'score'
-        root.global_events.on 'change_party', @partyChange
+        root.global.on 'change_party', @partyChange
 
     filterByParty: (party) ->
         @unfilteredCollection.where party_name: party.get('name')
@@ -332,8 +338,12 @@ class root.CandidateListView extends root.PartyFilteredListView
         itemView: root.CandidateView
 
     partyChange: (party) =>
-        super(party)
+        super(arguments...)
         @collection.fetchAgendas()
+
+    filterChange: (filter_model) ->
+        filtered = @filterByParty root.global.party
+        @collection.reset _.filter(filtered, filter_model.get('func'))
 
     calculate: (weights) ->
         if not @collection.agendas_fetching
@@ -416,6 +426,25 @@ class root.RecommendationsView extends root.PartyFilteredListView
         _.each recommendation.get('positive_list')['newbies'], changeModelFunc(@options.newbies, 'recommendation_positive')
         _.each recommendation.get('negative_list')['newbies'], changeModelFunc(@options.newbies, 'recommendation_negative')
 
+filter_data = [
+    id: "all"
+    name: "All"
+    func: (obj) -> true
+  ,
+    id: "district"
+    name: "District"
+    func: (obj) ->
+        obj.get('district') == root.global.district.get('id')
+]
+
+class root.FilterView extends root.DropdownContainer
+    el: '.filtering'
+    options: _.extend({}, @__super__.options,
+        collection: new Backbone.Collection(filter_data)
+        autofetch: false
+        show_null_option: false
+    )
+
 class root.AppView extends Backbone.View
     el: '#app_root'
     initialize: =>
@@ -424,13 +453,16 @@ class root.AppView extends Backbone.View
             collection: new root.PartyList
         @partyListView.on 'change', (model) =>
             console.log "Changed: ", this, arguments
-            root.global_events.trigger 'change_party', model
+            root.global.party = model
+            root.global.trigger 'change_party', model
 
         @districtListView = new root.DropdownContainer
             el: '.districts'
             collection: new Backbone.Collection
             autofetch: false
-        root.global_events.on 'change_party', (party) =>
+        @districtListView.on 'change', (model) =>
+            root.global.district = model
+        root.global.on 'change_party', (party) =>
             # Assume members are already fetched - TODO - fix
             districts_names = _.chain(_.union(
                     @members.where party_name: party.get('name'),
@@ -482,6 +514,6 @@ class root.AppView extends Backbone.View
 ############### INIT ##############
 
 $ ->
-    root.global_events = _.extend({}, Backbone.Events)
+    root.global = _.extend({}, Backbone.Events)
     root.appView = new root.AppView
     return
