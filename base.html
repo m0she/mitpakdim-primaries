@@ -14,6 +14,8 @@
           })();
 
         </script>
+        <script src='http://connect.facebook.net/en_US/all.js'></script>
+
         <script type="text/javascript" src="lib/underscore-1.4.2.js"></script>
         <script type="text/javascript" src="lib/jquery-1.8.2.js"></script>
         <script type="text/javascript" src="lib/jquery-ui-1.9.0/js/jquery-ui-1.9.0.custom.js"></script>
@@ -30,6 +32,7 @@
     </head>
     <body>
         Hello!
+        <div id='fb-root'></div>
         <div id="app_root">
             <div class="main_page">
                 <div class="parties_container">Party: <select class="parties"></select></div>
@@ -45,6 +48,7 @@
                     <div class="newbies_container">New candidates: <div class="newbies"></div></div>
                     <div class="recommendations_container">Recommendations: <div class="recommendations"></div></div>
             </div>
+            <input type="button" value="Share" />
         </div>
         <script type="text/template" id='candidate_template'><% 
                 print("+".repeat(_.size(recommendation_positive)));

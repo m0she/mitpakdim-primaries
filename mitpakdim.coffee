@@ -5,6 +5,38 @@ root = window.mit ?= {}
 String::repeat = ( num ) ->
     new Array( num + 1 ).join( this )
 
+root.facebookShare = (link) ->
+    FB.ui
+            app_id: '362298483856854'
+            display: 'popup'
+            redirect_uri: 'http://www.mitpakdim.co.il/site/primaries/redirect'
+            method: 'feed'
+            name: 'Mitpakdim Primarieser'
+            link: link
+            caption: 'The way to choose your candidates'
+            description: 'Learn about your candidates by prioritizing the agendas you care about'
+        ,
+            -> console.log('Facebook callback', @, arguments)
+
+getShareLink = (weights) ->
+    base = window.location.href.replace /#.*$/, ''
+    party = root.global.party.get('name')
+    district = if root.global.district then root.global.district.get('name') else 'x'
+    fragment = "#{party}/#{district}/#{encode_weights(weights)}"
+    base + '#' + fragment
+
+parse_weights = (weights) ->
+    if not _.isString weights
+        return
+    parsed = {}
+    _.each weights.split('i'), (item) ->
+        [key, value] = item.split('x')
+        parsed[Number(key)] = Number(value)
+    return parsed
+
+encode_weights = (weights) ->
+    ("#{key}x#{value}" for key,value of weights).join('i')
+
 ############### JQUERY UI EXTENSIONS ##############
 
 $.widget "mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {
@@ -217,9 +249,6 @@ class root.ListViewItem extends root.TemplateView
     tagName: "div"
     get_template: ->
         "<a href='#'><%= name %></a>"
-    events:
-        'click': ->
-            @trigger 'click', @model
 
 class root.CandidateView extends root.ListViewItem
     className: "candidate_instance"
@@ -391,7 +420,14 @@ class root.AgendaListView extends root.ListView
     reset: (weights) ->
         @collection.each (agenda, index) ->
             if _.isNumber(value = weights[agenda.id])
+                agenda.set "uservalue", value
                 @.$(".slider").eq(index).agendaSlider "value", value
+
+    getWeights: ->
+        weights = {}
+        @collection.each (agenda) =>
+            weights[agenda.id] = agenda.get("uservalue")
+        weights
 
     showMarkersForCandidate: (candidate_model) ->
         candidate_agendas = candidate_model.getAgendas()
@@ -500,11 +536,12 @@ class root.AppView extends Backbone.View
             members: @members
             newbies: @newbies
 
+    events:
+        'click input:button[value=Share]': (event) ->
+            root.facebookShare getShareLink @agendaListView.getWeights()
+
     calculate: ->
-        weights = {}
-        @agendaListView.collection.each (agenda) =>
-            weights[agenda.id] = agenda.get("uservalue")
-        @candidatesView.calculate(weights)
+        @candidatesView.calculate @agendaListView.getWeights()
 
 ############### ROUTERS ##############
 class root.Router extends Backbone.Router
@@ -513,12 +550,14 @@ class root.Router extends Backbone.Router
         ':party': 'party'
         ':party/:district': 'party'
         ':party/:district/:weights': 'party'
+        ':party//:weights': 'partyNoDistrict'
 
     entrance: ->
         console.log 'main'
         $('.main_page').show()
         $('.party_page').hide()
 
+    partyNoDistrict: (party, weights) -> @party(party, undefined, weights)
     party: (party, district, weights) ->
         console.log 'party', arguments...
         model = root.partyList.where(name: party)[0]
@@ -530,14 +569,6 @@ class root.Router extends Backbone.Router
         if district_model = root.partyList.where(name: district)[0]
             root.global.district = district_model
 
-        parse_weights = (weights) ->
-            if not _.isString weights
-                return
-            parsed = {}
-            _.each weights.split('i'), (item) ->
-                [key, value] = item.split('x')
-                parsed[Number(key)] = Number(value)
-            return parsed
         if weights = parse_weights(weights)
             root.appView.agendaListView.reset weights
         $('.party_page').show()
@@ -563,4 +594,5 @@ $ ->
     partyListFetching = setupPartyList()
     $.when(partyListFetching).done ->
         Backbone.history.start()
+    FB.init()
     return
