@@ -213,7 +213,15 @@ class root.TemplateView extends Backbone.View
         @$el.html( @template(@model.toJSON()) )
         @
 
-class root.CandidateView extends root.TemplateView
+class root.ListViewItem extends root.TemplateView
+    tagName: "div"
+    get_template: ->
+        "<a href='#'><%= name %></a>"
+    events:
+        'click': ->
+            @trigger 'click', @model
+
+class root.CandidateView extends root.ListViewItem
     className: "candidate_instance"
     initialize: ->
         super(arguments...)
@@ -222,14 +230,7 @@ class root.CandidateView extends root.TemplateView
             @render()
     get_template: ->
         $("#candidate_template").html()
-    events:
-        'click': ->
-            @trigger 'click', @model
 
-class root.ListViewItem extends root.TemplateView
-    tagName: "div"
-    get_template: ->
-        "<a href='#'><%= name %></a>"
 
 class root.ListView extends root.TemplateView
     initialize: ->
@@ -245,6 +246,8 @@ class root.ListView extends root.TemplateView
         @collection.on "reset", @addAll
         if @options.autofetch
             @collection.fetch()
+        else
+            @addAll()
 
     addOne: (modelInstance) =>
         view = new @options.itemView({ model:modelInstance })
@@ -273,9 +276,13 @@ class root.DropdownItem extends Backbone.View
 class root.DropdownContainer extends root.ListView
     tagName: "select"
     options:
-        itemView: root.DropdownItem
+        itemView: root.DropdownItem,
+        show_null_option: true
     initEmptyView: =>
-        @$el.html("<option>-----</option>")
+        if @options.show_null_option
+            @$el.html("<option>-----</option>")
+    events: 'change': ->
+        @trigger 'change', @collection.at (@$el.children().index @$('option:selected')) - 1
 
 class root.CandidatesMainView extends Backbone.View
     el: ".candidates_container"
@@ -314,8 +321,11 @@ class root.PartyFilteredListView extends root.ListView
                 return -candidate.get 'score'
         root.global_events.on 'change_party', @partyChange
 
+    filterByParty: (party) ->
+        @unfilteredCollection.where party_name: party.get('name')
+
     partyChange: (party) =>
-        @collection.reset @unfilteredCollection.where(party_name: party)
+        @collection.reset @filterByParty party
 
 class root.CandidateListView extends root.PartyFilteredListView
     options:
@@ -410,9 +420,31 @@ class root.AppView extends Backbone.View
     el: '#app_root'
     initialize: =>
         @partyListView = new root.DropdownContainer
+            el: '.parties'
             collection: new root.PartyList
-        @$(".parties").append(@partyListView.$el)
-        @partyListView.$el.on 'change', @partyChange
+        @partyListView.on 'change', (model) =>
+            console.log "Changed: ", this, arguments
+            root.global_events.trigger 'change_party', model
+
+        @districtListView = new root.DropdownContainer
+            el: '.districts'
+            collection: new Backbone.Collection
+            autofetch: false
+        root.global_events.on 'change_party', (party) =>
+            # Assume members are already fetched - TODO - fix
+            districts_names = _.chain(_.union(
+                    @members.where party_name: party.get('name'),
+                    @newbies.where party_name: party.get('name')
+                )).pluck('attributes').pluck('district').uniq().value()
+            districts = []
+            for district in districts_names
+                if not district
+                    continue
+                districts.push
+                    id: district
+                    name: district
+
+            @districtListView.collection.reset districts
 
         @agendaListView = new root.AgendaListView
 
@@ -438,10 +470,6 @@ class root.AppView extends Backbone.View
             collection: @recommendations
             members: @members
             newbies: @newbies
-
-    partyChange: =>
-        console.log "Changed: ", this, arguments
-        root.global_events.trigger 'change_party', @partyListView.$('option:selected').text()
 
     calculate: ->
         weights = {}

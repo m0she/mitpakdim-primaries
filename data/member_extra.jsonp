@@ -2,6 +2,7 @@ if (!window.mit) window.mit = {};
 window.mit.member_extra = {
     "objects": [
         {
+            "previous_vote_count": 7, 
             "id": 214, 
             "district": "north"
         }, 

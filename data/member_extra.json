@@ -2,7 +2,8 @@
     "objects" : [
         {
             "id": 214,
-            "district": "north"
+            "district": "north",
+            "previous_vote_count": 7
         },
         {
             "id": 771,
