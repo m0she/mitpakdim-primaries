@@ -513,14 +513,7 @@ class root.AppView extends Backbone.View
 
         @agendaListView = new root.AgendaListView
 
-        @agendaListView.collection.on 'change', =>
-            console.log "Model changed", arguments
-            if @recalc_timeout
-                clearTimeout @recalc_timeout
-            recalc_timeout = setTimeout =>
-                @recalc_timeout = null
-                @calculate()
-            , 100
+        @agendaListView.collection.on 'change', _.debounce @calculate, 500
 
         @members = new root.MemberList
         @newbies = new root.NewbiesList
@@ -540,7 +533,7 @@ class root.AppView extends Backbone.View
         'click input:button[value=Share]': (event) ->
             root.facebookShare getShareLink @agendaListView.getWeights()
 
-    calculate: ->
+    calculate: =>
         @candidatesView.calculate @agendaListView.getWeights()
 
 ############### ROUTERS ##############

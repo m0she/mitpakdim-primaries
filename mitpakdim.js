@@ -1024,6 +1024,8 @@
     __extends(AppView, _super);
 
     function AppView() {
+      this.calculate = __bind(this.calculate, this);
+
       this.initialize = __bind(this.initialize, this);
       return AppView.__super__.constructor.apply(this, arguments);
     }
@@ -1061,17 +1063,7 @@
         return _this.districtListView.collection.reset(districts);
       });
       this.agendaListView = new root.AgendaListView;
-      this.agendaListView.collection.on('change', function() {
-        var recalc_timeout;
-        console.log("Model changed", arguments);
-        if (_this.recalc_timeout) {
-          clearTimeout(_this.recalc_timeout);
-        }
-        return recalc_timeout = setTimeout(function() {
-          _this.recalc_timeout = null;
-          return _this.calculate();
-        }, 100);
-      });
+      this.agendaListView.collection.on('change', _.debounce(this.calculate, 500));
       this.members = new root.MemberList;
       this.newbies = new root.NewbiesList;
       this.candidatesView = new root.CandidatesMainView({
