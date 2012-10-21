@@ -20,8 +20,8 @@ root.facebookShare = (link) ->
 
 getShareLink = (weights) ->
     base = window.location.href.replace /#.*$/, ''
-    party = root.global.party.get('name')
-    district = if root.global.district then root.global.district.get('name') else 'x'
+    party = root.global.party.id
+    district = if root.global.district then root.global.district.id else 'x'
     fragment = "#{party}/#{district}/#{encode_weights(weights)}"
     base + '#' + fragment
 
@@ -557,16 +557,16 @@ class root.Router extends Backbone.Router
         $('.main_page').show()
         $('.party_page').hide()
 
-    partyNoDistrict: (party, weights) -> @party(party, undefined, weights)
-    party: (party, district, weights) ->
+    partyNoDistrict: (party_id, weights) -> @party(party_id, undefined, weights)
+    party: (party_id, district_id, weights) ->
         console.log 'party', arguments...
-        model = root.partyList.where(name: party)[0]
+        model = root.partyList.where(id: Number(party_id))[0]
         if not model
             return root.router.navigate '', trigger: true
         root.global.party = model
         root.global.trigger 'change_party', model
 
-        if district_model = root.partyList.where(name: district)[0]
+        if district_model = root.partyList.where(id: Number(district_id))[0]
             root.global.district = district_model
 
         if weights = parse_weights(weights)
@@ -584,7 +584,7 @@ setupPartyList = ->
         autofetch: false
     root.partyListView.on 'change', (model) =>
         console.log "Party changed: ", this, arguments
-        root.router.navigate model.get('name'), trigger: true
+        root.router.navigate model.id.toString(), trigger: true
     return partyListFetching
 
 $ ->

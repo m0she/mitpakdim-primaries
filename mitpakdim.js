@@ -30,8 +30,8 @@
   getShareLink = function(weights) {
     var base, district, fragment, party;
     base = window.location.href.replace(/#.*$/, '');
-    party = root.global.party.get('name');
-    district = root.global.district ? root.global.district.get('name') : 'x';
+    party = root.global.party.id;
+    district = root.global.district ? root.global.district.id : 'x';
     fragment = "" + party + "/" + district + "/" + (encode_weights(weights));
     return base + '#' + fragment;
   };
@@ -1125,15 +1125,15 @@
       return $('.party_page').hide();
     };
 
-    Router.prototype.partyNoDistrict = function(party, weights) {
-      return this.party(party, void 0, weights);
+    Router.prototype.partyNoDistrict = function(party_id, weights) {
+      return this.party(party_id, void 0, weights);
     };
 
-    Router.prototype.party = function(party, district, weights) {
+    Router.prototype.party = function(party_id, district_id, weights) {
       var district_model, model;
       console.log.apply(console, ['party'].concat(__slice.call(arguments)));
       model = root.partyList.where({
-        name: party
+        id: Number(party_id)
       })[0];
       if (!model) {
         return root.router.navigate('', {
@@ -1143,7 +1143,7 @@
       root.global.party = model;
       root.global.trigger('change_party', model);
       if (district_model = root.partyList.where({
-        name: district
+        id: Number(district_id)
       })[0]) {
         root.global.district = district_model;
       }
@@ -1169,7 +1169,7 @@
     });
     root.partyListView.on('change', function(model) {
       console.log("Party changed: ", _this, arguments);
-      return root.router.navigate(model.get('name'), {
+      return root.router.navigate(model.id.toString(), {
         trigger: true
       });
     });
