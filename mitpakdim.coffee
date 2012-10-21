@@ -552,8 +552,8 @@ class root.Router extends Backbone.Router
         ':party//:weights': 'partyNoDistrict'
 
     entrance: ->
-        console.log 'main'
-        $('.main_page').show()
+        console.log 'entrance'
+        $('.entrance_page').show()
         $('.party_page').hide()
 
     partyNoDistrict: (party_id, weights) -> @party(party_id, undefined, weights)
@@ -571,6 +571,7 @@ class root.Router extends Backbone.Router
         if weights = parse_weights(weights)
             root.appView.agendaListView.reset weights
         $('.party_page').show()
+        $('.entrance_page').hide()
 
 ############### INIT ##############
 
@@ -593,6 +594,8 @@ $ ->
     partyListFetching = setupPartyList()
     $.when(partyListFetching).done ->
         Backbone.history.start()
+        $('#loading').hide()
+        $('#app_root').show()
     FB.init()
     FB.Event.subscribe 'message.send', (targetUrl) ->
         ga.social 'facebook', 'send', targetUrl

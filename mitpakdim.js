@@ -1123,8 +1123,8 @@
     };
 
     Router.prototype.entrance = function() {
-      console.log('main');
-      $('.main_page').show();
+      console.log('entrance');
+      $('.entrance_page').show();
       return $('.party_page').hide();
     };
 
@@ -1153,7 +1153,8 @@
       if (weights = parse_weights(weights)) {
         root.appView.agendaListView.reset(weights);
       }
-      return $('.party_page').show();
+      $('.party_page').show();
+      return $('.entrance_page').hide();
     };
 
     return Router;
@@ -1186,7 +1187,9 @@
     root.appView = new root.AppView;
     partyListFetching = setupPartyList();
     $.when(partyListFetching).done(function() {
-      return Backbone.history.start();
+      Backbone.history.start();
+      $('#loading').hide();
+      return $('#app_root').show();
     });
     FB.init();
     FB.Event.subscribe('message.send', function(targetUrl) {
