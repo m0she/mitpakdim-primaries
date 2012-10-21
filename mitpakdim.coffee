@@ -320,9 +320,17 @@ class root.DropdownContainer extends root.ListView
         index -= 1 if @options.show_null_option
         @trigger 'change', @collection.at index
 
+class root.CurrentPartyView extends Backbone.View
+    el: ".current_party"
+    render: =>
+        @$('.current_party_name').text root.global.party.get('name')
+
 class root.CandidatesMainView extends Backbone.View
     el: ".candidates_container"
     initialize: ->
+        @currentPartyView = new root.CurrentPartyView
+        root.global.on 'change_party', =>
+            @currentPartyView.render()
         @filteringView = new root.FilterView
         @membersView = new root.CandidateListView
             el: ".members"
@@ -537,6 +545,8 @@ class root.AppView extends Backbone.View
     events:
         'click input:button[value=Share]': (event) ->
             root.facebookShare getShareLink @agendaListView.getWeights()
+        'click input:button#change_party': (event) ->
+            root.router.navigate '', trigger: true
 
     calculate: (agenda) =>
         @candidatesView.calculate @agendaListView.getWeights()

@@ -691,6 +691,25 @@
 
   })(root.ListView);
 
+  root.CurrentPartyView = (function(_super) {
+
+    __extends(CurrentPartyView, _super);
+
+    function CurrentPartyView() {
+      this.render = __bind(this.render, this);
+      return CurrentPartyView.__super__.constructor.apply(this, arguments);
+    }
+
+    CurrentPartyView.prototype.el = ".current_party";
+
+    CurrentPartyView.prototype.render = function() {
+      return this.$('.current_party_name').text(root.global.party.get('name'));
+    };
+
+    return CurrentPartyView;
+
+  })(Backbone.View);
+
   root.CandidatesMainView = (function(_super) {
 
     __extends(CandidatesMainView, _super);
@@ -704,6 +723,10 @@
 
     CandidatesMainView.prototype.initialize = function() {
       var _this = this;
+      this.currentPartyView = new root.CurrentPartyView;
+      root.global.on('change_party', function() {
+        return _this.currentPartyView.render();
+      });
       this.filteringView = new root.FilterView;
       this.membersView = new root.CandidateListView({
         el: ".members",
@@ -1094,6 +1117,11 @@
     AppView.prototype.events = {
       'click input:button[value=Share]': function(event) {
         return root.facebookShare(getShareLink(this.agendaListView.getWeights()));
+      },
+      'click input:button#change_party': function(event) {
+        return root.router.navigate('', {
+          trigger: true
+        });
       }
     };
 
