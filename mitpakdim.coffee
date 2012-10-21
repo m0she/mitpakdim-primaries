@@ -594,6 +594,7 @@ setupPartyList = ->
         autofetch: false
     root.partyListView.on 'change', (model) =>
         console.log "Party changed: ", this, arguments
+        ga.event 'party', 'choose', 'party_'+model.id.toString()
         root.router.navigate model.id.toString(), trigger: true
     return partyListFetching
 

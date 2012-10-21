@@ -1201,6 +1201,7 @@
     });
     root.partyListView.on('change', function(model) {
       console.log("Party changed: ", _this, arguments);
+      ga.event('party', 'choose', 'party_' + model.id.toString());
       return root.router.navigate(model.id.toString(), {
         trigger: true
       });
