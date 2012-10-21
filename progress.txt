@@ -12,10 +12,11 @@ Done:
 * Fetch MemberAgenda's after partyChange
 * Add correlation percentage
 * Add member indicator on slider
+* Mutex on calculate - make retriable
 
 Todo:
 * Add spinners
-* Mutex on calculate - make retriable
+* Title, favicon
 
 * Needs mitpakdim axx
   * Facebook integration

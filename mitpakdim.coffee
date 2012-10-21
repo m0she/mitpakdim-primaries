@@ -6,6 +6,7 @@ String::repeat = ( num ) ->
     new Array( num + 1 ).join( this )
 
 root.facebookShare = (link) ->
+    ga.social 'Facebook', 'share', link
     FB.ui
             app_id: '362298483856854'
             display: 'popup'
@@ -36,6 +37,12 @@ parse_weights = (weights) ->
 
 encode_weights = (weights) ->
     ("#{key}x#{value}" for key,value of weights).join('i')
+
+ga =
+    event: (args...) ->
+        _gaq.push ['_trackEvent'].concat args
+    social: (args...) ->
+        _gaq.push ['_trackSocial'].concat args
 
 ############### JQUERY UI EXTENSIONS ##############
 
@@ -254,9 +261,7 @@ class root.CandidateView extends root.ListViewItem
     className: "candidate_instance"
     initialize: ->
         super(arguments...)
-        @model.on 'change', =>
-            console.log 'candidate changed: ', @, arguments
-            @render()
+        @model.on 'change', @render
     get_template: ->
         $("#candidate_template").html()
 
@@ -513,7 +518,7 @@ class root.AppView extends Backbone.View
 
         @agendaListView = new root.AgendaListView
 
-        @agendaListView.collection.on 'change', _.debounce @calculate, 500
+        @agendaListView.collection.on 'change:uservalue', _.debounce @calculate, 500
 
         @members = new root.MemberList
         @newbies = new root.NewbiesList
@@ -533,8 +538,9 @@ class root.AppView extends Backbone.View
         'click input:button[value=Share]': (event) ->
             root.facebookShare getShareLink @agendaListView.getWeights()
 
-    calculate: =>
+    calculate: (agenda) =>
         @candidatesView.calculate @agendaListView.getWeights()
+        ga.event 'weight', 'change', 'agenda_' + agenda.id, agenda.get('uservalue')
 
 ############### ROUTERS ##############
 class root.Router extends Backbone.Router
@@ -588,4 +594,6 @@ $ ->
     $.when(partyListFetching).done ->
         Backbone.history.start()
     FB.init()
+    FB.Event.subscribe 'message.send', (targetUrl) ->
+        ga.social 'facebook', 'send', targetUrl
     return
