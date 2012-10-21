@@ -78,15 +78,13 @@
   };
 
   $.widget("mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {
-    _create: (function() {
-      var cached_old_slider_create, new_create_func;
-      cached_old_slider_create = $.ui.slider.prototype._create;
-      new_create_func = function() {
-        this.element.append('<div class="ui-slider-mid-marker"></div>');
-        return cached_old_slider_create.apply(this);
-      };
-      return new_create_func;
-    })(),
+    _create: function() {
+      this.element.append('<div class="ui-slider-back"></div>');
+      this.element.append('<div class="ui-slider-mid-range"></div>');
+      this.element.append('<div class="ui-slider-minus-button"></div>');
+      this.element.append('<div class="ui-slider-plus-button"></div>');
+      return $.ui.slider.prototype._create.apply(this);
+    },
     setCandidateMarker: function(value) {
       var candidate_marker_classname, handle;
       candidate_marker_classname = "ui-slider-candidate-marker";
@@ -97,6 +95,28 @@
       return this.element.find("." + candidate_marker_classname).css({
         left: value + "%"
       });
+    },
+    _refreshValue: function() {
+      var range, value;
+      $.ui.slider.prototype._refreshValue.apply(this);
+      value = this.value();
+      range = this.element.find(".ui-slider-mid-range");
+      console.log("range ", range);
+      this.element.removeClass("minus plus");
+      if (value < 0) {
+        this.element.addClass("minus");
+        range.css({
+          left: (50 + value / 2) + "%",
+          right: "50%"
+        });
+      }
+      if (value > 0) {
+        this.element.addClass("plus");
+        return range.css({
+          left: "50%",
+          right: (50 - value / 2) + "%"
+        });
+      }
     }
   }));
 

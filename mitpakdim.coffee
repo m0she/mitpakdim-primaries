@@ -47,13 +47,12 @@ ga =
 ############### JQUERY UI EXTENSIONS ##############
 
 $.widget "mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {
-    _create : (->
-            cached_old_slider_create = $.ui.slider::_create
-            new_create_func = ->
-                @element.append '<div class="ui-slider-mid-marker"></div>'
-                cached_old_slider_create.apply @
-            new_create_func
-        )()
+    _create : ->
+        @element.append '<div class="ui-slider-back"></div>'
+        @element.append '<div class="ui-slider-mid-range"></div>'
+        @element.append '<div class="ui-slider-minus-button"></div>'
+        @element.append '<div class="ui-slider-plus-button"></div>'
+        $.ui.slider::_create.apply @
     setCandidateMarker : (value) ->
         candidate_marker_classname = "ui-slider-candidate-marker"
         if not @element.find(".#{candidate_marker_classname}").length
@@ -61,6 +60,22 @@ $.widget "mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {
             handle.before "<div class='#{candidate_marker_classname}'></div>"
         @element.find(".#{candidate_marker_classname}").css
             left : value + "%"
+    _refreshValue : ->
+        $.ui.slider::_refreshValue.apply @
+        value = @value()
+        range = @element.find ".ui-slider-mid-range"
+        console.log "range ", range
+        @element.removeClass "minus plus"
+        if value < 0
+            @element.addClass "minus"
+            range.css
+                left : (50 + value / 2) + "%"
+                right : "50%"
+        if value > 0
+            @element.addClass "plus"
+            range.css
+                left : "50%"
+                right : (50 - value / 2) + "%"
 })
 
 ############### SYNC ##############

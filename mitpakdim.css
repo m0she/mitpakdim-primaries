@@ -16,14 +16,61 @@
     display : inline-block;
     vertical-align : top;
 }
-.agenda_item .ui-slider-mid-marker {
-    background-color : #eee;
+.agenda_item .ui-slider {
+    border-width : 0;
+    height : 22px;
+    width : 386px;
+}
+.agenda_item .ui-slider-back {
+    border-width : 0;
+    background-image : url("./static/slider_back.png");
+    height : 22px;
+    width : 408px;
     position : absolute;
     top : 0;
-    left : 50%;
-    z-index : 1;
-    height : 100%;
-    width : 0.2em;
+    left : -11px;
+}
+.agenda_item .ui-slider-handle.ui-state-default {
+    border-width : 0;
+    background : none;
+    background-image : url("./static/grey_handle.png");
+    height : 27px;
+    width : 27px;
+    top : -3px;
+    outline : none;
+}
+.agenda_item .ui-slider.plus .ui-slider-handle.ui-state-default {
+    background-image : url("./static/blue_handle.png");
+}
+.agenda_item .ui-slider.minus .ui-slider-handle.ui-state-default {
+    background-image : url("./static/yellow_handle.png");
+    height : 28px;
+    width : 28px;
+}
+.agenda_item .ui-slider .ui-slider-mid-range {
+    background-color : #00507d;
+    height : 20px;
+    position : absolute;
+    top : 1px;
+}
+.agenda_item .ui-slider.minus .ui-slider-mid-range {
+    background-color : #fcbb2b;
+}
+.agenda_item .ui-slider-minus-button {
+    background-image : url("./static/minus_sign.png");
+    position : absolute;
+    top : 0;
+    left : -11px;
+    height : 22px;
+    width : 22px;
+}
+.agenda_item .ui-slider-plus-button {
+    background-image : url("./static/plus_sign.png");
+    position : absolute;
+    top : 0;
+    right : -11px;
+    height : 22px;
+    width : 22px;
 }
 .agenda_item .ui-slider-candidate-marker {
     background-color : #d1e0be;
