@@ -556,6 +556,12 @@
       return "<a href='#'><%= name %></a>";
     };
 
+    ListViewItem.prototype.events = {
+      click: function() {
+        return this.trigger('click', this.model);
+      }
+    };
+
     return ListViewItem;
 
   })(root.TemplateView);

@@ -271,6 +271,8 @@ class root.ListViewItem extends root.TemplateView
     tagName: "div"
     get_template: ->
         "<a href='#'><%= name %></a>"
+    events: click: ->
+        @trigger 'click', @model
 
 class root.CandidateView extends root.ListViewItem
     className: "candidate_instance"
