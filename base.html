@@ -52,8 +52,8 @@
                     </div>
                     <div class="filtering_container">Filter: <select class="filtering"></select></div>
                     <div class="lists_wrapper">
-                        <div class="members_container">Members: <div class="members"></div></div>
-                        <div class="newbies_container">New candidates: <div class="newbies"></div></div>
+                        <div class="members_container">Members: <div class="members"></div></div
+                        ><div class="newbies_container">New candidates: <div class="newbies"></div></div>
                     </div>
                     <div class="recommendations_container">Recommendations: <div class="recommendations"></div></div>
             </div>
@@ -65,7 +65,8 @@
             <% 
                 print("+".repeat(_.size(recommendation_positive)));
                 print("-".repeat(_.size(recommendation_negative)));
-            %><span class="name"><%= name %></span>: <span><%= score %></span>
+                %><span class="name"><%= name %></span>
+                <div class="score<% if (score > 0) { %> positive<% } %>"><%= simplified_score %></div>
             </div>
         </script>
         <script type="text/template" id='agenda_template'>

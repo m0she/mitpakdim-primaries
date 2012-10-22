@@ -535,8 +535,12 @@
       return _.template(this.get_template()).apply(null, arguments);
     };
 
+    TemplateView.prototype.digestData = function(data) {
+      return data;
+    };
+
     TemplateView.prototype.render = function() {
-      this.$el.html(this.template(this.model.toJSON()));
+      this.$el.html(this.template(this.digestData(this.model.toJSON())));
       return this;
     };
 
@@ -585,6 +589,18 @@
 
     CandidateView.prototype.get_template = function() {
       return $("#candidate_template").html();
+    };
+
+    CandidateView.prototype.digestData = function(data) {
+      if (_.isString(data.score)) {
+        data.simplified_score = "";
+      } else {
+        data.simplified_score = Math.round(data.score);
+        if (data.simplified_score > 0) {
+          data.simplified_score += "+";
+        }
+      }
+      return data;
     };
 
     return CandidateView;

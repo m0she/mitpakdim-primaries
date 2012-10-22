@@ -265,8 +265,10 @@ class root.RecommendationList extends root.JSONPCollection
 class root.TemplateView extends Backbone.View
     template: ->
         _.template( @get_template() )(arguments...)
+    digestData : (data) ->
+        data
     render: =>
-        @$el.html( @template(@model.toJSON()) )
+        @$el.html( @template(@digestData @model.toJSON()) )
         @
 
 class root.ListViewItem extends root.TemplateView
@@ -283,7 +285,14 @@ class root.CandidateView extends root.ListViewItem
         @model.on 'change', @render
     get_template: ->
         $("#candidate_template").html()
-
+    digestData : (data) ->
+        if _.isString data.score
+            data.simplified_score = ""
+        else
+            data.simplified_score = Math.round(data.score)
+            if data.simplified_score > 0
+                data.simplified_score += "+"
+        data
 
 class root.ListView extends root.TemplateView
     initialize: ->

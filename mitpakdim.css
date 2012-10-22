@@ -100,9 +100,11 @@
     vertical-align : top;
 }
 .candidates_container .lists_wrapper {
-    border-color : #fff;
+    border-color : #03527e;
     border-width : 1px;
+    border-style : solid;
     white-space : nowrap;
+    box-shadow : 0 0 10px #666;
 }
 .candidates_container .lists_wrapper > * {
     white-space : normal;
@@ -112,13 +114,20 @@
     width : 50%;
 }
 .newbies_container {
+    background-image : url("./static/newbies_back.png");
+    background-repeat : repeat;
+
     display : inline-block;
     width : 50%;
 }
 .candidate_instance {
+    border-color : #03537e;
+    border-width : 0 0 1px 0;
+    border-style : solid;
     cursor : pointer;
     min-height : 60px;
-    padding : 10px 0 10px 0;
+    margin : 0 10px 0 10px;
+    padding : 5px 0 5px 0;
     position : relative;
 }
 .candidate_instance .image {
@@ -128,7 +137,7 @@
     border-style : solid;
     border-radius : 2px;
     position : absolute;
-    top : 10px;
+    top : 5px;
     right : 0;
     height : 60px;
     width : 47px;
@@ -140,4 +149,18 @@
 .candidate_instance .info {
     display : inline-block;
     margin-right : 60px;
+    margin-left : 20px;
+}
+.candidate_instance .name {
+    font-size : 14px;
+    font-weight : 700;
+}
+.candidate_instance .score {
+    color : #f8b617;
+    position : absolute;
+    left : 10px;
+    top : 10px;
+}
+.candidate_instance .score.positive {
+    color : #00507d;
 }
