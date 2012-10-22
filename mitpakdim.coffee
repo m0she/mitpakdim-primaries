@@ -64,7 +64,6 @@ $.widget "mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {
         $.ui.slider::_refreshValue.apply @
         value = @value()
         range = @element.find ".ui-slider-mid-range"
-        console.log "range ", range
         @element.removeClass "minus plus"
         if value < 0
             @element.addClass "minus"

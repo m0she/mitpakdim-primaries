@@ -101,7 +101,6 @@
       $.ui.slider.prototype._refreshValue.apply(this);
       value = this.value();
       range = this.element.find(".ui-slider-mid-range");
-      console.log("range ", range);
       this.element.removeClass("minus plus");
       if (value < 0) {
         this.element.addClass("minus");
