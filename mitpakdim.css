@@ -165,6 +165,17 @@ window, body {
 .candidates_container .lists_wrapper > * {
     white-space : normal;
 }
+.members_container .title,
+.newbies_container .title {
+    color : #03537e;
+    font-size : 14px;
+    font-weight : 400;
+    margin-right : 10px;
+}
+.members_container .title strong,
+.newbies_container .title strong {
+    font-weight : 700;
+}
 .members_container {
     display : inline-block;
     width : 50%;
@@ -219,6 +230,8 @@ window, body {
 }
 .candidate_instance .score {
     color : #f8b617;
+    font-size : 13px;
+    font-weight : 700;
     position : absolute;
     left : 10px;
     top : 10px;
