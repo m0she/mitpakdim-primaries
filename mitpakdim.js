@@ -275,9 +275,12 @@
 
     })(Backbone.Model);
 
-    Member.prototype.fetchAgendas = function(force) {
+    Member.prototype.fetchAgendas = function() {
       var _this = this;
-      if (this.agendas_fetching.state() !== "resolved" || force) {
+      if (this.agendas_fetching.state() !== "resolved") {
+        if (this.get('agendas')) {
+          return this.agendas_fetching.resolve();
+        }
         this.memberAgendas = new MemberAgenda({
           id: this.id
         });
@@ -403,7 +406,7 @@
     MemberList.prototype.url = "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name";
 
     MemberList.prototype.syncOptions = {
-      repo: window.mit.member,
+      repo: window.mit.combined_members,
       sync: root.JSONPCachableSync('members')
     };
 

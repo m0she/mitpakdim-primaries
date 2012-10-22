@@ -156,8 +156,11 @@ class root.Member extends root.Candidate
                 ret[agenda.id] = agenda.score
             ret
 
-    fetchAgendas: (force) ->
-        if @agendas_fetching.state() != "resolved" or force
+    fetchAgendas: () ->
+        if @agendas_fetching.state() != "resolved"
+            if @get('agendas')
+                return @agendas_fetching.resolve()
+
             @memberAgendas = new MemberAgenda
                 id: @id
             @memberAgendas.fetch
@@ -202,7 +205,7 @@ class root.MemberList extends root.JSONPCollection
     model: root.Member
     url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name"
     syncOptions:
-        repo: window.mit.member
+        repo: window.mit.combined_members
         sync: root.JSONPCachableSync('members')
 
     sync: (method, model, options) ->
