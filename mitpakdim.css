@@ -21,7 +21,7 @@ window, body {
     width : 234px;
     position : absolute;
     top : 2px;
-    left : 20px;
+    left : 10px;
 }
 .page_top_bar .text {
     background-image : url("./static/header_text.png");
@@ -54,6 +54,9 @@ window, body {
     background-image : url("./static/instructions.png");
     height : 130px;
     width : 465px;
+}
+.agendas {
+    margin-top : 30px;
 }
 .agenda_item {
     border-width : 0 0 1px 0;
@@ -134,7 +137,7 @@ window, body {
 .candidates_container {
     width : 500px;
     display : inline-block;
-    margin-right : 30px;
+    margin-right : 40px;
     vertical-align : top;
 }
 .candidates_container .lists_wrapper {
