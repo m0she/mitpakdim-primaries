@@ -465,6 +465,8 @@ class root.AgendaListView extends root.ListView
                     stop : @onStop
                 @
             onStop : (event, ui) =>
+                if ui.value <= 5 and ui.value >= -5
+                    $(ui.handle).closest('.slider').agendaSlider "value", 0
                 @model.set
                     uservalue : ui.value
             get_template: ->

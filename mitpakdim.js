@@ -961,6 +961,9 @@
         };
 
         _Class.prototype.onStop = function(event, ui) {
+          if (ui.value <= 5 && ui.value >= -5) {
+            $(ui.handle).closest('.slider').agendaSlider("value", 0);
+          }
           return this.model.set({
             uservalue: ui.value
           });
