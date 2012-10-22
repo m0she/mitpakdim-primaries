@@ -127,7 +127,7 @@ class root.Candidate extends Backbone.Model
         participating: true
 
     getAgendas: ->
-        if @agendas_fetching.state() != "resolved"
+        if @agendas_fetching.state() != "resolved" and not @get('agendas')
             console.log "Trying to use candidate agendas before fetched", @, @agendas_fetching
             throw "Agendas not fetched yet!"
         @get('agendas')

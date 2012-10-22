@@ -209,7 +209,7 @@
     };
 
     Candidate.prototype.getAgendas = function() {
-      if (this.agendas_fetching.state() !== "resolved") {
+      if (this.agendas_fetching.state() !== "resolved" && !this.get('agendas')) {
         console.log("Trying to use candidate agendas before fetched", this, this.agendas_fetching);
         throw "Agendas not fetched yet!";
       }
