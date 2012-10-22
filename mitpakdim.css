@@ -143,6 +143,7 @@ window, body {
     height : 92px;
     width : 135px;
     position : relative;
+    z-index : 2;
 }
 .current_party .current_party_name {
     padding-top : 30px;
@@ -159,8 +160,19 @@ window, body {
     border-color : #03527e;
     border-width : 1px;
     border-style : solid;
-    white-space : nowrap;
     box-shadow : 0 0 10px #666;
+    padding-bottom : 20px;
+    position : relative;
+    white-space : nowrap;
+}
+.candidates_container .lists_wrapper .left_background {
+    background-image : url("./static/newbies_back.png");
+    background-repeat : repeat;
+    position  : absolute;
+    left : 0;
+    top : 0;
+    bottom : 0;
+    width : 50%;
 }
 .candidates_container .lists_wrapper > * {
     white-space : normal;
@@ -180,13 +192,15 @@ window, body {
     display : inline-block;
     width : 50%;
     padding-top : 40px;
+    vertical-align : top;
+    position : relative;
 }
 .newbies_container {
-    background-image : url("./static/newbies_back.png");
-    background-repeat : repeat;
     padding-top : 40px;
     display : inline-block;
     width : 50%;
+    vertical-align : top;
+    position : relative;
 }
 .candidate_instance {
     border-color : #03537e;
