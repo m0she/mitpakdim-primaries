@@ -1,5 +1,36 @@
-#app_root {
+window, body {
+    margin : 0;
+    padding : 0;
     direction : rtl;
+}
+.page_top_bar {
+    background-image : url("./static/header_back.png");
+    background-repeat : repeat;
+    height : 66px;
+    width : 100%;
+}
+.page_top_bar .content {
+    width : 960px;
+    margin : 0 auto;
+    position : relative;
+    padding-top : 20px;
+}
+.page_top_bar .icons {
+    background-image : url("./static/header_icons.png");
+    height : 62px;
+    width : 234px;
+    position : absolute;
+    top : 2px;
+    left : 20px;
+}
+.page_top_bar .text {
+    background-image : url("./static/header_text.png");
+    height : 38px;
+    width : 552px;
+}
+
+
+#app_root {
     font-family : Arial, Helvetica, Sans-serif;
     vertical-align : top;
     width : 100%;
