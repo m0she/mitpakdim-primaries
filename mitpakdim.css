@@ -133,6 +133,21 @@ window, body {
 }
 
 
+.current_party {
+    width : 100%;
+    margin-bottom : -40px;
+}
+.current_party .current_party_logo {
+    background-image : url("./static/party_logo_back.png");
+    margin : 0 auto;
+    height : 92px;
+    width : 135px;
+    position : relative;
+}
+.current_party .current_party_name {
+    padding-top : 30px;
+    text-align : center;
+}
 
 .candidates_container {
     width : 500px;
@@ -153,11 +168,12 @@ window, body {
 .members_container {
     display : inline-block;
     width : 50%;
+    padding-top : 40px;
 }
 .newbies_container {
     background-image : url("./static/newbies_back.png");
     background-repeat : repeat;
-
+    padding-top : 40px;
     display : inline-block;
     width : 50%;
 }
