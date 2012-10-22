@@ -212,6 +212,11 @@ window, body {
     font-size : 14px;
     font-weight : 700;
 }
+.candidate_instance .role_description {
+    font-size : 12px;
+    font-weight : 400;
+    line-height : 120%;
+}
 .candidate_instance .score {
     color : #f8b617;
     position : absolute;
