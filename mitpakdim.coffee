@@ -343,10 +343,12 @@ class root.DropdownContainer extends root.ListView
     initEmptyView: =>
         if @options.show_null_option
             @$el.html("<option>-----</option>")
+    current: {}
     events: 'change': ->
         index = @$el.children().index @$('option:selected')
         index -= 1 if @options.show_null_option
-        @trigger 'change', @collection.at index
+        @current = if index >= 0 then @collection.at index else {}
+        @trigger 'change', @current
 
 class root.CurrentPartyView extends Backbone.View
     el: ".current_party"
@@ -527,20 +529,36 @@ class root.FilterView extends root.DropdownContainer
         show_null_option: false
     )
 
-class root.AppView extends Backbone.View
-    el: '#app_root'
+class root.EntranceView extends Backbone.View
+    el: '.entrance_page'
     initialize: =>
+        @partyListView = new root.DropdownContainer
+            el: '.parties'
+            collection: root.lists.partyList
+            autofetch: false
+        @partyListView.on 'change', (model) =>
+            console.log "Party changed: ", this, arguments
         @districtListView = new root.DropdownContainer
             el: '.districts'
             collection: new Backbone.Collection
             autofetch: false
         @districtListView.on 'change', (model) =>
             root.global.district = model
-        root.global.on 'change_party', (party) =>
+
+        @$el.on 'click', '#party_selected', =>
+            [party,district] = [@partyListView.current, @districtListView.current]
+            if district.id
+                ga.event 'party', 'choose', "party_#{party.id}_district_#{district.id}"
+            else
+                ga.event 'party', 'choose', "party_#{party.id}"
+
+            root.router.navigate party.id.toString(), trigger: true
+
+        @partyListView.on 'change', (party) =>
             # Assume members are already fetched - TODO - fix
             districts_names = _.chain(_.union(
-                    @members.where party_name: party.get('name'),
-                    @newbies.where party_name: party.get('name')
+                    root.lists.members.where party_name: party.get('name'),
+                    root.lists.newbies.where party_name: party.get('name')
                 )).pluck('attributes').pluck('district').uniq().value()
             districts = []
             for district in districts_names
@@ -552,23 +570,25 @@ class root.AppView extends Backbone.View
 
             @districtListView.collection.reset districts
 
+class root.AppView extends Backbone.View
+    el: '#app_root'
+
+    initialize: =>
         @agendaListView = new root.AgendaListView
 
         @agendaListView.collection.on 'change:uservalue', _.debounce @calculate, 500
 
-        @members = new root.MemberList
-        @newbies = new root.NewbiesList
         @candidatesView = new root.CandidatesMainView
-            members: @members
-            newbies: @newbies
+            members: root.lists.members
+            newbies: root.lists.newbies
 
         @candidatesView.on 'click', (candidate) =>
             @agendaListView.showMarkersForCandidate candidate
         @recommendations = new root.RecommendationList
         @recommendationsView = new root.RecommendationsView
             collection: @recommendations
-            members: @members
-            newbies: @newbies
+            members: root.lists.members
+            newbies: root.lists.newbies
 
     events:
         'click input:button[value=Share]': (event) ->
@@ -597,13 +617,13 @@ class root.Router extends Backbone.Router
     partyNoDistrict: (party_id, weights) -> @party(party_id, undefined, weights)
     party: (party_id, district_id, weights) ->
         console.log 'party', arguments...
-        model = root.partyList.where(id: Number(party_id))[0]
+        model = root.lists.partyList.where(id: Number(party_id))[0]
         if not model
             return root.router.navigate '', trigger: true
         root.global.party = model
         root.global.trigger 'change_party', model
 
-        if district_model = root.partyList.where(id: Number(district_id))[0]
+        if district_model = root.lists.partyList.where(id: Number(district_id))[0]
             root.global.district = district_model
 
         if weights = parse_weights(weights)
@@ -614,23 +634,18 @@ class root.Router extends Backbone.Router
 ############### INIT ##############
 
 setupPartyList = ->
-    root.partyList = new root.PartyList
-    partyListFetching = root.partyList.fetch()
-    root.partyListView = new root.DropdownContainer
-        el: '.parties'
-        collection: root.partyList
-        autofetch: false
-    root.partyListView.on 'change', (model) =>
-        console.log "Party changed: ", this, arguments
-        ga.event 'party', 'choose', 'party_'+model.id.toString()
-        root.router.navigate model.id.toString(), trigger: true
-    return partyListFetching
+    root.lists ?= {}
+    root.lists.partyList = new root.PartyList
+    root.lists.members = new root.MemberList
+    root.lists.newbies = new root.NewbiesList
+    return root.lists.partyList.fetch()
 
 $ ->
     root.global = _.extend({}, Backbone.Events)
     root.router = new root.Router
-    root.appView = new root.AppView
     partyListFetching = setupPartyList()
+    root.appView = new root.AppView
+    root.entranceView = new root.EntranceView 
     $.when(partyListFetching).done ->
         Backbone.history.start()
         $('#loading').hide()

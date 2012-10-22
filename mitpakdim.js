@@ -720,6 +720,8 @@
       }
     };
 
+    DropdownContainer.prototype.current = {};
+
     DropdownContainer.prototype.events = {
       'change': function() {
         var index;
@@ -727,7 +729,8 @@
         if (this.options.show_null_option) {
           index -= 1;
         }
-        return this.trigger('change', this.collection.at(index));
+        this.current = index >= 0 ? this.collection.at(index) : {};
+        return this.trigger('change', this.current);
       }
     };
 
@@ -1096,21 +1099,27 @@
 
   })(root.DropdownContainer);
 
-  root.AppView = (function(_super) {
+  root.EntranceView = (function(_super) {
 
-    __extends(AppView, _super);
+    __extends(EntranceView, _super);
 
-    function AppView() {
-      this.calculate = __bind(this.calculate, this);
-
+    function EntranceView() {
       this.initialize = __bind(this.initialize, this);
-      return AppView.__super__.constructor.apply(this, arguments);
+      return EntranceView.__super__.constructor.apply(this, arguments);
     }
 
-    AppView.prototype.el = '#app_root';
+    EntranceView.prototype.el = '.entrance_page';
 
-    AppView.prototype.initialize = function() {
+    EntranceView.prototype.initialize = function() {
       var _this = this;
+      this.partyListView = new root.DropdownContainer({
+        el: '.parties',
+        collection: root.lists.partyList,
+        autofetch: false
+      });
+      this.partyListView.on('change', function(model) {
+        return console.log("Party changed: ", _this, arguments);
+      });
       this.districtListView = new root.DropdownContainer({
         el: '.districts',
         collection: new Backbone.Collection,
@@ -1119,11 +1128,23 @@
       this.districtListView.on('change', function(model) {
         return root.global.district = model;
       });
-      root.global.on('change_party', function(party) {
+      this.$el.on('click', '#party_selected', function() {
+        var district, party, _ref1;
+        _ref1 = [_this.partyListView.current, _this.districtListView.current], party = _ref1[0], district = _ref1[1];
+        if (district.id) {
+          ga.event('party', 'choose', "party_" + party.id + "_district_" + district.id);
+        } else {
+          ga.event('party', 'choose', "party_" + party.id);
+        }
+        return root.router.navigate(party.id.toString(), {
+          trigger: true
+        });
+      });
+      return this.partyListView.on('change', function(party) {
         var district, districts, districts_names, _i, _len;
-        districts_names = _.chain(_.union(_this.members.where({
+        districts_names = _.chain(_.union(root.lists.members.where({
           party_name: party.get('name')
-        }), _this.newbies.where({
+        }), root.lists.newbies.where({
           party_name: party.get('name')
         }))).pluck('attributes').pluck('district').uniq().value();
         districts = [];
@@ -1139,13 +1160,32 @@
         }
         return _this.districtListView.collection.reset(districts);
       });
+    };
+
+    return EntranceView;
+
+  })(Backbone.View);
+
+  root.AppView = (function(_super) {
+
+    __extends(AppView, _super);
+
+    function AppView() {
+      this.calculate = __bind(this.calculate, this);
+
+      this.initialize = __bind(this.initialize, this);
+      return AppView.__super__.constructor.apply(this, arguments);
+    }
+
+    AppView.prototype.el = '#app_root';
+
+    AppView.prototype.initialize = function() {
+      var _this = this;
       this.agendaListView = new root.AgendaListView;
       this.agendaListView.collection.on('change:uservalue', _.debounce(this.calculate, 500));
-      this.members = new root.MemberList;
-      this.newbies = new root.NewbiesList;
       this.candidatesView = new root.CandidatesMainView({
-        members: this.members,
-        newbies: this.newbies
+        members: root.lists.members,
+        newbies: root.lists.newbies
       });
       this.candidatesView.on('click', function(candidate) {
         return _this.agendaListView.showMarkersForCandidate(candidate);
@@ -1153,8 +1193,8 @@
       this.recommendations = new root.RecommendationList;
       return this.recommendationsView = new root.RecommendationsView({
         collection: this.recommendations,
-        members: this.members,
-        newbies: this.newbies
+        members: root.lists.members,
+        newbies: root.lists.newbies
       });
     };
 
@@ -1207,7 +1247,7 @@
     Router.prototype.party = function(party_id, district_id, weights) {
       var district_model, model;
       console.log.apply(console, ['party'].concat(__slice.call(arguments)));
-      model = root.partyList.where({
+      model = root.lists.partyList.where({
         id: Number(party_id)
       })[0];
       if (!model) {
@@ -1217,7 +1257,7 @@
       }
       root.global.party = model;
       root.global.trigger('change_party', model);
-      if (district_model = root.partyList.where({
+      if (district_model = root.lists.partyList.where({
         id: Number(district_id)
       })[0]) {
         root.global.district = district_model;
@@ -1234,31 +1274,23 @@
   })(Backbone.Router);
 
   setupPartyList = function() {
-    var partyListFetching,
-      _this = this;
-    root.partyList = new root.PartyList;
-    partyListFetching = root.partyList.fetch();
-    root.partyListView = new root.DropdownContainer({
-      el: '.parties',
-      collection: root.partyList,
-      autofetch: false
-    });
-    root.partyListView.on('change', function(model) {
-      console.log("Party changed: ", _this, arguments);
-      ga.event('party', 'choose', 'party_' + model.id.toString());
-      return root.router.navigate(model.id.toString(), {
-        trigger: true
-      });
-    });
-    return partyListFetching;
+    var _ref1;
+    if ((_ref1 = root.lists) == null) {
+      root.lists = {};
+    }
+    root.lists.partyList = new root.PartyList;
+    root.lists.members = new root.MemberList;
+    root.lists.newbies = new root.NewbiesList;
+    return root.lists.partyList.fetch();
   };
 
   $(function() {
     var partyListFetching;
     root.global = _.extend({}, Backbone.Events);
     root.router = new root.Router;
-    root.appView = new root.AppView;
     partyListFetching = setupPartyList();
+    root.appView = new root.AppView;
+    root.entranceView = new root.EntranceView;
     $.when(partyListFetching).done(function() {
       Backbone.history.start();
       $('#loading').hide();
