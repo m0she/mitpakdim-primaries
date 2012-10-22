@@ -122,9 +122,10 @@ class root.Agenda extends Backbone.Model
         uservalue: 0
 
 class root.Candidate extends Backbone.Model
-    defaults:
-        score: 'N/A'
-        participating: true
+    defaults :
+        selected : false
+        score : 'N/A'
+        participating : true
 
     getAgendas: ->
         if @agendas_fetching.state() != "resolved" and not @get('agendas')
@@ -275,8 +276,10 @@ class root.ListViewItem extends root.TemplateView
     tagName: "div"
     get_template: ->
         "<a href='#'><%= name %></a>"
-    events: click: ->
-        @trigger 'click', @model
+    events :
+        click : "onClick"
+    onClick : ->
+        @trigger 'click', @model, @
 
 class root.CandidateView extends root.ListViewItem
     className: "candidate_instance"
@@ -293,6 +296,13 @@ class root.CandidateView extends root.ListViewItem
             if data.simplified_score > 0
                 data.simplified_score += "+"
         data
+    render : =>
+        super()
+        @.$el.toggleClass "selected", @model.get "selected"
+        @
+    onClick : ->
+        super arguments...
+        @model.set selected : true
 
 class root.ListView extends root.TemplateView
     initialize: ->
@@ -582,8 +592,9 @@ class root.AppView extends Backbone.View
             members: root.lists.members
             newbies: root.lists.newbies
 
-        @candidatesView.on 'click', (candidate) =>
-            @agendaListView.showMarkersForCandidate candidate
+        root.lists.members.on "change:selected", @updateSelectedCandidate
+        root.lists.newbies.on "change:selected", @updateSelectedCandidate
+
         @recommendations = new root.RecommendationList
         @recommendationsView = new root.RecommendationsView
             collection: @recommendations
@@ -599,6 +610,19 @@ class root.AppView extends Backbone.View
     calculate: (agenda) =>
         @candidatesView.calculate @agendaListView.getWeights()
         ga.event 'weight', 'change', 'agenda_' + agenda.id, agenda.get('uservalue')
+
+    updateSelectedCandidate : (candidate_model, selected_attr_value) =>
+        if not selected_attr_value
+            return
+        @agendaListView.showMarkersForCandidate candidate_model
+        @deselectCandidates candidate_model
+
+    deselectCandidates : (exclude_model) ->
+        for collection in [root.lists.members, root.lists.newbies]
+            _.each collection.where(selected : true), (model) ->
+                if (not exclude_model) or (model isnt exclude_model)
+                    model.set selected : false
+        return
 
 ############### ROUTERS ##############
 class root.Router extends Backbone.Router
@@ -645,7 +669,7 @@ $ ->
     root.router = new root.Router
     partyListFetching = setupPartyList()
     root.appView = new root.AppView
-    root.entranceView = new root.EntranceView 
+    root.entranceView = new root.EntranceView
     $.when(partyListFetching).done ->
         Backbone.history.start()
         $('#loading').hide()

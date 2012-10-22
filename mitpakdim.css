@@ -193,10 +193,25 @@ window, body {
     border-width : 0 0 1px 0;
     border-style : solid;
     cursor : pointer;
-    min-height : 60px;
     margin : 0 10px 0 10px;
     padding : 5px 0 5px 0;
     position : relative;
+}
+.candidate_instance .content {
+    min-height : 60px;
+}
+.candidate_instance.selected .content {
+    background-color : #f4f5e9;
+    border-color : #069d4a;
+    border-width : 2px;
+    border-style : solid;
+    border-radius : 4px;
+    min-height : 90px;
+    padding : 5px;
+}
+.candidate_instance.selected .image {
+    height : 80px;
+    width : 60px;
 }
 .candidate_instance .image {
     background-color : #eee;
@@ -204,19 +219,16 @@ window, body {
     border-width : 1px;
     border-style : solid;
     border-radius : 2px;
-    position : absolute;
-    top : 5px;
-    right : 0;
+    float : right;
     height : 60px;
     width : 47px;
     overflow : hidden;
+    margin-left : 10px;
 }
 .candidate_instance .image img {
     width : 100%;
 }
 .candidate_instance .info {
-    display : inline-block;
-    margin-right : 60px;
     margin-left : 20px;
 }
 .candidate_instance .name {

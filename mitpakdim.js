@@ -204,6 +204,7 @@
     }
 
     Candidate.prototype.defaults = {
+      selected: false,
       score: 'N/A',
       participating: true
     };
@@ -563,9 +564,11 @@
     };
 
     ListViewItem.prototype.events = {
-      click: function() {
-        return this.trigger('click', this.model);
-      }
+      click: "onClick"
+    };
+
+    ListViewItem.prototype.onClick = function() {
+      return this.trigger('click', this.model, this);
     };
 
     return ListViewItem;
@@ -577,6 +580,7 @@
     __extends(CandidateView, _super);
 
     function CandidateView() {
+      this.render = __bind(this.render, this);
       return CandidateView.__super__.constructor.apply(this, arguments);
     }
 
@@ -601,6 +605,19 @@
         }
       }
       return data;
+    };
+
+    CandidateView.prototype.render = function() {
+      CandidateView.__super__.render.call(this);
+      this.$el.toggleClass("selected", this.model.get("selected"));
+      return this;
+    };
+
+    CandidateView.prototype.onClick = function() {
+      CandidateView.__super__.onClick.apply(this, arguments);
+      return this.model.set({
+        selected: true
+      });
     };
 
     return CandidateView;
@@ -1171,6 +1188,8 @@
     __extends(AppView, _super);
 
     function AppView() {
+      this.updateSelectedCandidate = __bind(this.updateSelectedCandidate, this);
+
       this.calculate = __bind(this.calculate, this);
 
       this.initialize = __bind(this.initialize, this);
@@ -1180,16 +1199,14 @@
     AppView.prototype.el = '#app_root';
 
     AppView.prototype.initialize = function() {
-      var _this = this;
       this.agendaListView = new root.AgendaListView;
       this.agendaListView.collection.on('change:uservalue', _.debounce(this.calculate, 500));
       this.candidatesView = new root.CandidatesMainView({
         members: root.lists.members,
         newbies: root.lists.newbies
       });
-      this.candidatesView.on('click', function(candidate) {
-        return _this.agendaListView.showMarkersForCandidate(candidate);
-      });
+      root.lists.members.on("change:selected", this.updateSelectedCandidate);
+      root.lists.newbies.on("change:selected", this.updateSelectedCandidate);
       this.recommendations = new root.RecommendationList;
       return this.recommendationsView = new root.RecommendationsView({
         collection: this.recommendations,
@@ -1212,6 +1229,31 @@
     AppView.prototype.calculate = function(agenda) {
       this.candidatesView.calculate(this.agendaListView.getWeights());
       return ga.event('weight', 'change', 'agenda_' + agenda.id, agenda.get('uservalue'));
+    };
+
+    AppView.prototype.updateSelectedCandidate = function(candidate_model, selected_attr_value) {
+      if (!selected_attr_value) {
+        return;
+      }
+      this.agendaListView.showMarkersForCandidate(candidate_model);
+      return this.deselectCandidates(candidate_model);
+    };
+
+    AppView.prototype.deselectCandidates = function(exclude_model) {
+      var collection, _i, _len, _ref1;
+      _ref1 = [root.lists.members, root.lists.newbies];
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        collection = _ref1[_i];
+        _.each(collection.where({
+          selected: true
+        }), function(model) {
+          if ((!exclude_model) || (model !== exclude_model)) {
+            return model.set({
+              selected: false
+            });
+          }
+        });
+      }
     };
 
     return AppView;
