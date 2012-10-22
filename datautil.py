@@ -1,11 +1,15 @@
-import json, os, re
+import json, os, re, sys
+
+print 'args: ', sys.argv
+current_dir = os.getcwd()
+os.chdir(os.path.join(os.path.dirname(sys.argv[0]), 'data'))
 
 paths = dict(
-    member = r'data\member.json',
-    agenda = r'data\agenda.json',
-    party = r'data\party.json',
-    combined = r'data\combined_newbies.json',
-    member_agendas = r'data\member-agendas\member-agendas.%d.json',
+    member = r'member.json',
+    agenda = r'agenda.json',
+    party = r'party.json',
+    combined = r'combined_newbies.json',
+    member_agendas = r'member-agendas\member-agendas.%d.json',
 )
 def load_json(path):
     try:
@@ -13,6 +17,7 @@ def load_json(path):
     except:
         print 'Error with %s' % path
 data = { k:load_json(v) for k,v in paths.items() if '%' not in v }
+os.chdir(current_dir)
 
 prefix = 'if (!window.mit) window.mit = {};\nwindow.mit.%s = '
 def do_file(path, variable=None):
@@ -28,6 +33,8 @@ def do_file(path, variable=None):
     out_file.write(prefix % (variable))
     json.dump(data, out_file, indent=4)
 
+if len(sys.argv) > 1 and sys.argv[1] == 'jsonp':
+    do_file(sys.argv[2])
 
 def process_member_agenda(member_agenda):
     res = {}
@@ -40,6 +47,9 @@ def combine_agendas(member_path, member_agendas_path, output_path):
     for member in data['objects']:
         #print 'Handling member: %d' % member['id']
         member_agenda = json.load(open(member_agendas_path % member['id']))
-        member['name'] = 'XX' + member['name']
+        member['name'] = member['name']
         member['agendas'] = process_member_agenda(member_agenda)
     json.dump(data, open(output_path, 'w'), indent=4)
+
+if len(sys.argv) > 1 and sys.argv[1] == 'combine':
+    combine_agendas(paths['member'], paths['member_agendas'], sys.argv[2])
