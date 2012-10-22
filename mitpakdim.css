@@ -68,7 +68,7 @@ window, body {
 }
 .agenda_item .ui-slider {
     border-width : 0;
-    margin: 10px auto 0 auto;
+    margin: 15px auto 0 auto;
     height : 22px;
     width : 386px;
 }
