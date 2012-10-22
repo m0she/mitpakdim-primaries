@@ -1,5 +1,6 @@
 #app_root {
     direction : rtl;
+    font-family : Arial, Helvetica, Sans-serif;
     vertical-align : top;
     width : 960px;
     margin : 0 auto;
@@ -16,8 +17,17 @@
     display : inline-block;
     vertical-align : top;
 }
+.agenda_item {
+    border-width : 0 0 1px 0;
+    border-color : #348dc5;
+    border-style : solid;
+    font-size : 14px;
+    font-weight : 700;
+    padding : 10px 0 15px 0;
+}
 .agenda_item .ui-slider {
     border-width : 0;
+    margin-top : 10px;
     height : 22px;
     width : 386px;
 }
