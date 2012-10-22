@@ -2,11 +2,11 @@
     direction : rtl;
     font-family : Arial, Helvetica, Sans-serif;
     vertical-align : top;
-    width : 960px;
-    margin : 0 auto;
+    width : 100%;
 }
 .agendas_section {
-    width : 100%;
+    margin : 0 auto;
+    width : 960px;
     white-space : nowrap;
 }
 .agendas_section > * {
@@ -90,10 +90,28 @@
     height : 100%;
     width : 0.5em;
 }
+
+
+
 .candidates_container {
-    width : 510px;
+    width : 500px;
     display : inline-block;
+    margin-right : 30px;
     vertical-align : top;
+}
+.candidates_container .lists_wrapper {
+    white-space : nowrap;
+}
+.candidates_container .lists_wrapper > * {
+    white-space : normal;
+}
+.members_container {
+    display : inline-block;
+    width : 50%;
+}
+.newbies_container {
+    display : inline-block;
+    width : 50%;
 }
 .candidate_instance {
     cursor : pointer;
