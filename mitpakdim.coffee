@@ -664,7 +664,11 @@ setupPartyList = ->
     root.lists.partyList = new root.PartyList
     root.lists.members = new root.MemberList
     root.lists.newbies = new root.NewbiesList
-    return root.lists.partyList.fetch()
+    return [
+        root.lists.newbies.fetch()
+        root.lists.members.fetch()
+        root.lists.partyList.fetch()
+    ]
 
 $ ->
     root.global = _.extend({}, Backbone.Events)
@@ -672,7 +676,7 @@ $ ->
     partyListFetching = setupPartyList()
     root.appView = new root.AppView
     root.entranceView = new root.EntranceView
-    $.when(partyListFetching).done ->
+    $.when(partyListFetching...).done ->
         Backbone.history.start()
         $('#loading').hide()
         $('#app_root').show()

@@ -1326,7 +1326,7 @@
     root.lists.partyList = new root.PartyList;
     root.lists.members = new root.MemberList;
     root.lists.newbies = new root.NewbiesList;
-    return root.lists.partyList.fetch();
+    return [root.lists.newbies.fetch(), root.lists.members.fetch(), root.lists.partyList.fetch()];
   };
 
   $(function() {
@@ -1336,7 +1336,7 @@
     partyListFetching = setupPartyList();
     root.appView = new root.AppView;
     root.entranceView = new root.EntranceView;
-    $.when(partyListFetching).done(function() {
+    $.when.apply($, partyListFetching).done(function() {
       Backbone.history.start();
       $('#loading').hide();
       return $('#app_root').show();
