@@ -59,10 +59,14 @@
             </div>
             <input type="button" value="Share" />
         </div>
-        <script type="text/template" id='candidate_template'><% 
+        <script type="text/template" id='candidate_template'>
+            <div class="image"><% if (typeof img_url != 'undefined') { %><img src="<%= img_url %>" /><% } %></div>
+            <div class="info">
+            <% 
                 print("+".repeat(_.size(recommendation_positive)));
                 print("-".repeat(_.size(recommendation_negative)));
             %><span class="name"><%= name %></span>: <span><%= score %></span>
+            </div>
         </script>
         <script type="text/template" id='agenda_template'>
             <span class="name"><%= name %></span>

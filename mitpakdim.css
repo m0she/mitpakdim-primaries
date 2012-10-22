@@ -100,6 +100,8 @@
     vertical-align : top;
 }
 .candidates_container .lists_wrapper {
+    border-color : #fff;
+    border-width : 1px;
     white-space : nowrap;
 }
 .candidates_container .lists_wrapper > * {
@@ -115,4 +117,27 @@
 }
 .candidate_instance {
     cursor : pointer;
+    min-height : 60px;
+    padding : 10px 0 10px 0;
+    position : relative;
+}
+.candidate_instance .image {
+    background-color : #eee;
+    border-color : #348dc5;
+    border-width : 1px;
+    border-style : solid;
+    border-radius : 2px;
+    position : absolute;
+    top : 10px;
+    right : 0;
+    height : 60px;
+    width : 47px;
+    overflow : hidden;
+}
+.candidate_instance .image img {
+    width : 100%;
+}
+.candidate_instance .info {
+    display : inline-block;
+    margin-right : 60px;
 }
