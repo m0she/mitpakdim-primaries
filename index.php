@@ -5,7 +5,7 @@ $REVISION = 1;
 $MIN_USER = 1001;
 $MAX_USER = 9999;
 
-$user = $_REQUEST['user'];
+$user = $_POST['user'];
 $value = hexdec($user);
 
 $verify = bcmod($value, 946384521);
@@ -21,7 +21,7 @@ if (($userid >= $MIN_USER) &&
     #header('Location: base.php');
     readfile('base.html');
 } else {
-    echo "<h2>Bad login</h2>";
+    header('Location: /primaries/');
 }
 
 ?>
