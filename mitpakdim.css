@@ -124,12 +124,12 @@ window, body {
     width : 22px;
 }
 .agenda_item .ui-slider-candidate-marker {
-    background-color : #d1e0be;
+    background-image : url("./static/candidate_marker.png");
     position : absolute;
-    top : 0;
+    top : -13px;
     z-index : 1;
-    height : 100%;
-    width : 0.5em;
+    height : 35px;
+    width : 12px;
 }
 
 
