@@ -1291,7 +1291,7 @@
 
     Router.prototype.party = function(party_id, district_id, weights) {
       var district_model, model;
-      console.log.apply(console, ['party'].concat(__slice.call(arguments)));
+      console.log('party', arguments);
       model = root.lists.partyList.where({
         id: Number(party_id)
       })[0];

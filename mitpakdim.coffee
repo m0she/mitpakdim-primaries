@@ -642,7 +642,7 @@ class root.Router extends Backbone.Router
 
     partyNoDistrict: (party_id, weights) -> @party(party_id, undefined, weights)
     party: (party_id, district_id, weights) ->
-        console.log 'party', arguments...
+        console.log 'party', arguments
         model = root.lists.partyList.where(id: Number(party_id))[0]
         if not model
             return root.router.navigate '', trigger: true
