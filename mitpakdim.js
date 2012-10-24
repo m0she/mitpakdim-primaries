@@ -925,6 +925,9 @@
         return _.reduce(arr, do_sum, 0);
       };
       weight_sum = abs_sum(weights);
+      if (!weight_sum) {
+        return;
+      }
       console.log("Weights: ", weights, weight_sum);
       return this.collection.each(function(candidate) {
         return candidate.set('score', _.reduce(candidate.getAgendas(), function(memo, score, id) {
@@ -974,6 +977,7 @@
         _Class.prototype.onStop = function(event, ui) {
           if (ui.value <= 5 && ui.value >= -5) {
             $(ui.handle).closest('.slider').agendaSlider("value", 0);
+            ui.value = 0;
           }
           return this.model.set({
             uservalue: ui.value

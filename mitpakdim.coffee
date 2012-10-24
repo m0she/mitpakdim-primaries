@@ -450,6 +450,7 @@ class root.CandidateListView extends root.PartyFilteredListView
                 memo += Math.abs item
             _.reduce(arr, do_sum, 0)
         weight_sum = abs_sum(weights)
+        return if not weight_sum
 
         console.log "Weights: ", weights, weight_sum
         @collection.each (candidate) =>
@@ -477,6 +478,7 @@ class root.AgendaListView extends root.ListView
             onStop : (event, ui) =>
                 if ui.value <= 5 and ui.value >= -5
                     $(ui.handle).closest('.slider').agendaSlider "value", 0
+                    ui.value = 0
                 @model.set
                     uservalue : ui.value
             get_template: ->
