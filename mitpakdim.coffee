@@ -84,10 +84,21 @@ root.syncEx = (options_override) ->
         Backbone.sync(method, model, _.extend({}, options, options_override))
 
 root.JSONPCachableSync = (callback_name) ->
+    collisionDict = {}
+    collisionPrevention = ->
+        callback = callback_name or 'cachable'
+        callback_value = if _.isFunction callback then callback() else callback
+        index = collisionDict[callback_value] or 0
+        collisionDict[callback_value] = index + 1
+        if index
+            callback_value += "__#{index}"
+        #console.log "jsonp callback: #{callback_value}"
+        return callback_value
+
     root.syncEx
         cache: true
         dataType: 'jsonp'
-        jsonpCallback: callback_name or 'cachable'
+        jsonpCallback: collisionPrevention
 
 root.syncOptions =
     dataType: 'jsonp'
@@ -193,22 +204,23 @@ class root.PartyList extends root.JSONPCollection
     model: root.MiscModel
     url: "http://www.oknesset.org/api/v2/party/"
     syncOptions:
-        repo: window.mit.party
+        disable_repo: window.mit.party
 
 class root.AgendaList extends root.JSONPCollection
     model: root.Agenda
     url: "http://www.oknesset.org/api/v2/agenda/"
     syncOptions:
-        repo: window.mit.agenda
+        disable_repo: window.mit.agenda
 
 class root.MemberList extends root.JSONPCollection
     model: root.Member
     url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name"
     syncOptions:
-        repo: window.mit.combined_members
+        disable_repo: window.mit.combined_members
         sync: root.JSONPCachableSync('members')
 
     sync: (method, model, options) ->
+        console.log 'MemberList sync', @, arguments
         members_options = _.extend {}, options,
             success: undefined,
             error: undefined,
@@ -375,9 +387,11 @@ class root.CandidatesMainView extends Backbone.View
         @membersView = new root.CandidateListView
             el: ".members"
             collection: @.options.members
+            autofetch: false
         @newbiesView = new root.CandidateListView
             el: ".newbies"
             collection: @.options.newbies
+            autofetch: false
 
         @membersView.on 'all', @propagate
         @newbiesView.on 'all', @propagate
@@ -397,13 +411,9 @@ root.CandidatesMainView.create_delegation 'calculate'
 root.CandidatesMainView.create_delegation 'filterChange'
 
 class root.PartyFilteredListView extends root.ListView
-    options:
-        autofetch: false
-
     initialize: ->
         super(arguments...)
         @unfilteredCollection = @.collection
-        @unfilteredCollection.fetch()
         @setCollection new @unfilteredCollection.constructor undefined,
             comparator: (candidate) ->
                 return -candidate.get 'score'

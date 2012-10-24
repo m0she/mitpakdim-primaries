@@ -126,10 +126,23 @@
   };
 
   root.JSONPCachableSync = function(callback_name) {
+    var collisionDict, collisionPrevention;
+    collisionDict = {};
+    collisionPrevention = function() {
+      var callback, callback_value, index;
+      callback = callback_name || 'cachable';
+      callback_value = _.isFunction(callback) ? callback() : callback;
+      index = collisionDict[callback_value] || 0;
+      collisionDict[callback_value] = index + 1;
+      if (index) {
+        callback_value += "__" + index;
+      }
+      return callback_value;
+    };
     return root.syncEx({
       cache: true,
       dataType: 'jsonp',
-      jsonpCallback: callback_name || 'cachable'
+      jsonpCallback: collisionPrevention
     });
   };
 
@@ -366,7 +379,7 @@
     PartyList.prototype.url = "http://www.oknesset.org/api/v2/party/";
 
     PartyList.prototype.syncOptions = {
-      repo: window.mit.party
+      disable_repo: window.mit.party
     };
 
     return PartyList;
@@ -386,7 +399,7 @@
     AgendaList.prototype.url = "http://www.oknesset.org/api/v2/agenda/";
 
     AgendaList.prototype.syncOptions = {
-      repo: window.mit.agenda
+      disable_repo: window.mit.agenda
     };
 
     return AgendaList;
@@ -406,12 +419,13 @@
     MemberList.prototype.url = "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name";
 
     MemberList.prototype.syncOptions = {
-      repo: window.mit.combined_members,
+      disable_repo: window.mit.combined_members,
       sync: root.JSONPCachableSync('members')
     };
 
     MemberList.prototype.sync = function(method, model, options) {
       var extra, extra_options, members, members_options;
+      console.log('MemberList sync', this, arguments);
       members_options = _.extend({}, options, {
         success: void 0,
         error: void 0
@@ -794,11 +808,13 @@
       this.filteringView = new root.FilterView;
       this.membersView = new root.CandidateListView({
         el: ".members",
-        collection: this.options.members
+        collection: this.options.members,
+        autofetch: false
       });
       this.newbiesView = new root.CandidateListView({
         el: ".newbies",
-        collection: this.options.newbies
+        collection: this.options.newbies,
+        autofetch: false
       });
       this.membersView.on('all', this.propagate);
       this.newbiesView.on('all', this.propagate);
@@ -838,14 +854,9 @@
       return PartyFilteredListView.__super__.constructor.apply(this, arguments);
     }
 
-    PartyFilteredListView.prototype.options = {
-      autofetch: false
-    };
-
     PartyFilteredListView.prototype.initialize = function() {
       PartyFilteredListView.__super__.initialize.apply(this, arguments);
       this.unfilteredCollection = this.collection;
-      this.unfilteredCollection.fetch();
       this.setCollection(new this.unfilteredCollection.constructor(void 0, {
         comparator: function(candidate) {
           return -candidate.get('score');
