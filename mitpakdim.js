@@ -1233,6 +1233,11 @@
       'click input:button[value=Share]': function(event) {
         return root.facebookShare(getShareLink(this.agendaListView.getWeights()));
       },
+      'click input:button#show_weights': function(event) {
+        var instructions;
+        instructions = "\u05DC\u05D4\u05E2\u05EA\u05E7\u05D4\u0020\u05DC\u05D7\u05E5\u0020\u05E2\u05DC\u0020\u05E6\u05D9\u05E8\u05D5\u05E3\u0020\u05D4\u05DE\u05E7\u05E9\u05D9\u05DD\u000A\u0043\u0074\u0072\u006C\u002B\u0043";
+        return window.prompt(instructions, encode_weights(this.agendaListView.getWeights()));
+      },
       'click input:button#change_party': function(event) {
         return root.router.navigate('', {
           trigger: true
