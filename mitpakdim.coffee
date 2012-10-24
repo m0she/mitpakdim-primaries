@@ -205,12 +205,14 @@ class root.PartyList extends root.JSONPCollection
     url: "http://www.oknesset.org/api/v2/party/"
     syncOptions:
         disable_repo: window.mit.party
+        sync: root.JSONPCachableSync('parties')
 
 class root.AgendaList extends root.JSONPCollection
     model: root.Agenda
     url: "http://www.oknesset.org/api/v2/agenda/"
     syncOptions:
         disable_repo: window.mit.agenda
+        sync: root.JSONPCachableSync('agendas')
 
 class root.MemberList extends root.JSONPCollection
     model: root.Member

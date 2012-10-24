@@ -379,7 +379,8 @@
     PartyList.prototype.url = "http://www.oknesset.org/api/v2/party/";
 
     PartyList.prototype.syncOptions = {
-      disable_repo: window.mit.party
+      disable_repo: window.mit.party,
+      sync: root.JSONPCachableSync('parties')
     };
 
     return PartyList;
@@ -399,7 +400,8 @@
     AgendaList.prototype.url = "http://www.oknesset.org/api/v2/agenda/";
 
     AgendaList.prototype.syncOptions = {
-      disable_repo: window.mit.agenda
+      disable_repo: window.mit.agenda,
+      sync: root.JSONPCachableSync('agendas')
     };
 
     return AgendaList;
