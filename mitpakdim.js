@@ -144,10 +144,23 @@
   };
 
   root.JSONPCachableSync = function(callback_name) {
+    var collisionDict, collisionPrevention;
+    collisionDict = {};
+    collisionPrevention = function() {
+      var callback, callback_value, index;
+      callback = callback_name || 'cachable';
+      callback_value = _.isFunction(callback) ? callback() : callback;
+      index = collisionDict[callback_value] || 0;
+      collisionDict[callback_value] = index + 1;
+      if (index) {
+        callback_value += "__" + index;
+      }
+      return callback_value;
+    };
     return root.syncEx({
       cache: true,
       dataType: 'jsonp',
-      jsonpCallback: callback_name || 'cachable'
+      jsonpCallback: collisionPrevention
     });
   };
 
@@ -384,7 +397,8 @@
     PartyList.prototype.url = "http://www.oknesset.org/api/v2/party/";
 
     PartyList.prototype.syncOptions = {
-      repo: window.mit.party
+      disable_repo: window.mit.party,
+      sync: root.JSONPCachableSync('parties')
     };
 
     return PartyList;
@@ -404,7 +418,8 @@
     AgendaList.prototype.url = "http://www.oknesset.org/api/v2/agenda/";
 
     AgendaList.prototype.syncOptions = {
-      repo: window.mit.agenda
+      disable_repo: window.mit.agenda,
+      sync: root.JSONPCachableSync('agendas')
     };
 
     return AgendaList;
@@ -424,12 +439,13 @@
     MemberList.prototype.url = "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name,is_current";
 
     MemberList.prototype.syncOptions = {
-      repo: window.mit.combined_members,
+      disable_repo: window.mit.combined_members,
       sync: root.JSONPCachableSync('members')
     };
 
     MemberList.prototype.sync = function(method, model, options) {
       var extra, extra_options, members, members_options;
+      console.log('MemberList sync', this, arguments);
       members_options = _.extend({}, options, {
         success: void 0,
         error: void 0
@@ -813,11 +829,13 @@
       this.filteringView = new root.FilterView;
       this.membersView = new root.CandidateListView({
         el: ".members",
-        collection: this.options.members
+        collection: this.options.members,
+        autofetch: false
       });
       this.newbiesView = new root.CandidateListView({
         el: ".newbies",
-        collection: this.options.newbies
+        collection: this.options.newbies,
+        autofetch: false
       });
       this.membersView.on('all', this.propagate);
       this.newbiesView.on('all', this.propagate);
@@ -857,14 +875,9 @@
       return PartyFilteredListView.__super__.constructor.apply(this, arguments);
     }
 
-    PartyFilteredListView.prototype.options = {
-      autofetch: false
-    };
-
     PartyFilteredListView.prototype.initialize = function() {
       PartyFilteredListView.__super__.initialize.apply(this, arguments);
       this.unfilteredCollection = this.collection;
-      this.unfilteredCollection.fetch();
       this.setCollection(new this.unfilteredCollection.constructor(void 0, {
         comparator: function(candidate) {
           return -candidate.get('score');
@@ -933,6 +946,9 @@
         return _.reduce(arr, do_sum, 0);
       };
       weight_sum = abs_sum(weights);
+      if (!weight_sum) {
+        return;
+      }
       console.log("Weights: ", weights, weight_sum);
       return this.collection.each(function(candidate) {
         return candidate.set('score', _.reduce(candidate.getAgendas(), function(memo, score, id) {
@@ -982,6 +998,7 @@
         _Class.prototype.onStop = function(event, ui) {
           if (ui.value <= 5 && ui.value >= -5) {
             $(ui.handle).closest('.slider').agendaSlider("value", 0);
+            ui.value = 0;
           }
           return this.model.set({
             uservalue: ui.value
@@ -1249,6 +1266,11 @@
     AppView.prototype.events = {
       'click input:button[value=Share]': function(event) {
         return root.facebookShare(getShareLink(this.agendaListView.getWeights()));
+      },
+      'click input:button#show_weights': function(event) {
+        var instructions;
+        instructions = "\u05DC\u05D4\u05E2\u05EA\u05E7\u05D4\u0020\u05DC\u05D7\u05E5\u0020\u05E2\u05DC\u0020\u05E6\u05D9\u05E8\u05D5\u05E3\u0020\u05D4\u05DE\u05E7\u05E9\u05D9\u05DD\u000A\u0043\u0074\u0072\u006C\u002B\u0043";
+        return window.prompt(instructions, encode_weights(this.agendaListView.getWeights()));
       },
       'click input:button#change_party': function(event) {
         return root.router.navigate('', {

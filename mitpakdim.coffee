@@ -97,10 +97,21 @@ root.syncEx = (options_override) ->
         Backbone.sync(method, model, _.extend({}, options, options_override))
 
 root.JSONPCachableSync = (callback_name) ->
+    collisionDict = {}
+    collisionPrevention = ->
+        callback = callback_name or 'cachable'
+        callback_value = if _.isFunction callback then callback() else callback
+        index = collisionDict[callback_value] or 0
+        collisionDict[callback_value] = index + 1
+        if index
+            callback_value += "__#{index}"
+        #console.log "jsonp callback: #{callback_value}"
+        return callback_value
+
     root.syncEx
         cache: true
         dataType: 'jsonp'
-        jsonpCallback: callback_name or 'cachable'
+        jsonpCallback: collisionPrevention
 
 root.syncOptions =
     dataType: 'jsonp'
@@ -206,22 +217,25 @@ class root.PartyList extends root.JSONPCollection
     model: root.MiscModel
     url: "http://www.oknesset.org/api/v2/party/"
     syncOptions:
-        repo: window.mit.party
+        disable_repo: window.mit.party
+        sync: root.JSONPCachableSync('parties')
 
 class root.AgendaList extends root.JSONPCollection
     model: root.Agenda
     url: "http://www.oknesset.org/api/v2/agenda/"
     syncOptions:
-        repo: window.mit.agenda
+        disable_repo: window.mit.agenda
+        sync: root.JSONPCachableSync('agendas')
 
 class root.MemberList extends root.JSONPCollection
     model: root.Member
     url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name,is_current"
     syncOptions:
-        repo: window.mit.combined_members
+        disable_repo: window.mit.combined_members
         sync: root.JSONPCachableSync('members')
 
     sync: (method, model, options) ->
+        console.log 'MemberList sync', @, arguments
         members_options = _.extend {}, options,
             success: undefined,
             error: undefined,
@@ -388,10 +402,11 @@ class root.CandidatesMainView extends Backbone.View
         @membersView = new root.CandidateListView
             el: ".members"
             collection: @.options.members
-
+            autofetch: false
         @newbiesView = new root.CandidateListView
             el: ".newbies"
             collection: @.options.newbies
+            autofetch: false
 
         @membersView.on 'all', @propagate
         @newbiesView.on 'all', @propagate
@@ -411,13 +426,9 @@ root.CandidatesMainView.create_delegation 'calculate'
 root.CandidatesMainView.create_delegation 'filterChange'
 
 class root.PartyFilteredListView extends root.ListView
-    options:
-        autofetch: false
-
     initialize: ->
         super(arguments...)
         @unfilteredCollection = @.collection
-        @unfilteredCollection.fetch()
         @setCollection new @unfilteredCollection.constructor undefined,
             comparator: (candidate) ->
                 return -candidate.get 'score'
@@ -454,6 +465,7 @@ class root.CandidateListView extends root.PartyFilteredListView
                 memo += Math.abs item
             _.reduce(arr, do_sum, 0)
         weight_sum = abs_sum(weights)
+        return if not weight_sum
 
         console.log "Weights: ", weights, weight_sum
         @collection.each (candidate) =>
@@ -481,6 +493,7 @@ class root.AgendaListView extends root.ListView
             onStop : (event, ui) =>
                 if ui.value <= 5 and ui.value >= -5
                     $(ui.handle).closest('.slider').agendaSlider "value", 0
+                    ui.value = 0
                 @model.set
                     uservalue : ui.value
             get_template: ->
@@ -626,6 +639,9 @@ class root.AppView extends Backbone.View
     events:
         'click input:button[value=Share]': (event) ->
             root.facebookShare getShareLink @agendaListView.getWeights()
+        'click input:button#show_weights': (event) ->
+            instructions = "\u05DC\u05D4\u05E2\u05EA\u05E7\u05D4\u0020\u05DC\u05D7\u05E5\u0020\u05E2\u05DC\u0020\u05E6\u05D9\u05E8\u05D5\u05E3\u0020\u05D4\u05DE\u05E7\u05E9\u05D9\u05DD\u000A\u0043\u0074\u0072\u006C\u002B\u0043"
+            window.prompt instructions, encode_weights @agendaListView.getWeights()
         'click input:button#change_party': (event) ->
             root.router.navigate '', trigger: true
 
