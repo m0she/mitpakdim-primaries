@@ -9,7 +9,7 @@ function get_with_retry {
 }
 
 get_with_retry http://oknesset.org/api/v2/party/ party.json
-get_with_retry "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name" member.json
+get_with_retry "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name,is_current" member.json
 get_with_retry http://oknesset.org/api/v2/agenda/ agenda.json
 python ../datautil.py jsonp party.json
 python ../datautil.py jsonp member.json

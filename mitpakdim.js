@@ -8,6 +8,8 @@
 
   root = (_ref = window.mit) != null ? _ref : window.mit = {};
 
+  console.log('init');
+
   String.prototype.repeat = function(num) {
     return new Array(num + 1).join(this);
   };
@@ -96,8 +98,24 @@
         left: value + "%"
       });
     },
+    resetSelection: function() {
+      var handle, range;
+      $.ui.slider.prototype._refreshValue.apply(this);
+      handle = this.element.find(".ui-slider-handle");
+      range = this.element.find(".ui-slider-mid-range");
+      this.element.removeClass("minus plus");
+      handle.css({
+        left: "50%",
+        right: "initial"
+      });
+      return range.css({
+        left: "50%",
+        right: "initial"
+      });
+    },
     _refreshValue: function() {
       var range, value;
+      console.log('_refreshValue');
       $.ui.slider.prototype._refreshValue.apply(this);
       value = this.value();
       range = this.element.find(".ui-slider-mid-range");
@@ -403,7 +421,7 @@
 
     MemberList.prototype.model = root.Member;
 
-    MemberList.prototype.url = "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name";
+    MemberList.prototype.url = "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name,is_current";
 
     MemberList.prototype.syncOptions = {
       repo: window.mit.combined_members,
@@ -742,6 +760,7 @@
     DropdownContainer.prototype.events = {
       'change': function() {
         var index;
+        console.log('selection changed');
         index = this.$el.children().index(this.$('option:selected'));
         if (this.options.show_null_option) {
           index -= 1;
@@ -998,6 +1017,14 @@
       return weights;
     };
 
+    AgendaListView.prototype.resetMarkers = function() {
+      console.log('resetMarkers');
+      return this.collection.each(function(agenda, index) {
+        console.log('resetMarkers', agenda, index);
+        return this.$(".slider").eq(index).agendaSlider("resetSelection");
+      });
+    };
+
     AgendaListView.prototype.showMarkersForCandidate = function(candidate_model) {
       var candidate_agendas;
       candidate_agendas = candidate_model.getAgendas();
@@ -1203,6 +1230,7 @@
 
     AppView.prototype.initialize = function() {
       this.agendaListView = new root.AgendaListView;
+      this.agendaListView.collection.on('reset', this.resetSelection, this);
       this.agendaListView.collection.on('change:uservalue', _.debounce(this.calculate, 500));
       this.candidatesView = new root.CandidatesMainView({
         members: root.lists.members,
@@ -1240,6 +1268,11 @@
       }
       this.agendaListView.showMarkersForCandidate(candidate_model);
       return this.deselectCandidates(candidate_model);
+    };
+
+    AppView.prototype.resetSelection = function() {
+      console.log('resetSelection');
+      return this.agendaListView.resetMarkers();
     };
 
     AppView.prototype.deselectCandidates = function(exclude_model) {
@@ -1292,6 +1325,7 @@
     Router.prototype.party = function(party_id, district_id, weights) {
       var district_model, model;
       console.log('party', arguments);
+      root.appView.agendaListView.resetMarkers();
       model = root.lists.partyList.where({
         id: Number(party_id)
       })[0];
@@ -1337,7 +1371,13 @@
     root.appView = new root.AppView;
     root.entranceView = new root.EntranceView;
     $.when.apply($, partyListFetching).done(function() {
+      var filteredMembers;
       Backbone.history.start();
+      filteredMembers = root.lists.members.filter(function(m) {
+        return m.get("is_current") === true;
+      });
+      root.lists.members.reset(filteredMembers);
+      console.log('Filtered members list', root.lists.members.models.length, filteredMembers);
       $('#loading').hide();
       return $('#app_root').show();
     });
