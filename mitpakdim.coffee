@@ -188,6 +188,11 @@ class root.Newbie extends root.Candidate
     initialize: ->
         super(arguments...)
         @agendas_fetching.resolve()
+    parse: (response) ->
+        ret = super arguments...
+        if _.isString ret.agendas
+            ret.agendas = parse_weights ret.agendas
+        ret
 
 class root.Recommendation extends Backbone.Model
 

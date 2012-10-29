@@ -328,6 +328,15 @@
       return this.agendas_fetching.resolve();
     };
 
+    Newbie.prototype.parse = function(response) {
+      var ret;
+      ret = Newbie.__super__.parse.apply(this, arguments);
+      if (_.isString(ret.agendas)) {
+        ret.agendas = parse_weights(ret.agendas);
+      }
+      return ret;
+    };
+
     return Newbie;
 
   })(root.Candidate);
