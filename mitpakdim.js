@@ -506,10 +506,10 @@
     NewbiesList.prototype.model = root.Newbie;
 
     NewbiesList.prototype.syncOptions = {
-      repo: window.mit.combined_newbies
+      disable_repo: window.mit.combined_newbies
     };
 
-    NewbiesList.prototype.url = "http://www.mitpakdim.co.il/site/primaries/data/newbies.jsonp";
+    NewbiesList.prototype.url = "http://www.mitpakdim.co.il/site/primaries/candidates_new/json.php";
 
     NewbiesList.prototype.fetchAgendas = function() {
       return this.agendas_fetching = $.Deferred().resolve();
