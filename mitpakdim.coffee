@@ -144,14 +144,12 @@ class root.Candidate extends Backbone.Model
         participating : true
 
     getAgendas: ->
-        if @agendas_fetching.state() != "resolved" and not @get('agendas')
-            console.log "Trying to use candidate agendas before fetched", @, @agendas_fetching
+        if not @get('agendas')
+            console.log "Trying to use candidate agendas before fetched", @
             throw "Agendas not fetched yet!"
         @get('agendas')
 
     initialize: ->
-        @agendas_fetching = $.Deferred()
-
         set_default = (attr, val) =>
             # Good for not sharing same object for all instances
             if @get(attr) is undefined
@@ -160,39 +158,7 @@ class root.Candidate extends Backbone.Model
         set_default 'recommendation_negative', {}
 
 class root.Member extends root.Candidate
-    class MemberAgenda extends Backbone.Model
-        urlRoot: "http://www.oknesset.org/api/v2/member-agendas/"
-        url: ->
-            super(arguments...) + '/'
-        sync: =>
-            root.JSONPCachableSync("memberagenda_#{ @id }")(arguments...)
-        getAgendas: ->
-            ret = {}
-            _.each @get('agendas'), (agenda) ->
-                ret[agenda.id] = agenda.score
-            ret
-
-    fetchAgendas: () ->
-        if @agendas_fetching.state() != "resolved"
-            if @get('agendas')
-                return @agendas_fetching.resolve()
-
-            @memberAgendas = new MemberAgenda
-                id: @id
-            @memberAgendas.fetch
-                success: =>
-                    @set 'agendas', @memberAgendas.getAgendas()
-                    @agendas_fetching.resolve()
-                error: =>
-                    console.log "Error fetching member agendas", @, arguments
-                    @agendas_fetching.reject()
-
-        return @agendas_fetching
-
 class root.Newbie extends root.Candidate
-    initialize: ->
-        super(arguments...)
-        @agendas_fetching.resolve()
     parse: (response) ->
         ret = super arguments...
         if _.isString ret.agendas
@@ -262,14 +228,24 @@ class root.MemberList extends root.JSONPCollection
 
     fetchAgendas: ->
         fetches = []
-        @each (member) =>
-            fetches.push member.fetchAgendas()
-        console.log "Waiting for " + fetches.length + " member agendas"
-        @agendas_fetching = $.when(fetches...)
-        .done =>
-            console.log "Got results!", this, arguments
-        .fail =>
-            console.log "Error getting results!", this, arguments
+        no_agendas = @filter (model) -> not model.get('agendas')
+        ids = _.pluck no_agendas, 'id'
+        bulkUrl = "http://www.oknesset.org/api/v2/member-agendas/set/" + ids.join ';'
+        @agendas_fetching = smartSync 'read', @,
+            url: bulkUrl
+            error: ->
+                console.log 'error fetching agendas', @, arguments
+            success: (resp) =>
+                if resp.not_found
+                    console.log 'Got not_found data, aborting', resp
+                    return
+                agendas_to_hashmap = (agendas) ->
+                    ret = {}
+                    _.each agendas, (agenda) ->
+                        ret[agenda.id] = agenda.score
+                    ret
+                _.each resp.objects, (obj, index) =>
+                    @get(ids[index]).set agendas: agendas_to_hashmap(obj.agendas), silent: true
 
 class root.NewbiesList extends root.JSONPCollection
     model: root.Newbie

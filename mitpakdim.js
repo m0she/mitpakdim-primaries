@@ -230,8 +230,8 @@
     };
 
     Candidate.prototype.getAgendas = function() {
-      if (this.agendas_fetching.state() !== "resolved" && !this.get('agendas')) {
-        console.log("Trying to use candidate agendas before fetched", this, this.agendas_fetching);
+      if (!this.get('agendas')) {
+        console.log("Trying to use candidate agendas before fetched", this);
         throw "Agendas not fetched yet!";
       }
       return this.get('agendas');
@@ -240,7 +240,6 @@
     Candidate.prototype.initialize = function() {
       var set_default,
         _this = this;
-      this.agendas_fetching = $.Deferred();
       set_default = function(attr, val) {
         if (_this.get(attr) === void 0) {
           return _this.set(attr, val);
@@ -255,7 +254,6 @@
   })(Backbone.Model);
 
   root.Member = (function(_super) {
-    var MemberAgenda;
 
     __extends(Member, _super);
 
@@ -263,64 +261,9 @@
       return Member.__super__.constructor.apply(this, arguments);
     }
 
-    MemberAgenda = (function(_super1) {
-
-      __extends(MemberAgenda, _super1);
-
-      function MemberAgenda() {
-        this.sync = __bind(this.sync, this);
-        return MemberAgenda.__super__.constructor.apply(this, arguments);
-      }
-
-      MemberAgenda.prototype.urlRoot = "http://www.oknesset.org/api/v2/member-agendas/";
-
-      MemberAgenda.prototype.url = function() {
-        return MemberAgenda.__super__.url.apply(this, arguments) + '/';
-      };
-
-      MemberAgenda.prototype.sync = function() {
-        return root.JSONPCachableSync("memberagenda_" + this.id).apply(null, arguments);
-      };
-
-      MemberAgenda.prototype.getAgendas = function() {
-        var ret;
-        ret = {};
-        _.each(this.get('agendas'), function(agenda) {
-          return ret[agenda.id] = agenda.score;
-        });
-        return ret;
-      };
-
-      return MemberAgenda;
-
-    })(Backbone.Model);
-
-    Member.prototype.fetchAgendas = function() {
-      var _this = this;
-      if (this.agendas_fetching.state() !== "resolved") {
-        if (this.get('agendas')) {
-          return this.agendas_fetching.resolve();
-        }
-        this.memberAgendas = new MemberAgenda({
-          id: this.id
-        });
-        this.memberAgendas.fetch({
-          success: function() {
-            _this.set('agendas', _this.memberAgendas.getAgendas());
-            return _this.agendas_fetching.resolve();
-          },
-          error: function() {
-            console.log("Error fetching member agendas", _this, arguments);
-            return _this.agendas_fetching.reject();
-          }
-        });
-      }
-      return this.agendas_fetching;
-    };
-
     return Member;
 
-  }).call(this, root.Candidate);
+  })(root.Candidate);
 
   root.Newbie = (function(_super) {
 
@@ -329,11 +272,6 @@
     function Newbie() {
       return Newbie.__super__.constructor.apply(this, arguments);
     }
-
-    Newbie.prototype.initialize = function() {
-      Newbie.__super__.initialize.apply(this, arguments);
-      return this.agendas_fetching.resolve();
-    };
 
     Newbie.prototype.parse = function(response) {
       var ret;
@@ -493,17 +431,40 @@
     };
 
     MemberList.prototype.fetchAgendas = function() {
-      var fetches,
+      var bulkUrl, fetches, ids, no_agendas,
         _this = this;
       fetches = [];
-      this.each(function(member) {
-        return fetches.push(member.fetchAgendas());
+      no_agendas = this.filter(function(model) {
+        return !model.get('agendas');
       });
-      console.log("Waiting for " + fetches.length + " member agendas");
-      return this.agendas_fetching = $.when.apply($, fetches).done(function() {
-        return console.log("Got results!", _this, arguments);
-      }).fail(function() {
-        return console.log("Error getting results!", _this, arguments);
+      ids = _.pluck(no_agendas, 'id');
+      bulkUrl = "http://www.oknesset.org/api/v2/member-agendas/set/" + ids.join(';');
+      return this.agendas_fetching = smartSync('read', this, {
+        url: bulkUrl,
+        error: function() {
+          return console.log('error fetching agendas', this, arguments);
+        },
+        success: function(resp) {
+          var agendas_to_hashmap;
+          if (resp.not_found) {
+            console.log('Got not_found data, aborting', resp);
+            return;
+          }
+          agendas_to_hashmap = function(agendas) {
+            var ret;
+            ret = {};
+            _.each(agendas, function(agenda) {
+              return ret[agenda.id] = agenda.score;
+            });
+            return ret;
+          };
+          return _.each(resp.objects, function(obj, index) {
+            return _this.get(ids[index]).set({
+              agendas: agendas_to_hashmap(obj.agendas),
+              silent: true
+            });
+          });
+        }
       });
     };
 
