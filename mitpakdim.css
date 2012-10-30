@@ -30,6 +30,36 @@ window, body {
 }
 
 
+
+.entrance_page {
+    background-image : url("./static/party_select_back.png");
+    height : 321px;
+    width : 436px;
+    margin : 130px auto 0 auto;
+    padding : 30px 50px 30px 50px;
+}
+.entrance_page h1 {
+    color : #00507F;
+    font-size : 18px;
+    font-weight : 700;
+    padding : 0;
+    margin : 0;
+}
+.entrance_page p {
+    font-size : 13px;
+    font-weight : 400;
+}
+.entrance_page .parties_container,
+.entrance_page .districts_container {
+    color : #00507F;
+    font-size : 14px;
+    font-weight : 600;
+}
+.entrance_page input {
+    margin-top : 20px;
+}
+
+
 #app_root {
     direction : rtl;
     font-family : Arial, Helvetica, Sans-serif;
