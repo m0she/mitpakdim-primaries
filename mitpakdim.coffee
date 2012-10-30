@@ -255,7 +255,7 @@ class root.NewbiesList extends root.JSONPCollection
     model: root.Newbie
     syncOptions:
         disable_repo: window.mit.combined_newbies
-    url: "http://www.mitpakdim.co.il/site/primaries/candidates_new/json.php"
+    url: "http://www.mitpakdim.co.il/site/primaries/candidates/json.php"
     fetchAgendas: ->
         @agendas_fetching = $.Deferred().resolve()
 
