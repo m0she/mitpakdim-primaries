@@ -375,7 +375,7 @@ class root.CandidatesMainView extends Backbone.View
         @currentPartyView = new root.CurrentPartyView
         root.global.on 'change_party', =>
             @currentPartyView.render()
-        @filteringView = new root.FilterView
+        #@filteringView = new root.FilterView
         @membersView = new root.CandidateListView
             el: ".members"
             collection: @.options.members
@@ -387,8 +387,8 @@ class root.CandidatesMainView extends Backbone.View
 
         @membersView.on 'all', @propagate
         @newbiesView.on 'all', @propagate
-        @filteringView.on 'change', (filter) =>
-            @filterChange filter
+        #@filteringView.on 'change', (filter) =>
+        #    @filterChange filter
 
     propagate: =>
         @trigger arguments...
@@ -615,7 +615,7 @@ class root.AppView extends Backbone.View
         'click input:button#show_weights': (event) ->
             instructions = "\u05DC\u05D4\u05E2\u05EA\u05E7\u05D4\u0020\u05DC\u05D7\u05E5\u0020\u05E2\u05DC\u0020\u05E6\u05D9\u05E8\u05D5\u05E3\u0020\u05D4\u05DE\u05E7\u05E9\u05D9\u05DD\u000A\u0043\u0074\u0072\u006C\u002B\u0043"
             window.prompt instructions, encode_weights @agendaListView.getWeights()
-        'click input:button#change_party': (event) ->
+        'click #change_party': (event) ->
             root.router.navigate '', trigger: true
 
     calculate: (agenda) =>

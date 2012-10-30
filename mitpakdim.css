@@ -175,6 +175,19 @@ window, body {
 .current_party {
     width : 100%;
     margin-bottom : -40px;
+    margin-top : 150px;
+    position : relative;
+}
+#change_party {
+    cursor : pointer;
+    color : #aaa;
+    display : inline-block;
+    font-size : 13px;
+    font-weight : 400;
+    text-decoration : underline;
+    position : absolute;
+    top : 30px;
+    right : 110px;
 }
 .current_party .current_party_logo {
     background-image : url("./static/party_logo_back.png");
