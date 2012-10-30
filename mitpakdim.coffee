@@ -1,5 +1,5 @@
 root = window.mit ?= {}
-
+console.log 'init'
 ############### UTILITIES ##############
 
 String::repeat = ( num ) ->
@@ -65,7 +65,20 @@ $.widget "mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {
             handle.before "<div class='#{candidate_marker_classname}'></div>"
         @element.find(".#{candidate_marker_classname}").css
             left : value + "%"
+    resetSelection : ->
+        $.ui.slider::_refreshValue.apply @
+        handle = @element.find(".ui-slider-handle")
+        range = @element.find ".ui-slider-mid-range"
+        @element.removeClass "minus plus"
+        handle.css
+            left : "50%"
+            right : "initial"
+        range.css
+            left : "50%"
+            right: "initial"
+
     _refreshValue : ->
+        console.log '_refreshValue'
         $.ui.slider::_refreshValue.apply @
         value = @value()
         range = @element.find ".ui-slider-mid-range"
@@ -226,7 +239,7 @@ class root.AgendaList extends root.JSONPCollection
 
 class root.MemberList extends root.JSONPCollection
     model: root.Member
-    url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name"
+    url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name,is_current"
     syncOptions:
         disable_repo: window.mit.combined_members
         sync: root.JSONPCachableSync('members')
@@ -237,7 +250,6 @@ class root.MemberList extends root.JSONPCollection
             success: undefined,
             error: undefined,
         members = smartSync(method, model, options)
-
         extra_options = _.extend {}, members_options,
             repo: window.mit.member_extra
             url: "data/member_extra.jsonp"
@@ -379,6 +391,7 @@ class root.DropdownContainer extends root.ListView
             @$el.html("<option>-----</option>")
     current: {}
     events: 'change': ->
+        console.log 'selection changed'
         index = @$el.children().index @$('option:selected')
         index -= 1 if @options.show_null_option
         @current = if index >= 0 then @collection.at index else {}
@@ -508,6 +521,12 @@ class root.AgendaListView extends root.ListView
             weights[agenda.id] = agenda.get("uservalue")
         weights
 
+    resetMarkers: () ->
+      console.log 'resetMarkers'
+      @collection.each (agenda, index) ->
+          console.log 'resetMarkers', agenda, index
+          @.$(".slider").eq(index).agendaSlider "resetSelection"
+
     showMarkersForCandidate: (candidate_model) ->
         candidate_agendas = candidate_model.getAgendas()
         @collection.each (agenda, index) ->
@@ -611,7 +630,7 @@ class root.AppView extends Backbone.View
 
     initialize: =>
         @agendaListView = new root.AgendaListView
-
+        @agendaListView.collection.on 'reset', @resetSelection, @
         @agendaListView.collection.on 'change:uservalue', _.debounce @calculate, 500
 
         @candidatesView = new root.CandidatesMainView
@@ -648,6 +667,10 @@ class root.AppView extends Backbone.View
         @agendaListView.showMarkersForCandidate candidate_model
         @deselectCandidates candidate_model
 
+    resetSelection : () ->
+        console.log 'resetSelection'
+        @agendaListView.resetMarkers()
+
     deselectCandidates : (exclude_model) ->
         for collection in [root.lists.members, root.lists.newbies]
             _.each collection.where(selected : true), (model) ->
@@ -672,6 +695,9 @@ class root.Router extends Backbone.Router
     partyNoDistrict: (party_id, weights) -> @party(party_id, undefined, weights)
     party: (party_id, district_id, weights) ->
         console.log 'party', arguments
+        # Reset markers (bugfix), perhaps better to use pubsub
+        root.appView.agendaListView.resetMarkers()
+
         model = root.lists.partyList.where(id: Number(party_id))[0]
         if not model
             return root.router.navigate '', trigger: true
@@ -707,6 +733,14 @@ $ ->
     root.entranceView = new root.EntranceView
     $.when(partyListFetching...).done ->
         Backbone.history.start()
+
+        # Hack, filtering the members list here to remove inactive members (bugfix)
+        filteredMembers = root.lists.members.filter((m) ->
+          m.get("is_current") is true
+        )
+        root.lists.members.reset filteredMembers
+        console.log 'Filtered members list', root.lists.members.models.length, filteredMembers
+
         $('#loading').hide()
         $('#app_root').show()
     FB.init()
