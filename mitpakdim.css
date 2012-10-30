@@ -59,6 +59,15 @@ window, body {
     margin-top : 20px;
 }
 
+#loading {
+    direction : rtl;
+}
+#loading h1 {
+    color : #00507F;
+    font-size : 18px;
+    padding : 20px;
+}
+
 
 #app_root {
     direction : rtl;
