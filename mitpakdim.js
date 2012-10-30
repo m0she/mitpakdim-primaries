@@ -28,6 +28,13 @@
     });
   };
 
+  root.twitterShare = function(link) {
+    ga.social('Twitter', 'share', link);
+    return window.open("https://twitter.com/share?" + $.param({
+      url: link
+    }), 'tweet', 'width=575,height=400,left=672,top=320,scrollbars=1');
+  };
+
   getShareLink = function(weights) {
     var base, district, fragment, party;
     base = window.location.href.replace(/#.*$/, '');
@@ -1245,8 +1252,11 @@
     };
 
     AppView.prototype.events = {
-      'click input:button[value=Share]': function(event) {
+      'click input:button#fb_share': function(event) {
         return root.facebookShare(getShareLink(this.agendaListView.getWeights()));
+      },
+      'click input:button#tweet_share': function(event) {
+        return root.twitterShare(getShareLink(this.agendaListView.getWeights()));
       },
       'click input:button#show_weights': function(event) {
         var instructions;

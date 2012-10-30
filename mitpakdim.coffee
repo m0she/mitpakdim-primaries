@@ -19,6 +19,11 @@ root.facebookShare = (link) ->
         ,
             -> console.log('Facebook callback', @, arguments)
 
+root.twitterShare = (link) ->
+    ga.social 'Twitter', 'share', link
+    window.open "https://twitter.com/share?" + $.param(url: link),
+        'tweet', 'width=575,height=400,left=672,top=320,scrollbars=1'
+
 getShareLink = (weights) ->
     base = window.location.href.replace /#.*$/, ''
     party = root.global.party.id
@@ -623,8 +628,10 @@ class root.AppView extends Backbone.View
             newbies: root.lists.newbies
 
     events:
-        'click input:button[value=Share]': (event) ->
+        'click input:button#fb_share': (event) ->
             root.facebookShare getShareLink @agendaListView.getWeights()
+        'click input:button#tweet_share': (event) ->
+            root.twitterShare getShareLink @agendaListView.getWeights()
         'click input:button#show_weights': (event) ->
             instructions = "\u05DC\u05D4\u05E2\u05EA\u05E7\u05D4\u0020\u05DC\u05D7\u05E5\u0020\u05E2\u05DC\u0020\u05E6\u05D9\u05E8\u05D5\u05E3\u0020\u05D4\u05DE\u05E7\u05E9\u05D9\u05DD\u000A\u0043\u0074\u0072\u006C\u002B\u0043"
             window.prompt instructions, encode_weights @agendaListView.getWeights()
