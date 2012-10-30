@@ -229,9 +229,13 @@ class root.MemberList extends root.JSONPCollection
     fetchAgendas: ->
         fetches = []
         no_agendas = @filter (model) -> not model.get('agendas')
+        if no_agendas.length == 0
+            @agendas_fetching = $.Deferred().resolve()
+            return
         ids = _.pluck no_agendas, 'id'
-        bulkUrl = "http://www.oknesset.org/api/v2/member-agendas/set/" + ids.join ';'
-        @agendas_fetching = smartSync 'read', @,
+
+        bulkUrl = "http://www.oknesset.org/api/v2/member-agendas/set/" + ids.join(';') + '/'
+        @agendas_fetching = root.JSONPCachableSync('memberagendas') 'read', @,
             url: bulkUrl
             error: ->
                 console.log 'error fetching agendas', @, arguments

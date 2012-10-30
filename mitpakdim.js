@@ -437,9 +437,13 @@
       no_agendas = this.filter(function(model) {
         return !model.get('agendas');
       });
+      if (no_agendas.length === 0) {
+        this.agendas_fetching = $.Deferred().resolve();
+        return;
+      }
       ids = _.pluck(no_agendas, 'id');
-      bulkUrl = "http://www.oknesset.org/api/v2/member-agendas/set/" + ids.join(';');
-      return this.agendas_fetching = smartSync('read', this, {
+      bulkUrl = "http://www.oknesset.org/api/v2/member-agendas/set/" + ids.join(';') + '/';
+      return this.agendas_fetching = root.JSONPCachableSync('memberagendas')('read', this, {
         url: bulkUrl,
         error: function() {
           return console.log('error fetching agendas', this, arguments);
