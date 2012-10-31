@@ -1,52 +1,86 @@
 if (!window.mit) window.mit = {};
 window.mit.recommendations = {
-    "objects": [
+    "objects" : [
         {
+            "id": 1,
+            "name": "צפון עכשיו",
+            "party_name": "הליכוד", 
+    		"recommend_agendas": "?1x0i2x0i6x65i7x0i9x100i24x49i26x0i36x0i39x61i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x61i64x64i66x61i71x39i72x0i74x0", 
             "positive_list": {
-                "newbies": [
-                    822, 
-                    854
-                ], 
-                "members": [
-                    771, 
-                    852
-                ]
-            }, 
+                "members": [  ],
+                "newbies": [  ]
+            },
             "negative_list": {
-                "newbies": [
-                    852
-                ], 
-                "members": [
-                    822, 
-                    854
-                ]
-            }, 
-            "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
-            "id": 1, 
-            "name": "My cool kadima list"
+                "members": [  ],
+                "newbies": [  ]
+            }
         }, 
-        {
+		{
+            "id": 2,
+            "name": "מתארגנים לעבודה",
+            "party_name": "עבודה", 
+			"recommend_agendas": "1x-100i2x48i6x-18i7x37i9x100i24x0i26x20i36x76i39x0i40x29i41x100i44x45i45x-100i48x0i49x29i53x-100i55x0i60x0i61x100i63x100i64x21i66x48i71x100i72x100i74x100", 
             "positive_list": {
-                "newbies": [
-                    210, 
-                    791, 
-                    7
-                ], 
-                "members": [
-                    63
-                ]
-            }, 
+                "members": [  ],
+                "newbies": [  ]
+            },
             "negative_list": {
-                "newbies": [], 
-                "members": [
-                    210, 
-                    791, 
-                    7
-                ]
-            }, 
-            "party_name": "\u05e9\"\u05e1", 
-            "id": 2, 
-            "name": "My spanish something"
+                "members": [  ],
+                "newbies": [ ]
+            }
+        } , 
+		{
+            "id": 3,
+            "name": "דור האמת",
+            "party_name": "עבודה", 
+			"recommend_agendas": "1x0i2x73i6x-99i7x29i9x43i24x49i26x0i36x46i39x32i40x26i41x30i44x0i45x0i48x75i49x47i53x100i55x46i60x-30i61x50i63x0i64x72i66x15i71x0i72x0i74x0", 
+            "positive_list": {
+                "members": [  ],
+                "newbies": [  ]
+            },
+            "negative_list": {
+                "members": [  ],
+                "newbies": [ ]
+            }
+        }, 
+		{
+            "id": 4,
+            "name": "חינוך ישראלי",
+			"recommend_agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x100i63x0i64x0i66x0i71x0i72x0i74x0", 
+            "positive_list": {
+                "members": [  ],
+                "newbies": [  ]
+            },
+            "negative_list": {
+                "members": [  ],
+                "newbies": [ ]
+            }
+        }, 
+		{
+            "id": 5,
+            "name": "מתפקדות",
+			"recommend_agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x99i74x0", 
+            "positive_list": {
+                "members": [  ],
+                "newbies": [  ]
+            },
+            "negative_list": {
+                "members": [  ],
+                "newbies": [ ]
+            }
+        }, 
+		{
+            "id": 6,
+            "name": "הפורום לשוויון בנטל",
+			"recommend_agendas": "1x0i2x0i6x99i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x0i74x0", 
+            "positive_list": {
+                "members": [  ],
+                "newbies": [  ]
+            },
+            "negative_list": {
+                "members": [  ],
+                "newbies": [ ]
+            }
         }
     ]
 }
