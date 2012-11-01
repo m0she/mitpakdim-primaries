@@ -17,7 +17,7 @@
 		{
             "id": 2,
             "name": "מתארגנים לעבודה",
-            "party_name": "עבודה", 
+            "party_name": "העבודה", 
 			"agendas": "1x-100i2x48i6x-18i7x37i9x100i24x0i26x20i36x76i39x0i40x29i41x100i44x45i45x-100i48x0i49x29i53x-100i55x0i60x0i61x100i63x100i64x21i66x48i71x100i72x100i74x100", 
             "positive_list": {
                 "members": [  ],
@@ -31,7 +31,7 @@
 		{
             "id": 3,
             "name": "דור האמת",
-            "party_name": "עבודה", 
+            "party_name": "העבודה", 
 			"agendas": "1x0i2x73i6x-99i7x29i9x43i24x49i26x0i36x46i39x32i40x26i41x30i44x0i45x0i48x75i49x47i53x100i55x46i60x-30i61x50i63x0i64x72i66x15i71x0i72x0i74x0", 
             "positive_list": {
                 "members": [  ],
