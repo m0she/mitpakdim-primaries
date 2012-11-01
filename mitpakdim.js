@@ -92,16 +92,19 @@
       this.element.append('<div class="ui-slider-plus-button"></div>');
       return $.ui.slider.prototype._create.apply(this);
     },
+    candidate_marker_classname: "ui-slider-candidate-marker",
     setCandidateMarker: function(value) {
-      var candidate_marker_classname, handle;
-      candidate_marker_classname = "ui-slider-candidate-marker";
-      if (!this.element.find("." + candidate_marker_classname).length) {
+      var handle;
+      if (!this.element.find("." + this.candidate_marker_classname).length) {
         handle = this.element.find(".ui-slider-handle");
-        handle.before("<div class='" + candidate_marker_classname + "'></div>");
+        handle.before("<div class='" + this.candidate_marker_classname + "'></div>");
       }
-      return this.element.find("." + candidate_marker_classname).css({
+      return this.element.find("." + this.candidate_marker_classname).css({
         left: value + "%"
       });
+    },
+    clearCandidateMarker: function() {
+      return this.element.find("." + this.candidate_marker_classname).remove();
     },
     _refreshValue: function() {
       var range, value;
@@ -1039,6 +1042,12 @@
       });
     };
 
+    AgendaListView.prototype.clearMarkers = function() {
+      return this.collection.each(function(agenda, index) {
+        return this.$(".slider").eq(index).agendaSlider("clearCandidateMarker");
+      });
+    };
+
     return AgendaListView;
 
   }).call(this, root.ListView);
@@ -1245,15 +1254,15 @@
         members: root.lists.members,
         newbies: root.lists.newbies
       });
-      root.lists.agendas.on('change:uservalue', _.debounce(this.calculate, 500));
-      root.lists.members.on("change:selected", this.updateSelectedCandidate);
-      root.lists.newbies.on("change:selected", this.updateSelectedCandidate);
       this.recommendations = new root.RecommendationList;
-      return this.recommendationsView = new root.RecommendationsView({
+      this.recommendationsView = new root.RecommendationsView({
         collection: this.recommendations,
         members: root.lists.members,
         newbies: root.lists.newbies
       });
+      root.lists.agendas.on('change:uservalue', _.debounce(this.calculate, 500));
+      root.lists.members.on("change:selected", this.updateSelectedCandidate);
+      return root.lists.newbies.on("change:selected", this.updateSelectedCandidate);
     };
 
     AppView.prototype.events = {
@@ -1269,6 +1278,9 @@
         return window.prompt(instructions, encode_weights(root.lists.agendas.getWeights()));
       },
       'click #change_party': function(event) {
+        if (this.selected_candidate) {
+          this.selected_candidate.set('selected', false);
+        }
         return root.router.navigate('', {
           trigger: true
         });
@@ -1282,27 +1294,17 @@
 
     AppView.prototype.updateSelectedCandidate = function(candidate_model, selected_attr_value) {
       if (!selected_attr_value) {
+        this.selected_candidate = void 0;
+        this.agendaListView.clearMarkers();
         return;
       }
-      this.agendaListView.showMarkersForCandidate(candidate_model);
-      return this.deselectCandidates(candidate_model);
-    };
-
-    AppView.prototype.deselectCandidates = function(exclude_model) {
-      var collection, _i, _len, _ref1;
-      _ref1 = [root.lists.members, root.lists.newbies];
-      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-        collection = _ref1[_i];
-        _.each(collection.where({
-          selected: true
-        }), function(model) {
-          if ((!exclude_model) || (model !== exclude_model)) {
-            return model.set({
-              selected: false
-            });
-          }
+      if (this.selected_candidate) {
+        this.selected_candidate.set('selected', false, {
+          trigger: false
         });
       }
+      this.selected_candidate = candidate_model;
+      return this.agendaListView.showMarkersForCandidate(candidate_model);
     };
 
     return AppView;

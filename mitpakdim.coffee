@@ -58,13 +58,17 @@ $.widget "mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {
         @element.append '<div class="ui-slider-minus-button"></div>'
         @element.append '<div class="ui-slider-plus-button"></div>'
         $.ui.slider::_create.apply @
-    setCandidateMarker : (value) ->
-        candidate_marker_classname = "ui-slider-candidate-marker"
-        if not @element.find(".#{candidate_marker_classname}").length
+
+    candidate_marker_classname: "ui-slider-candidate-marker"
+    setCandidateMarker: (value) ->
+        if not @element.find(".#{@candidate_marker_classname}").length
             handle = @element.find(".ui-slider-handle")
-            handle.before "<div class='#{candidate_marker_classname}'></div>"
-        @element.find(".#{candidate_marker_classname}").css
+            handle.before "<div class='#{@candidate_marker_classname}'></div>"
+        @element.find(".#{@candidate_marker_classname}").css
             left : value + "%"
+    clearCandidateMarker: ->
+        @element.find(".#{@candidate_marker_classname}").remove()
+
     _refreshValue : ->
         $.ui.slider::_refreshValue.apply @
         value = @value()
@@ -510,6 +514,9 @@ class root.AgendaListView extends root.ListView
             value = candidate_agendas[agenda.id] or 0
             value = 50 + value / 2
             @.$(".slider").eq(index).agendaSlider "setCandidateMarker", value
+    clearMarkers: ->
+        @collection.each (agenda, index) ->
+            @.$(".slider").eq(index).agendaSlider "clearCandidateMarker"
 
 class root.RecommendationsView extends root.PartyFilteredListView
     el: '.recommendations'
@@ -617,15 +624,15 @@ class root.AppView extends Backbone.View
             members: root.lists.members
             newbies: root.lists.newbies
 
-        root.lists.agendas.on 'change:uservalue', _.debounce @calculate, 500
-        root.lists.members.on "change:selected", @updateSelectedCandidate
-        root.lists.newbies.on "change:selected", @updateSelectedCandidate
-
         @recommendations = new root.RecommendationList
         @recommendationsView = new root.RecommendationsView
             collection: @recommendations
             members: root.lists.members
             newbies: root.lists.newbies
+
+        root.lists.agendas.on 'change:uservalue', _.debounce @calculate, 500
+        root.lists.members.on "change:selected", @updateSelectedCandidate
+        root.lists.newbies.on "change:selected", @updateSelectedCandidate
 
     events:
         'click input:button#fb_share': (event) ->
@@ -636,6 +643,8 @@ class root.AppView extends Backbone.View
             instructions = "\u05DC\u05D4\u05E2\u05EA\u05E7\u05D4\u0020\u05DC\u05D7\u05E5\u0020\u05E2\u05DC\u0020\u05E6\u05D9\u05E8\u05D5\u05E3\u0020\u05D4\u05DE\u05E7\u05E9\u05D9\u05DD\u000A\u0043\u0074\u0072\u006C\u002B\u0043"
             window.prompt instructions, encode_weights root.lists.agendas.getWeights()
         'click #change_party': (event) ->
+            if @selected_candidate
+                @selected_candidate.set 'selected', false
             root.router.navigate '', trigger: true
 
     calculate: (agenda) =>
@@ -646,16 +655,14 @@ class root.AppView extends Backbone.View
 
     updateSelectedCandidate : (candidate_model, selected_attr_value) =>
         if not selected_attr_value
+            @selected_candidate = undefined
+            @agendaListView.clearMarkers()
             return
-        @agendaListView.showMarkersForCandidate candidate_model
-        @deselectCandidates candidate_model
 
-    deselectCandidates : (exclude_model) ->
-        for collection in [root.lists.members, root.lists.newbies]
-            _.each collection.where(selected : true), (model) ->
-                if (not exclude_model) or (model isnt exclude_model)
-                    model.set selected : false
-        return
+        if @selected_candidate
+            @selected_candidate.set 'selected', false, trigger:false
+        @selected_candidate = candidate_model
+        @agendaListView.showMarkersForCandidate candidate_model
 
 ############### ROUTERS ##############
 class root.Router extends Backbone.Router
