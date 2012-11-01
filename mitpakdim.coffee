@@ -169,7 +169,17 @@ class root.Recommendation extends Backbone.Model
 
 ############### COLLECTIONS ##############
 
-class root.JSONPCollection extends Backbone.Collection
+class root.PromisedCollection extends Backbone.Collection
+    initialize: ->
+        super(arguments...)
+        @data_ready = $.Deferred()
+        @data_ready.promise @
+        @on "reset", =>
+            @data_ready.resolve()
+        if @models.length
+            @data_ready.resolve()
+
+class root.JSONPCollection extends root.PromisedCollection
     sync: smartSync
     initialize: ->
         super(arguments...)
@@ -477,10 +487,11 @@ class root.AgendaListView extends root.ListView
                 $("#agenda_template").html()
 
     reset: (weights) ->
-        @collection.each (agenda, index) ->
-            if _.isNumber(value = weights[agenda.id])
-                agenda.set "uservalue", value
-                @.$(".slider").eq(index).agendaSlider "value", value
+        @collection.done =>
+            @collection.each (agenda, index) ->
+                if _.isNumber(value = weights[agenda.id])
+                    agenda.set "uservalue", value
+                    @.$(".slider").eq(index).agendaSlider "value", value
 
     getWeights: ->
         weights = {}

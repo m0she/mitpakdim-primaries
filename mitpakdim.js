@@ -298,6 +298,31 @@
 
   })(Backbone.Model);
 
+  root.PromisedCollection = (function(_super) {
+
+    __extends(PromisedCollection, _super);
+
+    function PromisedCollection() {
+      return PromisedCollection.__super__.constructor.apply(this, arguments);
+    }
+
+    PromisedCollection.prototype.initialize = function() {
+      var _this = this;
+      PromisedCollection.__super__.initialize.apply(this, arguments);
+      this.data_ready = $.Deferred();
+      this.data_ready.promise(this);
+      this.on("reset", function() {
+        return _this.data_ready.resolve();
+      });
+      if (this.models.length) {
+        return this.data_ready.resolve();
+      }
+    };
+
+    return PromisedCollection;
+
+  })(Backbone.Collection);
+
   root.JSONPCollection = (function(_super) {
 
     __extends(JSONPCollection, _super);
@@ -318,7 +343,7 @@
 
     return JSONPCollection;
 
-  })(Backbone.Collection);
+  })(root.PromisedCollection);
 
   root.PartyList = (function(_super) {
 
@@ -973,12 +998,15 @@
     };
 
     AgendaListView.prototype.reset = function(weights) {
-      return this.collection.each(function(agenda, index) {
-        var value;
-        if (_.isNumber(value = weights[agenda.id])) {
-          agenda.set("uservalue", value);
-          return this.$(".slider").eq(index).agendaSlider("value", value);
-        }
+      var _this = this;
+      return this.collection.done(function() {
+        return _this.collection.each(function(agenda, index) {
+          var value;
+          if (_.isNumber(value = weights[agenda.id])) {
+            agenda.set("uservalue", value);
+            return this.$(".slider").eq(index).agendaSlider("value", value);
+          }
+        });
       });
     };
 
