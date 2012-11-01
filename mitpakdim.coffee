@@ -453,19 +453,21 @@ class root.CandidateListView extends root.PartyFilteredListView
     partyChange: (party) =>
         super(arguments...)
         @collection.fetchAgendas()
+        @calculate()
 
     filterChange: (filter_model) ->
         filtered = @filterByParty root.global.party
         @collection.reset _.filter(filtered, filter_model.get('func'))
 
-    calculate: (weights) ->
+    calculate: () ->
         if not @collection.agendas_fetching
             throw "Agenda data not present yet"
         @collection.agendas_fetching.done =>
-            @calculate_inner(weights)
+            @calculate_inner()
             @collection.sort()
 
-    calculate_inner: (weights) ->
+    calculate_inner: () ->
+        weights = root.lists.agendas.getWeights()
         abs_sum = (arr) ->
             do_sum = (memo, item) ->
                 memo += Math.abs item
@@ -654,7 +656,7 @@ class root.AppView extends Backbone.View
             root.router.navigate '', trigger: true
 
     calculate: (agenda) =>
-        @candidatesView.calculate root.lists.agendas.getWeights()
+        @candidatesView.calculate()
         ga.event 'weight',
             'change_party_' + root.global.party.id,
             'agenda_' + agenda.id, agenda.get('uservalue')

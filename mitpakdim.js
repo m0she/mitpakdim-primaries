@@ -928,7 +928,8 @@
 
     CandidateListView.prototype.partyChange = function(party) {
       CandidateListView.__super__.partyChange.apply(this, arguments);
-      return this.collection.fetchAgendas();
+      this.collection.fetchAgendas();
+      return this.calculate();
     };
 
     CandidateListView.prototype.filterChange = function(filter_model) {
@@ -937,20 +938,21 @@
       return this.collection.reset(_.filter(filtered, filter_model.get('func')));
     };
 
-    CandidateListView.prototype.calculate = function(weights) {
+    CandidateListView.prototype.calculate = function() {
       var _this = this;
       if (!this.collection.agendas_fetching) {
         throw "Agenda data not present yet";
       }
       return this.collection.agendas_fetching.done(function() {
-        _this.calculate_inner(weights);
+        _this.calculate_inner();
         return _this.collection.sort();
       });
     };
 
-    CandidateListView.prototype.calculate_inner = function(weights) {
-      var abs_sum, weight_sum,
+    CandidateListView.prototype.calculate_inner = function() {
+      var abs_sum, weight_sum, weights,
         _this = this;
+      weights = root.lists.agendas.getWeights();
       abs_sum = function(arr) {
         var do_sum;
         do_sum = function(memo, item) {
@@ -1294,7 +1296,7 @@
     };
 
     AppView.prototype.calculate = function(agenda) {
-      this.candidatesView.calculate(root.lists.agendas.getWeights());
+      this.candidatesView.calculate();
       return ga.event('weight', 'change_party_' + root.global.party.id, 'agenda_' + agenda.id, agenda.get('uservalue'));
     };
 
