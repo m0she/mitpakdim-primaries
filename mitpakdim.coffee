@@ -555,6 +555,10 @@ class root.RecommendationsView extends root.PartyFilteredListView
                 weights = parse_weights weights
             root.lists.agendas.resetWeights weights
 
+        ga.event 'recommendation',
+            "party_#{root.global.party.id}_recommendation_#{recommendation.id}",
+            "#{recommendation.get('status')}"
+
 filter_data = [
     id: "all"
     name: "All"
@@ -665,6 +669,10 @@ class root.AppView extends Backbone.View
             @selected_candidate.set 'selected', false, trigger:false
         @selected_candidate = candidate_model
         @agendaListView.showMarkersForCandidate candidate_model
+        type = if candidate_model instanceof root.Member then 'member' else 'newbie'
+        ga.event 'candidates',
+            "select_party_#{root.global.party.id}",
+            "#{type}_#{candidate_model.id}"
 
 ############### ROUTERS ##############
 class root.Router extends Backbone.Router

@@ -1125,8 +1125,9 @@
         if (_.isString(weights)) {
           weights = parse_weights(weights);
         }
-        return root.lists.agendas.resetWeights(weights);
+        root.lists.agendas.resetWeights(weights);
       }
+      return ga.event('recommendation', "party_" + root.global.party.id + "_recommendation_" + recommendation.id, "" + (recommendation.get('status')));
     };
 
     return RecommendationsView;
@@ -1298,6 +1299,7 @@
     };
 
     AppView.prototype.updateSelectedCandidate = function(candidate_model, selected_attr_value) {
+      var type;
       if (!selected_attr_value) {
         this.selected_candidate = void 0;
         this.agendaListView.clearMarkers();
@@ -1309,7 +1311,9 @@
         });
       }
       this.selected_candidate = candidate_model;
-      return this.agendaListView.showMarkersForCandidate(candidate_model);
+      this.agendaListView.showMarkersForCandidate(candidate_model);
+      type = candidate_model instanceof root.Member ? 'member' : 'newbie';
+      return ga.event('candidates', "select_party_" + root.global.party.id, "" + type + "_" + candidate_model.id);
     };
 
     return AppView;
