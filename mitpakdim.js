@@ -1089,7 +1089,7 @@
     };
 
     RecommendationsView.prototype.applyChange = function(recommendation) {
-      var changeModelFunc;
+      var changeModelFunc, weights;
       changeModelFunc = function(candidates, attribute) {
         return function(model_id, status) {
           var list, model;
@@ -1106,7 +1106,13 @@
       _.each(recommendation.get('positive_list')['members'], changeModelFunc(this.options.members, 'recommendation_positive'));
       _.each(recommendation.get('negative_list')['members'], changeModelFunc(this.options.members, 'recommendation_negative'));
       _.each(recommendation.get('positive_list')['newbies'], changeModelFunc(this.options.newbies, 'recommendation_positive'));
-      return _.each(recommendation.get('negative_list')['newbies'], changeModelFunc(this.options.newbies, 'recommendation_negative'));
+      _.each(recommendation.get('negative_list')['newbies'], changeModelFunc(this.options.newbies, 'recommendation_negative'));
+      if (recommendation.get('status') && (weights = recommendation.get('agendas'))) {
+        if (_.isString(weights)) {
+          weights = parse_weights(weights);
+        }
+        return root.lists.agendas.resetWeights(weights);
+      }
     };
 
     return RecommendationsView;

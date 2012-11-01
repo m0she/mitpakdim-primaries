@@ -5,8 +5,8 @@ window.mit.recommendations = {
             "agendas": "1x0i2x0i6x65i7x0i9x100i24x49i26x0i36x0i39x61i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x61i64x64i66x61i71x39i72x0i74x0", 
             "name": "\u05e6\u05e4\u05d5\u05df \u05e2\u05db\u05e9\u05d9\u05d5", 
             "positive_list": {
-                "newbies": [], 
-                "members": []
+                "members": [ 771, 830 ],
+                "newbies": []
             }, 
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "negative_list": {

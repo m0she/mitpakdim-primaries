@@ -75,24 +75,27 @@ window, body {
     vertical-align : top;
     width : 100%;
 }
-.agendas_section {
+.party_page {
     margin : 0 auto;
     width : 960px;
     white-space : nowrap;
 }
-.agendas_section > * {
+.party_page > * {
     white-space : normal;
+}
+.main_top > * {
+    display: inline-block;
+}
+.instructions {
+    margin-right : -27px;
+    background-image : url("./static/instructions.png");
+    height : 130px;
+    width : 465px;
 }
 .agendas_container {
     width : 410px;
     display : inline-block;
     vertical-align : top;
-}
-.agendas_container .instructions {
-    margin-right : -27px;
-    background-image : url("./static/instructions.png");
-    height : 130px;
-    width : 465px;
 }
 .agendas {
     margin-top : 30px;

@@ -541,6 +541,10 @@ class root.RecommendationsView extends root.PartyFilteredListView
         _.each recommendation.get('negative_list')['members'], changeModelFunc(@options.members, 'recommendation_negative')
         _.each recommendation.get('positive_list')['newbies'], changeModelFunc(@options.newbies, 'recommendation_positive')
         _.each recommendation.get('negative_list')['newbies'], changeModelFunc(@options.newbies, 'recommendation_negative')
+        if recommendation.get('status') and weights = recommendation.get('agendas')
+            if _.isString weights
+                weights = parse_weights weights
+            root.lists.agendas.resetWeights weights
 
 filter_data = [
     id: "all"
