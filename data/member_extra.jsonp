@@ -1,37 +1,133 @@
 if (!window.mit) window.mit = {};
 window.mit.member_extra = {
-    "objects": [
-        {
-            "participating": false, 
-            "id": 731
-        }, 
-        {
-            "participating": false, 
-            "id": 824
-        }, 
-        {
-            "participating": false, 
-            "id": 724
-        }, 
-        {
-            "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
-            "id": 771
-        }, 
-        {
-            "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
-            "id": 821
-        }, 
-        {
-            "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
-            "id": 848
-        }, 
-        {
-            "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
-            "id": 850
-        }, 
-        {
-            "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
-            "id": 818
+    "objects" : [
+    	{
+            "id": 731,
+            "participating": false
+        },
+		{
+            "id": 824,
+            "participating": false
+        },
+		{
+            "id": 724,
+            "participating": false
+        },
+		{
+            "id": 771,
+			"party_name": "הליכוד"
+        },
+		{
+            "id": 821,
+			"party_name": "הליכוד"
+        },
+		{
+            "id": 848,
+			"party_name": "הליכוד"
+        },
+		{
+            "id": 850,
+			"party_name": "העבודה"
+        },
+		{
+            "id": 818,
+			"party_name": "העבודה"
+        },
+		{
+            "id": 830,
+			"district": "ארצי"
+        },
+		{
+            "id": 230,
+			"district": "ארצי"
+        },
+		{
+            "id": 725,
+			"district": "ארצי"
+        },
+		{
+            "id": 723,
+			"district": "ארצי"
+        },
+		{
+            "id": 734,
+			"district": "ארצי"
+        },
+		{
+            "id": 88,
+			"district": "ארצי"
+        },
+		{
+            "id": 828,
+			"district": "ארצי"
+        },
+		{
+            "id": 768,
+			"district": "ארצי"
+        },
+		{
+            "id": 14,
+			"district": "ארצי"
+        },
+		{
+            "id": 212,
+			"district": "ארצי"
+        },
+		{
+            "id": 695,
+			"district": "ארצי"
+        },
+		{
+            "id": 1,
+			"district": "ארצי"
+        },
+		{
+            "id": 826,
+			"district": "ארצי"
+        },
+		{
+            "id": 69,
+			"district": "ארצי"
+        },
+		{
+            "id": 829,
+			"district": "ארצי"
+        },
+		{
+            "id": 738,
+			"district": "ארצי"
+        },
+		{
+            "id": 70,
+			"district": "ארצי"
+        },
+		{
+            "id": 9,
+			"district": "ארצי"
+        },
+		{
+            "id": 831,
+			"district": "ארצי"
+        },
+		{
+            "id": 823,
+			"district": "ארצי"
+        },
+		{
+            "id": 122,
+			"district": "ארצי"
+        },
+		{
+            "id": 1,
+			"district": "ארצי"
+        },
+		{
+            "id": 825,
+			"district": "ארצי"
+        },
+		{
+            "id": 114,
+			"district": "ארצי"
         }
     ]
 }
