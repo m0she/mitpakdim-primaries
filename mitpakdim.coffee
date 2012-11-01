@@ -246,6 +246,8 @@ class root.MemberList extends root.JSONPCollection
                         else
                             dest.push item
             extendArrayWithId orig_args[0].objects, extra_args[0].objects
+            orig_args[0].objects = _.filter orig_args[0].objects, (obj) =>
+                obj.participating ? true
 
             if _.isFunction options.success
                 options.success orig_args...

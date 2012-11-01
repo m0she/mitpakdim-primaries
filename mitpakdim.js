@@ -443,7 +443,8 @@
       });
       extra = smartSync(method, model, extra_options);
       return $.when(members, extra).done(function(orig_args, extra_args) {
-        var extendArrayWithId;
+        var extendArrayWithId,
+          _this = this;
         extendArrayWithId = function() {
           var dest, dest_item, id, item, sources, src, _i, _len, _results;
           dest = arguments[0], sources = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
@@ -470,6 +471,10 @@
           return _results;
         };
         extendArrayWithId(orig_args[0].objects, extra_args[0].objects);
+        orig_args[0].objects = _.filter(orig_args[0].objects, function(obj) {
+          var _ref1;
+          return (_ref1 = obj.participating) != null ? _ref1 : true;
+        });
         if (_.isFunction(options.success)) {
           return options.success.apply(options, orig_args);
         }
