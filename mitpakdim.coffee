@@ -200,6 +200,19 @@ class root.AgendaList extends root.JSONPCollection
         disable_repo: window.mit.agenda
         sync: root.JSONPCachableSync('agendas')
 
+    resetWeights: (weights) ->
+        @done =>
+            @each (agenda, index) ->
+                if _.isNumber(value = weights[agenda.id])
+                    agenda.set "uservalue", value
+
+    getWeights: ->
+        weights = {}
+        @each (agenda) =>
+            weights[agenda.id] = agenda.get("uservalue")
+        weights
+
+
 class root.MemberList extends root.JSONPCollection
     model: root.Member
     url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name"
@@ -465,8 +478,6 @@ class root.CandidateListView extends root.PartyFilteredListView
 class root.AgendaListView extends root.ListView
     el: '.agendas'
     options:
-        collection: new root.AgendaList
-
         itemView: class extends root.ListViewItem
             className : "agenda_item"
             render : ->
@@ -486,18 +497,12 @@ class root.AgendaListView extends root.ListView
             get_template: ->
                 $("#agenda_template").html()
 
-    reset: (weights) ->
-        @collection.done =>
-            @collection.each (agenda, index) ->
-                if _.isNumber(value = weights[agenda.id])
-                    agenda.set "uservalue", value
-                    @.$(".slider").eq(index).agendaSlider "value", value
+    initialize: ->
+        super arguments...
+        @collection.on 'change', @changeModel
 
-    getWeights: ->
-        weights = {}
-        @collection.each (agenda) =>
-            weights[agenda.id] = agenda.get("uservalue")
-        weights
+    changeModel: (model) =>
+        @.$(".slider").eq(@collection.indexOf model).agendaSlider "value", model.get("uservalue")
 
     showMarkersForCandidate: (candidate_model) ->
         candidate_agendas = candidate_model.getAgendas()
@@ -561,7 +566,7 @@ class root.EntranceView extends Backbone.View
     initialize: =>
         @partyListView = new root.DropdownContainer
             el: '.parties'
-            collection: root.lists.partyList
+            collection: root.lists.parties
             autofetch: false
         @partyListView.on 'change', (model) =>
             console.log "Party changed: ", this, arguments
@@ -602,13 +607,13 @@ class root.AppView extends Backbone.View
 
     initialize: =>
         @agendaListView = new root.AgendaListView
-
-        @agendaListView.collection.on 'change:uservalue', _.debounce @calculate, 500
+            collection: root.lists.agendas
 
         @candidatesView = new root.CandidatesMainView
             members: root.lists.members
             newbies: root.lists.newbies
 
+        root.lists.agendas.on 'change:uservalue', _.debounce @calculate, 500
         root.lists.members.on "change:selected", @updateSelectedCandidate
         root.lists.newbies.on "change:selected", @updateSelectedCandidate
 
@@ -620,17 +625,17 @@ class root.AppView extends Backbone.View
 
     events:
         'click input:button#fb_share': (event) ->
-            root.facebookShare getShareLink @agendaListView.getWeights()
+            root.facebookShare getShareLink root.lists.agendas.getWeights()
         'click input:button#tweet_share': (event) ->
-            root.twitterShare getShareLink @agendaListView.getWeights()
+            root.twitterShare getShareLink root.lists.agendas.getWeights()
         'click input:button#show_weights': (event) ->
             instructions = "\u05DC\u05D4\u05E2\u05EA\u05E7\u05D4\u0020\u05DC\u05D7\u05E5\u0020\u05E2\u05DC\u0020\u05E6\u05D9\u05E8\u05D5\u05E3\u0020\u05D4\u05DE\u05E7\u05E9\u05D9\u05DD\u000A\u0043\u0074\u0072\u006C\u002B\u0043"
-            window.prompt instructions, encode_weights @agendaListView.getWeights()
+            window.prompt instructions, encode_weights root.lists.agendas.getWeights()
         'click #change_party': (event) ->
             root.router.navigate '', trigger: true
 
     calculate: (agenda) =>
-        @candidatesView.calculate @agendaListView.getWeights()
+        @candidatesView.calculate root.lists.agendas.getWeights()
         ga.event 'weight',
             'change_party_' + root.global.party.id,
             'agenda_' + agenda.id, agenda.get('uservalue')
@@ -665,17 +670,17 @@ class root.Router extends Backbone.Router
     partyNoDistrict: (party_id, weights) -> @party(party_id, undefined, weights)
     party: (party_id, district_id, weights) ->
         console.log 'party', arguments
-        model = root.lists.partyList.where(id: Number(party_id))[0]
+        model = root.lists.parties.where(id: Number(party_id))[0]
         if not model
             return root.router.navigate '', trigger: true
         root.global.party = model
         root.global.trigger 'change_party', model
 
-        if district_model = root.lists.partyList.where(id: Number(district_id))[0]
+        if district_model = root.lists.parties.where(id: Number(district_id))[0]
             root.global.district = district_model
 
         if weights = parse_weights(weights)
-            root.appView.agendaListView.reset weights
+            root.lists.agendas.resetWeights weights
             root.router.navigate party_id
         $('.party_page').show()
         $('.entrance_page').hide()
@@ -684,13 +689,15 @@ class root.Router extends Backbone.Router
 
 setupPartyList = ->
     root.lists ?= {}
-    root.lists.partyList = new root.PartyList
+    root.lists.agendas = new root.AgendaList
+    root.lists.parties = new root.PartyList
     root.lists.members = new root.MemberList
     root.lists.newbies = new root.NewbiesList
     return [
-        root.lists.newbies.fetch()
+        root.lists.agendas.fetch()
+        root.lists.parties.fetch()
         root.lists.members.fetch()
-        root.lists.partyList.fetch()
+        root.lists.newbies.fetch()
     ]
 
 $ ->

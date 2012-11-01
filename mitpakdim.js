@@ -383,6 +383,28 @@
       sync: root.JSONPCachableSync('agendas')
     };
 
+    AgendaList.prototype.resetWeights = function(weights) {
+      var _this = this;
+      return this.done(function() {
+        return _this.each(function(agenda, index) {
+          var value;
+          if (_.isNumber(value = weights[agenda.id])) {
+            return agenda.set("uservalue", value);
+          }
+        });
+      });
+    };
+
+    AgendaList.prototype.getWeights = function() {
+      var weights,
+        _this = this;
+      weights = {};
+      this.each(function(agenda) {
+        return weights[agenda.id] = agenda.get("uservalue");
+      });
+      return weights;
+    };
+
     return AgendaList;
 
   })(root.JSONPCollection);
@@ -949,13 +971,13 @@
     __extends(AgendaListView, _super);
 
     function AgendaListView() {
+      this.changeModel = __bind(this.changeModel, this);
       return AgendaListView.__super__.constructor.apply(this, arguments);
     }
 
     AgendaListView.prototype.el = '.agendas';
 
     AgendaListView.prototype.options = {
-      collection: new root.AgendaList,
       itemView: (function(_super1) {
 
         __extends(_Class, _super1);
@@ -997,27 +1019,13 @@
       })(root.ListViewItem)
     };
 
-    AgendaListView.prototype.reset = function(weights) {
-      var _this = this;
-      return this.collection.done(function() {
-        return _this.collection.each(function(agenda, index) {
-          var value;
-          if (_.isNumber(value = weights[agenda.id])) {
-            agenda.set("uservalue", value);
-            return this.$(".slider").eq(index).agendaSlider("value", value);
-          }
-        });
-      });
+    AgendaListView.prototype.initialize = function() {
+      AgendaListView.__super__.initialize.apply(this, arguments);
+      return this.collection.on('change', this.changeModel);
     };
 
-    AgendaListView.prototype.getWeights = function() {
-      var weights,
-        _this = this;
-      weights = {};
-      this.collection.each(function(agenda) {
-        return weights[agenda.id] = agenda.get("uservalue");
-      });
-      return weights;
+    AgendaListView.prototype.changeModel = function(model) {
+      return this.$(".slider").eq(this.collection.indexOf(model)).agendaSlider("value", model.get("uservalue"));
     };
 
     AgendaListView.prototype.showMarkersForCandidate = function(candidate_model) {
@@ -1156,7 +1164,7 @@
       var _this = this;
       this.partyListView = new root.DropdownContainer({
         el: '.parties',
-        collection: root.lists.partyList,
+        collection: root.lists.parties,
         autofetch: false
       });
       this.partyListView.on('change', function(model) {
@@ -1224,12 +1232,14 @@
     AppView.prototype.el = '#app_root';
 
     AppView.prototype.initialize = function() {
-      this.agendaListView = new root.AgendaListView;
-      this.agendaListView.collection.on('change:uservalue', _.debounce(this.calculate, 500));
+      this.agendaListView = new root.AgendaListView({
+        collection: root.lists.agendas
+      });
       this.candidatesView = new root.CandidatesMainView({
         members: root.lists.members,
         newbies: root.lists.newbies
       });
+      root.lists.agendas.on('change:uservalue', _.debounce(this.calculate, 500));
       root.lists.members.on("change:selected", this.updateSelectedCandidate);
       root.lists.newbies.on("change:selected", this.updateSelectedCandidate);
       this.recommendations = new root.RecommendationList;
@@ -1242,15 +1252,15 @@
 
     AppView.prototype.events = {
       'click input:button#fb_share': function(event) {
-        return root.facebookShare(getShareLink(this.agendaListView.getWeights()));
+        return root.facebookShare(getShareLink(root.lists.agendas.getWeights()));
       },
       'click input:button#tweet_share': function(event) {
-        return root.twitterShare(getShareLink(this.agendaListView.getWeights()));
+        return root.twitterShare(getShareLink(root.lists.agendas.getWeights()));
       },
       'click input:button#show_weights': function(event) {
         var instructions;
         instructions = "\u05DC\u05D4\u05E2\u05EA\u05E7\u05D4\u0020\u05DC\u05D7\u05E5\u0020\u05E2\u05DC\u0020\u05E6\u05D9\u05E8\u05D5\u05E3\u0020\u05D4\u05DE\u05E7\u05E9\u05D9\u05DD\u000A\u0043\u0074\u0072\u006C\u002B\u0043";
-        return window.prompt(instructions, encode_weights(this.agendaListView.getWeights()));
+        return window.prompt(instructions, encode_weights(root.lists.agendas.getWeights()));
       },
       'click #change_party': function(event) {
         return root.router.navigate('', {
@@ -1260,7 +1270,7 @@
     };
 
     AppView.prototype.calculate = function(agenda) {
-      this.candidatesView.calculate(this.agendaListView.getWeights());
+      this.candidatesView.calculate(root.lists.agendas.getWeights());
       return ga.event('weight', 'change_party_' + root.global.party.id, 'agenda_' + agenda.id, agenda.get('uservalue'));
     };
 
@@ -1322,7 +1332,7 @@
     Router.prototype.party = function(party_id, district_id, weights) {
       var district_model, model;
       console.log('party', arguments);
-      model = root.lists.partyList.where({
+      model = root.lists.parties.where({
         id: Number(party_id)
       })[0];
       if (!model) {
@@ -1332,13 +1342,13 @@
       }
       root.global.party = model;
       root.global.trigger('change_party', model);
-      if (district_model = root.lists.partyList.where({
+      if (district_model = root.lists.parties.where({
         id: Number(district_id)
       })[0]) {
         root.global.district = district_model;
       }
       if (weights = parse_weights(weights)) {
-        root.appView.agendaListView.reset(weights);
+        root.lists.agendas.resetWeights(weights);
         root.router.navigate(party_id);
       }
       $('.party_page').show();
@@ -1354,10 +1364,11 @@
     if ((_ref1 = root.lists) == null) {
       root.lists = {};
     }
-    root.lists.partyList = new root.PartyList;
+    root.lists.agendas = new root.AgendaList;
+    root.lists.parties = new root.PartyList;
     root.lists.members = new root.MemberList;
     root.lists.newbies = new root.NewbiesList;
-    return [root.lists.newbies.fetch(), root.lists.members.fetch(), root.lists.partyList.fetch()];
+    return [root.lists.agendas.fetch(), root.lists.parties.fetch(), root.lists.members.fetch(), root.lists.newbies.fetch()];
   };
 
   $(function() {
