@@ -141,10 +141,12 @@ window, body {
     width : 28px;
 }
 .agenda_item .ui-slider .ui-slider-mid-range {
-    background-color : #00507d;
     height : 20px;
     position : absolute;
     top : 1px;
+}
+.agenda_item .ui-slider.plus .ui-slider-mid-range {
+    background-color : #00507d;
 }
 .agenda_item .ui-slider.minus .ui-slider-mid-range {
     background-color : #fcbb2b;
