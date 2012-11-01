@@ -674,6 +674,7 @@ class root.Router extends Backbone.Router
 
         if weights = parse_weights(weights)
             root.appView.agendaListView.reset weights
+            root.router.navigate party_id
         $('.party_page').show()
         $('.entrance_page').hide()
 
