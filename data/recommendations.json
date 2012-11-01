@@ -80,6 +80,20 @@
                 "members": [  ],
                 "newbies": [ ]
             }
+        }, 
+		{
+            "id": 7,
+            "name": "חוג השכונות ופריפריה",
+            "party_name": "העבודה", 
+			"agendas": "1x0i2x74i6x12i7x69i9x100i24x100i26x22i36x21i39x0i40x0i41x40i44x0i45x0i48x0i49x23i53x0i55x0i60x49i61x66i63x100i64x100i66x71i71x59i72x9i74x37?", 
+            "positive_list": {
+                "members": [  ],
+                "newbies": [  ]
+            },
+            "negative_list": {
+                "members": [  ],
+                "newbies": [ ]
+            }
         }
     ]
 }
