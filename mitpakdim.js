@@ -1261,7 +1261,7 @@
 
     AppView.prototype.calculate = function(agenda) {
       this.candidatesView.calculate(this.agendaListView.getWeights());
-      return ga.event('weight', 'change', 'agenda_' + agenda.id, agenda.get('uservalue'));
+      return ga.event('weight', 'change_party_' + root.global.party.id, 'agenda_' + agenda.id, agenda.get('uservalue'));
     };
 
     AppView.prototype.updateSelectedCandidate = function(candidate_model, selected_attr_value) {

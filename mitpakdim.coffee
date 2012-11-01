@@ -631,7 +631,9 @@ class root.AppView extends Backbone.View
 
     calculate: (agenda) =>
         @candidatesView.calculate @agendaListView.getWeights()
-        ga.event 'weight', 'change', 'agenda_' + agenda.id, agenda.get('uservalue')
+        ga.event 'weight',
+            'change_party_' + root.global.party.id,
+            'agenda_' + agenda.id, agenda.get('uservalue')
 
     updateSelectedCandidate : (candidate_model, selected_attr_value) =>
         if not selected_attr_value
