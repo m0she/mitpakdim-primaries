@@ -1,14 +1,36 @@
 {
     "objects" : [
-        {
-            "id": 214,
-            "district": "north",
-            "previous_vote_count": 7
-        },
-        {
-            "id": 771,
+		{
+            "id": 731,
             "participating": false
+        },
+		{
+            "id": 824,
+            "participating": false
+        },
+		{
+            "id": 724,
+            "participating": false
+        },
+		{
+            "id": 771,
+			"party_name": "הליכוד"
+        },
+		{
+            "id": 821,
+			"party_name": "הליכוד"
+        },
+		{
+            "id": 848,
+			"party_name": "הליכוד"
+        },
+		{
+            "id": 850,
+			"party_name": "העבודה"
+        },
+		{
+            "id": 818,
+			"party_name": "העבודה"
         }
     ]
 }
-
