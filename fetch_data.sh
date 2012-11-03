@@ -21,6 +21,7 @@ cd member-agendas
 for i in $(cat ../member.ids); do
     get_with_retry http://oknesset.org/api/v2/member-agendas/$i/ member-agendas.$i.json
 done
+cd ..
 
 python ../datautil.py combine combined_members.json
 python ../datautil.py jsonp combined_members.json
