@@ -13,6 +13,7 @@ window.mit.recommendations = {
                 "newbies": [], 
                 "members": []
             }, 
+            "img_url": "https://lh5.googleusercontent.com/TK1bIeCaOeycTI45VBpMGp292P47AP70IpciRdPlcUEGTvgeQhZgovNm4BYj2vAVFlGEqp2RSFc", 
             "id": 1
         }, 
         {
@@ -27,11 +28,12 @@ window.mit.recommendations = {
                 "newbies": [], 
                 "members": []
             }, 
+            "img_url": "https://lh6.googleusercontent.com/B3tk5zRYaExkAXUFv3baufh7gB9VDUQ2YhutU37YwT9jDfzXHypZj3Rhy7e3DHZxWEhHSJbh12A", 
             "id": 2
         }, 
         {
-            "agendas": "1x0i2x73i6x-99i7x29i9x43i24x49i26x0i36x46i39x32i40x26i41x30i44x0i45x0i48x75i49x47i53x100i55x46i60x-30i61x50i63x0i64x72i66x15i71x0i72x0i74x0", 
-            "name": "\u05d3\u05d5\u05e8 \u05d4\u05d0\u05de\u05ea", 
+            "agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x100i63x0i64x0i66x0i71x0i72x0i74x0", 
+            "name": "\u05d7\u05d9\u05e0\u05d5\u05da \u05d9\u05e9\u05e8\u05d0\u05dc\u05d9", 
             "positive_list": {
                 "newbies": [], 
                 "members": []
@@ -41,46 +43,77 @@ window.mit.recommendations = {
                 "newbies": [], 
                 "members": []
             }, 
-            "id": 3
+            "id": 4
         }, 
         {
-            "positive_list": {
-                "newbies": [], 
-                "members": []
-            }, 
-            "negative_list": {
-                "newbies": [], 
-                "members": []
-            }, 
-            "agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x100i63x0i64x0i66x0i71x0i72x0i74x0", 
-            "id": 4, 
-            "name": "\u05d7\u05d9\u05e0\u05d5\u05da \u05d9\u05e9\u05e8\u05d0\u05dc\u05d9"
-        }, 
-        {
-            "positive_list": {
-                "newbies": [], 
-                "members": []
-            }, 
-            "negative_list": {
-                "newbies": [], 
-                "members": []
-            }, 
             "agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x99i74x0", 
-            "id": 5, 
-            "name": "\u05de\u05ea\u05e4\u05e7\u05d3\u05d5\u05ea"
-        }, 
-        {
+            "name": "\u05de\u05ea\u05e4\u05e7\u05d3\u05d5\u05ea", 
             "positive_list": {
                 "newbies": [], 
                 "members": []
             }, 
+            "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
             "negative_list": {
                 "newbies": [], 
                 "members": []
             }, 
+            "id": 5
+        }, 
+        {
             "agendas": "1x0i2x0i6x99i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x0i74x0", 
-            "id": 6, 
-            "name": "\u05d4\u05e4\u05d5\u05e8\u05d5\u05dd \u05dc\u05e9\u05d5\u05d5\u05d9\u05d5\u05df \u05d1\u05e0\u05d8\u05dc"
+            "name": "\u05d4\u05e4\u05d5\u05e8\u05d5\u05dd \u05dc\u05e9\u05d5\u05d5\u05d9\u05d5\u05df \u05d1\u05e0\u05d8\u05dc", 
+            "positive_list": {
+                "newbies": [], 
+                "members": []
+            }, 
+            "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
+            "negative_list": {
+                "newbies": [], 
+                "members": []
+            }, 
+            "id": 6
+        }, 
+        {
+            "agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x100i63x0i64x0i66x0i71x0i72x0i74x0", 
+            "name": "\u05d7\u05d9\u05e0\u05d5\u05da \u05d9\u05e9\u05e8\u05d0\u05dc\u05d9", 
+            "positive_list": {
+                "newbies": [], 
+                "members": []
+            }, 
+            "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
+            "negative_list": {
+                "newbies": [], 
+                "members": []
+            }, 
+            "id": 7
+        }, 
+        {
+            "agendas": "1x0i2x0i6x99i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x0i74x0", 
+            "name": "\u05d4\u05e4\u05d5\u05e8\u05d5\u05dd \u05dc\u05e9\u05d5\u05d5\u05d9\u05d5\u05df \u05d1\u05e0\u05d8\u05dc", 
+            "positive_list": {
+                "newbies": [], 
+                "members": []
+            }, 
+            "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
+            "negative_list": {
+                "newbies": [], 
+                "members": []
+            }, 
+            "id": 8
+        }, 
+        {
+            "agendas": "1x0i2x74i6x12i7x69i9x100i24x100i26x22i36x21i39x0i40x0i41x40i44x0i45x0i48x0i49x23i53x0i55x0i60x49i61x66i63x100i64x100i66x71i71x59i72x9i74x37?", 
+            "name": "\u05d7\u05d5\u05d2 \u05d4\u05e9\u05db\u05d5\u05e0\u05d5\u05ea \u05d5\u05e4\u05e8\u05d9\u05e4\u05e8\u05d9\u05d4", 
+            "positive_list": {
+                "newbies": [], 
+                "members": []
+            }, 
+            "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
+            "negative_list": {
+                "newbies": [], 
+                "members": []
+            }, 
+            "id": 9
         }
     ]
 }
