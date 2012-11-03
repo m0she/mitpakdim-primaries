@@ -379,7 +379,11 @@
 
     AgendaList.prototype.model = root.Agenda;
 
-    AgendaList.prototype.url = "http://www.oknesset.org/api/v2/agenda/";
+    AgendaList.prototype.url = "http://www.oknesset.org/api/v2/agenda/?extra_fields=num_followers";
+
+    AgendaList.prototype.comparator = function(agenda) {
+      return -agenda.get('num_followers');
+    };
 
     AgendaList.prototype.syncOptions = {
       disable_repo: window.mit.agenda,

@@ -199,7 +199,9 @@ class root.PartyList extends root.JSONPCollection
 
 class root.AgendaList extends root.JSONPCollection
     model: root.Agenda
-    url: "http://www.oknesset.org/api/v2/agenda/"
+    url: "http://www.oknesset.org/api/v2/agenda/?extra_fields=num_followers"
+    comparator: (agenda) ->
+        -agenda.get 'num_followers'
     syncOptions:
         disable_repo: window.mit.agenda
         sync: root.JSONPCachableSync('agendas')
