@@ -33,6 +33,50 @@
 			"party_name": "העבודה"
         },
 		{
+            "id": 5,
+            "participating": false
+        },
+		{
+            "id": 100,
+            "participating": false
+        },
+		{
+            "id": 96,
+            "participating": false
+        },
+		{
+            "id": 45,
+            "participating": false
+        },
+		{
+            "id": 730,
+            "participating": false
+        },
+		{
+            "id": 16,
+            "participating": false
+        },
+		{
+            "id": 697,
+            "participating": false
+        },
+		{
+            "id": 115,
+            "participating": false
+        },
+		{
+            "id": 204,
+            "participating": false
+        },
+		{
+            "id": 213,
+            "participating": false
+        },
+		{
+            "id": 103,
+            "participating": false
+        },
+		{
             "id": 830,
 			"district": "ארצי"
         },
