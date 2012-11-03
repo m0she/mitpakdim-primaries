@@ -31,6 +31,146 @@
 		{
             "id": 818,
 			"party_name": "העבודה"
+        },	
+		{
+            "id": 5,
+            "participating": false
+        },
+		{
+            "id": 100,
+            "participating": false
+        },
+		{
+            "id": 96,
+            "participating": false
+        },
+		{
+            "id": 45,
+            "participating": false
+        },
+		{
+            "id": 730,
+            "participating": false
+        },
+		{
+            "id": 16,
+            "participating": false
+        },
+		{
+            "id": 697,
+            "participating": false
+        },
+		{
+            "id": 115,
+            "participating": false
+        },
+		{
+            "id": 204,
+            "participating": false
+        },
+		{
+            "id": 213,
+            "participating": false
+        },
+		{
+            "id": 103,
+            "participating": false
+        },
+		{
+            "id": 830,
+			"district": "ארצי"
+        },
+		{
+            "id": 230,
+			"district": "ארצי"
+        },
+		{
+            "id": 725,
+			"district": "ארצי"
+        },
+		{
+            "id": 723,
+			"district": "ארצי"
+        },
+		{
+            "id": 734,
+			"district": "ארצי"
+        },
+		{
+            "id": 88,
+			"district": "ארצי"
+        },
+		{
+            "id": 828,
+			"district": "ארצי"
+        },
+		{
+            "id": 768,
+			"district": "ארצי"
+        },
+		{
+            "id": 14,
+			"district": "ארצי"
+        },
+		{
+            "id": 212,
+			"district": "ארצי"
+        },
+		{
+            "id": 695,
+			"district": "ארצי"
+        },
+		{
+            "id": 1,
+			"district": "ארצי"
+        },
+		{
+            "id": 826,
+			"district": "ארצי"
+        },
+		{
+            "id": 69,
+			"district": "ארצי"
+        },
+		{
+            "id": 829,
+			"district": "ארצי"
+        },
+		{
+            "id": 738,
+			"district": "ארצי"
+        },
+		{
+            "id": 70,
+			"district": "ארצי"
+        },
+		{
+            "id": 9,
+			"district": "ארצי"
+        },
+		{
+            "id": 831,
+			"district": "ארצי"
+        },
+		{
+            "id": 823,
+			"district": "ארצי"
+        },
+		{
+            "id": 122,
+			"district": "ארצי"
+        },
+		{
+            "id": 1,
+			"district": "ארצי"
+        },
+		{
+            "id": 825,
+			"district": "ארצי"
+        },
+		{
+            "id": 114,
+			"district": "ארצי"
         }
     ]
 }
