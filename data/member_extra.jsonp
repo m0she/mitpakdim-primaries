@@ -32,6 +32,146 @@ window.mit.member_extra = {
         {
             "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
             "id": 818
+        }, 
+        {
+            "participating": false, 
+            "id": 5
+        }, 
+        {
+            "participating": false, 
+            "id": 100
+        }, 
+        {
+            "participating": false, 
+            "id": 96
+        }, 
+        {
+            "participating": false, 
+            "id": 45
+        }, 
+        {
+            "participating": false, 
+            "id": 730
+        }, 
+        {
+            "participating": false, 
+            "id": 16
+        }, 
+        {
+            "participating": false, 
+            "id": 697
+        }, 
+        {
+            "participating": false, 
+            "id": 115
+        }, 
+        {
+            "participating": false, 
+            "id": 204
+        }, 
+        {
+            "participating": false, 
+            "id": 213
+        }, 
+        {
+            "participating": false, 
+            "id": 103
+        }, 
+        {
+            "id": 830, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 230, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 725, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 723, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 734, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 88, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 828, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 768, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 14, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 212, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 695, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 1, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 826, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 69, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 829, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 738, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 70, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 9, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 831, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 823, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 122, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 1, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 825, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 114, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
         }
     ]
 }
