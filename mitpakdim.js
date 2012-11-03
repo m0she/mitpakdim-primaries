@@ -909,8 +909,10 @@
       });
     };
 
+    PartyFilteredListView.prototype.partyChangeFilter = PartyFilteredListView.prototype.filterByParty;
+
     PartyFilteredListView.prototype.partyChange = function(party) {
-      return this.collection.reset(this.filterByParty(party));
+      return this.collection.reset(this.partyChangeFilter(party));
     };
 
     return PartyFilteredListView;
@@ -1106,6 +1108,12 @@
     RecommendationsView.prototype.initialize = function() {
       RecommendationsView.__super__.initialize.apply(this, arguments);
       return this.collection.on('change', this.applyChange, this);
+    };
+
+    RecommendationsView.prototype.partyChangeFilter = function(party) {
+      return RecommendationsView.__super__.partyChangeFilter.call(this, party).concat(this.unfilteredCollection.where({
+        party_name: void 0
+      }));
     };
 
     RecommendationsView.prototype.applyChange = function(recommendation) {

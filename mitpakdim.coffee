@@ -445,8 +445,9 @@ class root.PartyFilteredListView extends root.ListView
     filterByParty: (party) ->
         @unfilteredCollection.where party_name: party.get('name')
 
+    partyChangeFilter: @::filterByParty
     partyChange: (party) =>
-        @collection.reset @filterByParty party
+        @collection.reset @partyChangeFilter party
 
 class root.CandidateListView extends root.PartyFilteredListView
     options:
@@ -539,6 +540,9 @@ class root.RecommendationsView extends root.PartyFilteredListView
     initialize: ->
         super(arguments...)
         @collection.on 'change', @applyChange, @
+
+    partyChangeFilter: (party) ->
+        super(party).concat @unfilteredCollection.where party_name: undefined
 
     applyChange: (recommendation) ->
         changeModelFunc = (candidates, attribute) ->
