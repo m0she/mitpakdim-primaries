@@ -221,6 +221,7 @@ body {
     border-radius : 3px;
     border-style : solid;
     border-color : #00507d;
+    box-shadow : 6px 6px 6px #999;
     display : none;
     position : relative;
     z-index : 11;
