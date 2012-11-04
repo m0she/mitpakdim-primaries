@@ -248,43 +248,45 @@ class root.AgendaList extends root.JSONPCollection
         weights
 
 
-class root.MemberList extends root.JSONPCollection
-    model: root.Member
-    url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name"
-    syncOptions:
-        disable_repo: window.mit.combined_members
-        sync: root.JSONPCachableSync('members')
-
-    sync: (method, model, options) ->
-        console.log 'MemberList sync', @, arguments
-        members_options = _.extend {}, options,
+multiSync = (method, model, options) ->
+    multiSyncOptions = model?.multiSync or options?.multiSync
+    requests = for multi_options in multiSyncOptions
+        smartSync method, model, _.extend({}, multi_options,
             success: undefined,
             error: undefined,
-        members = smartSync(method, model, options)
+        )
+    $.when(requests...).done (responses...) ->
+        extendArrayWithId = (dest, sources...) ->
+            for src in sources
+                for item in src
+                    id = item.id
+                    if dest_item = _.where(dest, id: id)[0]
+                        _.extend dest_item, item
+                    else
+                        dest.push item
+        extendArrayWithId (_.chain(responses).pluck(0).pluck('objects').value())...
 
-        extra_options = _.extend {}, members_options,
-            repo: window.mit.member_extra
-            url: "data/member_extra.jsonp"
-        extra = smartSync(method, model, extra_options)
+        if _.isFunction options.success
+            options.success responses[0]...
+    .fail (orig_args) ->
+        if _.isFunction options.error
+            options.error responses[0]...
 
-        $.when(members, extra).done (orig_args, extra_args) ->
-            extendArrayWithId = (dest, sources...) ->
-                for src in sources
-                    for item in src
-                        id = item.id
-                        if dest_item = _.where(dest, id: id)[0]
-                            _.extend dest_item, item
-                        else
-                            dest.push item
-            extendArrayWithId orig_args[0].objects, extra_args[0].objects
-            orig_args[0].objects = _.filter orig_args[0].objects, (obj) =>
-                obj.participating ? true
+class root.MemberList extends root.JSONPCollection
+    model: root.Member
+    multiSync: [{
+        url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name"
+        disable_repo: window.mit.combined_members
+        sync: root.JSONPCachableSync('members')
+    }, {
+        repo: window.mit.member_extra
+        sync: root.JSONPCachableSync('members_extra')
+    }]
+    sync: multiSync
 
-            if _.isFunction options.success
-                options.success orig_args...
-        .fail (orig_args, extra_args) ->
-            if _.isFunction options.error
-                options.error orig_args...
+    parse: (data) ->
+        _.filter super(data), (obj) =>
+            obj.participating ? true
 
     fetchAgendas: ->
         fetches = []
