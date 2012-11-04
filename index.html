@@ -106,8 +106,18 @@
             </div>
         </script>
         <script type="text/template" id='agenda_template'>
-            <a href="http://oknesset.org<%= absolute_url %>" target="_blank" class="name"><%= name %></a>
-            <div class="current_value"></div>
+            <div class="agenda_title">
+                <a href="http://oknesset.org<%= absolute_url %>" target="_blank" class="name"><%= name %></a>
+                <div class="extra_info_wrapper">
+                    <div class="extra_info_icon"></div>
+                    <div class="extra_info">
+                        <div class="name"><%= name %></div>
+                        <div class="owner"><%= public_owner_name %></div>
+                        <div class="description"><%= description %></div>
+                    </div>
+                </div>
+            </a>
+            </div>
             <div class="slider" id="agenda_<%= id %>"></div> 
         </script>
         <script type="text/template" id='recommendation_template'>
