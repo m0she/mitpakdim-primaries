@@ -2,6 +2,7 @@ if (!window.mit) window.mit = {};
 window.mit.recommendations = {
     "objects": [
         {
+            "img_url": "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-snc6/276880_138609632944129_2010804045_q.jpg",
             "agendas": "1x0i2x0i6x65i7x0i9x100i24x49i26x0i36x0i39x61i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x61i64x64i66x61i71x39i72x0i74x0", 
             "name": "\u05e6\u05e4\u05d5\u05df \u05e2\u05db\u05e9\u05d9\u05d5", 
             "positive_list": {
@@ -17,6 +18,7 @@ window.mit.recommendations = {
             "id": 1
         }, 
         {
+            "img_url":"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-snc6/188131_420575417997746_2124773990_n.jpg",
             "agendas": "1x-100i2x48i6x-18i7x37i9x100i24x0i26x20i36x76i39x0i40x29i41x100i44x45i45x-100i48x0i49x29i53x-100i55x0i60x0i61x100i63x100i64x21i66x48i71x100i72x100i74x100", 
             "name": "\u05de\u05ea\u05d0\u05e8\u05d2\u05e0\u05d9\u05dd \u05dc\u05e2\u05d1\u05d5\u05d3\u05d4", 
             "positive_list": {
@@ -32,6 +34,7 @@ window.mit.recommendations = {
             "id": 2
         }, 
         {
+            "img_url": "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/188167_195739917129168_983006050_n.jpg",
             "agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x100i63x0i64x0i66x0i71x0i72x0i74x0", 
             "name": "\u05d7\u05d9\u05e0\u05d5\u05da \u05d9\u05e9\u05e8\u05d0\u05dc\u05d9", 
             "positive_list": {
@@ -46,6 +49,7 @@ window.mit.recommendations = {
             "id": 3
         }, 
         {
+"img_url":"http://mitpakdot.files.wordpress.com/2012/01/mitpakdot_logo_small2.jpg?w=200&h=125",
             "agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x99i74x0", 
             "name": "\u05de\u05ea\u05e4\u05e7\u05d3\u05d5\u05ea", 
             "positive_list": {
@@ -60,6 +64,7 @@ window.mit.recommendations = {
             "id": 4
         }, 
         {
+"img_url":"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-snc7/276917_272126646161078_1289964971_q.jpg",
             "agendas": "1x0i2x0i6x99i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x0i74x0", 
             "name": "\u05d4\u05e4\u05d5\u05e8\u05d5\u05dd \u05dc\u05e9\u05d5\u05d5\u05d9\u05d5\u05df \u05d1\u05e0\u05d8\u05dc", 
             "positive_list": {
@@ -74,6 +79,7 @@ window.mit.recommendations = {
             "id": 5
         }, 
         {
+"img_url": "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/188167_195739917129168_983006050_n.jpg",
             "agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x100i63x0i64x0i66x0i71x0i72x0i74x0", 
             "name": "\u05d7\u05d9\u05e0\u05d5\u05da \u05d9\u05e9\u05e8\u05d0\u05dc\u05d9", 
             "positive_list": {
@@ -88,6 +94,7 @@ window.mit.recommendations = {
             "id": 6
         }, 
         {
+"img_url":"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-snc7/276917_272126646161078_1289964971_q.jpg",
             "agendas": "1x0i2x0i6x99i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x0i74x0", 
             "name": "\u05d4\u05e4\u05d5\u05e8\u05d5\u05dd \u05dc\u05e9\u05d5\u05d5\u05d9\u05d5\u05df \u05d1\u05e0\u05d8\u05dc", 
             "positive_list": {
