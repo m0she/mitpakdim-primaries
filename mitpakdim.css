@@ -224,12 +224,14 @@ body {
     display : none;
     position : relative;
     z-index : 11;
-    width : 230px;
+    max-height : 300px;
+    width : 270px;
     padding : 12px 15px 15px 15px;
     font-size : 13px;
     font-weight : 400;
     word-wrap : break-word;
     vertical-align : top;
+    overflow-y : auto;
 }
 .agenda_item .extra_info .name {
     color : #00507d;
