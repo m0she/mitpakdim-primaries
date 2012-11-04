@@ -302,6 +302,10 @@
       img_url: ''
     };
 
+    Recommendation.prototype.isSelected = function(collection, options) {
+      return (collection || this.collection).getSelected((options != null ? options.attr_name : void 0) === this);
+    };
+
     return Recommendation;
 
   })(Backbone.Model);
@@ -349,10 +353,11 @@
     };
 
     SelectableCollection.prototype.getSelected = function(attr_name) {
+      var _ref1;
       if (attr_name == null) {
         attr_name = default_attr_name;
       }
-      return this.selecteds[attr_name];
+      return (_ref1 = this.selecteds) != null ? _ref1[attr_name] : void 0;
     };
 
     return SelectableCollection;
@@ -1123,6 +1128,45 @@
 
   }).call(this, root.ListView);
 
+  root.RecommendationsItemView = (function(_super) {
+
+    __extends(RecommendationsItemView, _super);
+
+    function RecommendationsItemView() {
+      return RecommendationsItemView.__super__.constructor.apply(this, arguments);
+    }
+
+    RecommendationsItemView.prototype.initialize = function() {
+      var _this = this;
+      RecommendationsItemView.__super__.initialize.apply(this, arguments);
+      this.model.on('selected', function() {
+        return _this.$('.recommendation_item').addClass('selected');
+      });
+      return this.model.on('deselected', function() {
+        return _this.$('.recommendation_item').removeClass('selected');
+      });
+    };
+
+    RecommendationsItemView.prototype.events = {
+      'click img': function() {
+        return this.model.trigger('select', this.model);
+      }
+    };
+
+    RecommendationsItemView.prototype.get_template = function() {
+      return $("#recommendation_template").html();
+    };
+
+    RecommendationsItemView.prototype.digestData = function(data) {
+      return _.extend({}, data, {
+        model: this.model
+      });
+    };
+
+    return RecommendationsItemView;
+
+  })(root.ListViewItem);
+
   root.RecommendationsView = (function(_super) {
 
     __extends(RecommendationsView, _super);
@@ -1134,32 +1178,7 @@
     RecommendationsView.prototype.el = '.recommendations';
 
     RecommendationsView.prototype.options = {
-      itemView: (function(_super1) {
-
-        __extends(_Class, _super1);
-
-        function _Class() {
-          this.catchEvents = __bind(this.catchEvents, this);
-          return _Class.__super__.constructor.apply(this, arguments);
-        }
-
-        _Class.prototype.catchEvents = function() {
-          var status;
-          status = Boolean(this.$el.find(':checkbox:checked').length);
-          return this.model.trigger('select', this.model);
-        };
-
-        _Class.prototype.events = {
-          'click img': 'catchEvents'
-        };
-
-        _Class.prototype.get_template = function() {
-          return $("#recommendation_template").html();
-        };
-
-        return _Class;
-
-      })(root.ListViewItem)
+      itemView: root.RecommendationsItemView
     };
 
     RecommendationsView.prototype.initialize = function() {
@@ -1205,7 +1224,7 @@
 
     return RecommendationsView;
 
-  }).call(this, root.PartyFilteredListView);
+  })(root.PartyFilteredListView);
 
   filter_data = [
     {

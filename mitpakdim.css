@@ -397,6 +397,9 @@ body {
 .candidate_instance .score.positive {
     color : #00507d;
 }
+.recommendation_item.selected {
+    background-color: #8f8;
+}
 
 
 

@@ -173,6 +173,8 @@ class root.Recommendation extends Backbone.Model
     defaults:
         url: ''
         img_url: ''
+    isSelected: (collection, options) ->
+        (collection or @collection).getSelected options?.attr_name == @
 
 ############### COLLECTIONS ##############
 
@@ -198,7 +200,7 @@ class root.SelectableCollection extends Backbone.Collection
 
     getSelected: (attr_name) ->
         attr_name ?= default_attr_name
-        @selecteds[attr_name]
+        @selecteds?[attr_name]
 
 class root.PromisedCollection extends root.SelectableCollection
     initialize: ->
@@ -552,17 +554,29 @@ class root.AgendaListView extends root.ListView
         @collection.each (agenda, index) ->
             @.$(".slider").eq(index).agendaSlider "clearCandidateMarker"
 
+class root.RecommendationsItemView extends root.ListViewItem
+    initialize: ->
+        super arguments...
+        @model.on 'selected', =>
+            @$('.recommendation_item').addClass 'selected'
+        @model.on 'deselected', =>
+            @$('.recommendation_item').removeClass 'selected'
+
+    events:
+        'click img': ->
+            @model.trigger 'select', @model
+
+    get_template: ->
+        $("#recommendation_template").html()
+
+    digestData : (data) ->
+        _.extend {}, data, model: @model
+
 class root.RecommendationsView extends root.PartyFilteredListView
     el: '.recommendations'
     options:
-        itemView: class extends root.ListViewItem
-            catchEvents: =>
-                status = Boolean(@$el.find(':checkbox:checked').length)
-                @model.trigger 'select', @model
-            events:
-                'click img': 'catchEvents'
-            get_template: ->
-                $("#recommendation_template").html()
+        itemView: root.RecommendationsItemView
+
     initialize: ->
         super arguments...
         @collection.on 'selected', @applyChange, @
