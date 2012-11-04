@@ -1,0 +1,4 @@
+if (!window.mit) window.mit = {};
+window.mit.party_extra = {
+    "objects": []
+}

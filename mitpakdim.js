@@ -188,6 +188,60 @@
     return (options.sync || Backbone.sync)(method, model, options);
   };
 
+  multiSync = function(method, model, options) {
+    var multiSyncOptions, multi_options, requests;
+    multiSyncOptions = (model != null ? model.multiSync : void 0) || (options != null ? options.multiSync : void 0);
+    requests = (function() {
+      var _i, _len, _results;
+      _results = [];
+      for (_i = 0, _len = multiSyncOptions.length; _i < _len; _i++) {
+        multi_options = multiSyncOptions[_i];
+        _results.push(smartSync(method, model, _.extend({}, multi_options, {
+          success: void 0,
+          error: void 0
+        })));
+      }
+      return _results;
+    })();
+    return $.when.apply($, requests).done(function() {
+      var extendArrayWithId, responses;
+      responses = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      extendArrayWithId = function() {
+        var dest, dest_item, id, item, sources, src, _i, _len, _results;
+        dest = arguments[0], sources = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+        _results = [];
+        for (_i = 0, _len = sources.length; _i < _len; _i++) {
+          src = sources[_i];
+          _results.push((function() {
+            var _j, _len1, _results1;
+            _results1 = [];
+            for (_j = 0, _len1 = src.length; _j < _len1; _j++) {
+              item = src[_j];
+              id = item.id;
+              if (dest_item = _.where(dest, {
+                id: id
+              })[0]) {
+                _results1.push(_.extend(dest_item, item));
+              } else {
+                _results1.push(dest.push(item));
+              }
+            }
+            return _results1;
+          })());
+        }
+        return _results;
+      };
+      extendArrayWithId.apply(null, _.chain(responses).pluck(0).pluck('objects').value());
+      if (_.isFunction(options.success)) {
+        return options.success.apply(options, responses[0]);
+      }
+    }).fail(function(orig_args) {
+      if (_.isFunction(options.error)) {
+        return options.error.apply(options, responses[0]);
+      }
+    });
+  };
+
   root.MiscModel = (function(_super) {
 
     __extends(MiscModel, _super);
@@ -419,12 +473,18 @@
 
     PartyList.prototype.model = root.MiscModel;
 
-    PartyList.prototype.url = "http://www.oknesset.org/api/v2/party/";
+    PartyList.prototype.multiSync = [
+      {
+        url: "http://www.oknesset.org/api/v2/party/",
+        disable_repo: window.mit.party,
+        sync: root.JSONPCachableSync('parties')
+      }, {
+        repo: window.mit.party_extra,
+        sync: root.JSONPCachableSync('parties_extra')
+      }
+    ];
 
-    PartyList.prototype.syncOptions = {
-      disable_repo: window.mit.party,
-      sync: root.JSONPCachableSync('parties')
-    };
+    PartyList.prototype.sync = multiSync;
 
     return PartyList;
 
@@ -476,60 +536,6 @@
     return AgendaList;
 
   })(root.JSONPCollection);
-
-  multiSync = function(method, model, options) {
-    var multiSyncOptions, multi_options, requests;
-    multiSyncOptions = (model != null ? model.multiSync : void 0) || (options != null ? options.multiSync : void 0);
-    requests = (function() {
-      var _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = multiSyncOptions.length; _i < _len; _i++) {
-        multi_options = multiSyncOptions[_i];
-        _results.push(smartSync(method, model, _.extend({}, multi_options, {
-          success: void 0,
-          error: void 0
-        })));
-      }
-      return _results;
-    })();
-    return $.when.apply($, requests).done(function() {
-      var extendArrayWithId, responses;
-      responses = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-      extendArrayWithId = function() {
-        var dest, dest_item, id, item, sources, src, _i, _len, _results;
-        dest = arguments[0], sources = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-        _results = [];
-        for (_i = 0, _len = sources.length; _i < _len; _i++) {
-          src = sources[_i];
-          _results.push((function() {
-            var _j, _len1, _results1;
-            _results1 = [];
-            for (_j = 0, _len1 = src.length; _j < _len1; _j++) {
-              item = src[_j];
-              id = item.id;
-              if (dest_item = _.where(dest, {
-                id: id
-              })[0]) {
-                _results1.push(_.extend(dest_item, item));
-              } else {
-                _results1.push(dest.push(item));
-              }
-            }
-            return _results1;
-          })());
-        }
-        return _results;
-      };
-      extendArrayWithId.apply(null, _.chain(responses).pluck(0).pluck('objects').value());
-      if (_.isFunction(options.success)) {
-        return options.success.apply(options, responses[0]);
-      }
-    }).fail(function(orig_args) {
-      if (_.isFunction(options.error)) {
-        return options.error.apply(options, responses[0]);
-      }
-    });
-  };
 
   root.MemberList = (function(_super) {
 

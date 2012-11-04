@@ -132,6 +132,30 @@ smartSync = (method, model, options) ->
         return promise
     return (options.sync or Backbone.sync)(method, model, options)
 
+multiSync = (method, model, options) ->
+    multiSyncOptions = model?.multiSync or options?.multiSync
+    requests = for multi_options in multiSyncOptions
+        smartSync method, model, _.extend({}, multi_options,
+            success: undefined,
+            error: undefined,
+        )
+    $.when(requests...).done (responses...) ->
+        extendArrayWithId = (dest, sources...) ->
+            for src in sources
+                for item in src
+                    id = item.id
+                    if dest_item = _.where(dest, id: id)[0]
+                        _.extend dest_item, item
+                    else
+                        dest.push item
+        extendArrayWithId (_.chain(responses).pluck(0).pluck('objects').value())...
+
+        if _.isFunction options.success
+            options.success responses[0]...
+    .fail (orig_args) ->
+        if _.isFunction options.error
+            options.error responses[0]...
+
 ############### MODELS ##############
 
 class root.MiscModel extends Backbone.Model
@@ -219,10 +243,15 @@ class root.JSONPCollection extends root.PromisedCollection
 
 class root.PartyList extends root.JSONPCollection
     model: root.MiscModel
-    url: "http://www.oknesset.org/api/v2/party/"
-    syncOptions:
+    multiSync: [{
+        url: "http://www.oknesset.org/api/v2/party/"
         disable_repo: window.mit.party
         sync: root.JSONPCachableSync('parties')
+    }, {
+        repo: window.mit.party_extra
+        sync: root.JSONPCachableSync('parties_extra')
+    }]
+    sync: multiSync
 
 class root.AgendaList extends root.JSONPCollection
     model: root.Agenda
@@ -244,31 +273,6 @@ class root.AgendaList extends root.JSONPCollection
         @each (agenda) =>
             weights[agenda.id] = agenda.get("uservalue")
         weights
-
-
-multiSync = (method, model, options) ->
-    multiSyncOptions = model?.multiSync or options?.multiSync
-    requests = for multi_options in multiSyncOptions
-        smartSync method, model, _.extend({}, multi_options,
-            success: undefined,
-            error: undefined,
-        )
-    $.when(requests...).done (responses...) ->
-        extendArrayWithId = (dest, sources...) ->
-            for src in sources
-                for item in src
-                    id = item.id
-                    if dest_item = _.where(dest, id: id)[0]
-                        _.extend dest_item, item
-                    else
-                        dest.push item
-        extendArrayWithId (_.chain(responses).pluck(0).pluck('objects').value())...
-
-        if _.isFunction options.success
-            options.success responses[0]...
-    .fail (orig_args) ->
-        if _.isFunction options.error
-            options.error responses[0]...
 
 class root.MemberList extends root.JSONPCollection
     model: root.Member

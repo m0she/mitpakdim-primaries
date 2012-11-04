@@ -1,3 +1,4 @@
+#!env python
 import json, os, re, sys
 
 print 'args: ', sys.argv
