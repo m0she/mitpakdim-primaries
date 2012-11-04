@@ -366,6 +366,9 @@ body {
     overflow : hidden;
     margin-left : 10px;
 }
+.candidate_instance:hover {
+    color : #00507d;
+}
 .candidate_instance .image img {
     width : 100%;
 }
