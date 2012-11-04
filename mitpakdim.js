@@ -1364,10 +1364,10 @@
     };
 
     AppView.prototype.events = {
-      'click input:button#fb_share': function(event) {
+      'click #fb_share': function(event) {
         return root.facebookShare(getShareLink(root.lists.agendas.getWeights()));
       },
-      'click input:button#tweet_share': function(event) {
+      'click #tweet_share': function(event) {
         return root.twitterShare(getShareLink(root.lists.agendas.getWeights()));
       },
       'click input:button#show_weights': function(event) {
