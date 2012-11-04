@@ -8,11 +8,9 @@ String::repeat = ( num ) ->
 root.facebookShare = (link) ->
     ga.social 'Facebook', 'share', link
     FB.ui
-            app_id: '362298483856854'
             display: 'popup'
-            redirect_uri: 'http://www.mitpakdim.co.il/site/primaries/redirect'
             method: 'feed'
-            name: 'Mitpakdim Primarieser'
+            name: 'מדח"כ'
             link: link
             caption: 'The way to choose your candidates'
             description: 'Learn about your candidates by prioritizing the agendas you care about'
@@ -783,7 +781,8 @@ $ ->
         Backbone.history.start()
         $('#loading').hide()
         $('#app_root').show()
-    FB.init()
+    FB.init
+        appId: 362298483856854
     FB.Event.subscribe 'message.send', (targetUrl) ->
         ga.social 'facebook', 'send', targetUrl
     return
