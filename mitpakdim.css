@@ -2,12 +2,17 @@ window, body {
     margin : 0;
     padding : 0;
 }
+body {
+    font-family : Arial, Helvetica, Sans-serif;
+}
 .page_top_bar {
     background-image : url("./static/header_back.png");
     background-repeat : repeat;
     height : 66px;
     width : 100%;
     direction : rtl;
+    position : relative;
+    z-index : 1;
 }
 .page_top_bar .content {
     width : 960px;
@@ -23,12 +28,26 @@ window, body {
     top : 2px;
     left : 10px;
 }
-.page_top_bar .text {
+.page_top_bar .text .logo {
     background-image : url("./static/header_text.png");
+    display : inline-block;
     height : 38px;
-    width : 552px;
+    width : 136px;
+    margin-top : -3px;
+    vertical-align : middle;
 }
 
+.page_top_bar .text .links {
+    color : #fff;
+    display : inline-block;
+    font-size : 14px;
+    font-weight : 700;
+    padding-right : 40px;
+    vertical-align : middle;
+}
+.page_top_bar .text .links a {
+    color : #fff;
+}
 
 
 .entrance_page {
@@ -71,7 +90,6 @@ window, body {
 
 #app_root {
     direction : rtl;
-    font-family : Arial, Helvetica, Sans-serif;
     vertical-align : top;
     width : 100%;
 }
@@ -321,4 +339,50 @@ window, body {
 }
 .candidate_instance .score.positive {
     color : #00507d;
+}
+
+
+
+
+/* --------------- qna page ----------------- */
+.qna_container {
+    background-color : #bbb;
+    box-shadow : 6px 6px 20px #888;
+    border-radius : 0 0 8px 8px;
+    width : 630px;
+    margin : 0 auto 80px auto;
+    direction : rtl;
+    padding : 2px 15px 50px 35px;
+}
+.qna_container h1 {
+    color : #00507d;
+    font-size : 20px;
+    font-weight : 700;
+}
+.qna_container .question {
+    padding-right : 32px;
+    margin-top : 20px;
+    position : relative;
+}
+.qna_container .question .icon {
+    background-image : url("./static/qna_icon.png");
+    height : 30px;
+    width : 30px;
+    position : absolute;
+    top : 0;
+    right : -5px;
+}
+.qna_container .question h3 {
+    color : #00507d;
+    font-size : 16px;
+    font-weight : 700;
+    margin : 0;
+    padding-top : 8px;
+}
+.qna_container .question p {
+    color : #000;
+    font-size : 14px;
+    font-weight : 400;
+    padding : 0;
+    margin : 6px 0 0 0;
 }
