@@ -437,7 +437,7 @@
 
     AgendaList.prototype.model = root.Agenda;
 
-    AgendaList.prototype.url = "http://www.oknesset.org/api/v2/agenda/?extra_fields=num_followers";
+    AgendaList.prototype.url = "http://www.oknesset.org/api/v2/agenda/?extra_fields=num_followers,image";
 
     AgendaList.prototype.comparator = function(agenda) {
       return -agenda.get('num_followers');

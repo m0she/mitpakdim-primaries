@@ -226,7 +226,7 @@ class root.PartyList extends root.JSONPCollection
 
 class root.AgendaList extends root.JSONPCollection
     model: root.Agenda
-    url: "http://www.oknesset.org/api/v2/agenda/?extra_fields=num_followers"
+    url: "http://www.oknesset.org/api/v2/agenda/?extra_fields=num_followers,image"
     comparator: (agenda) ->
         -agenda.get 'num_followers'
     syncOptions:
