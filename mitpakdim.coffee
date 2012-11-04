@@ -170,12 +170,39 @@ class root.Newbie extends root.Candidate
         ret
 
 class root.Recommendation extends Backbone.Model
+    defaults:
+        url: ''
+        img_url: ''
 
 ############### COLLECTIONS ##############
 
-class root.PromisedCollection extends Backbone.Collection
+class root.SelectableCollection extends Backbone.Collection
+    default_attr_name = 'selected'
     initialize: ->
-        super(arguments...)
+        super arguments...
+        @on 'select', (model, collection, options) =>
+            if collection == 'all'
+                collection = @
+            if not collection
+                collection = model.collection
+            if collection != @
+                return
+
+            attr_name = options?.attr_name ? default_attr_name
+            @selecteds ?= {}
+            old = @selecteds[attr_name]
+            @selecteds[attr_name] = model
+            if old
+                old.trigger 'deselected', old, @, attr_name:attr_name
+            model.trigger 'selected', model, @, attr_name:attr_name
+
+    getSelected: (attr_name) ->
+        attr_name ?= default_attr_name
+        @selecteds[attr_name]
+
+class root.PromisedCollection extends root.SelectableCollection
+    initialize: ->
+        super arguments...
         @data_ready = $.Deferred()
         @data_ready.promise @
         @on "reset", =>
@@ -393,7 +420,7 @@ class root.DropdownContainer extends root.ListView
         index = @$el.children().index @$('option:selected')
         index -= 1 if @options.show_null_option
         @current = if index >= 0 then @collection.at index else {}
-        @trigger 'change', @current
+        @trigger 'change', @current, @collection
 
 class root.CurrentPartyView extends Backbone.View
     el: ".current_party"
@@ -530,26 +557,27 @@ class root.RecommendationsView extends root.PartyFilteredListView
     options:
         itemView: class extends root.ListViewItem
             catchEvents: =>
-                console.log 'change', @, arguments
                 status = Boolean(@$el.find(':checkbox:checked').length)
-                @model.set('status', status)
+                @model.trigger 'select', @model
             events:
-                'change': 'catchEvents'
+                'click img': 'catchEvents'
             get_template: ->
                 $("#recommendation_template").html()
     initialize: ->
-        super(arguments...)
-        @collection.on 'change', @applyChange, @
+        super arguments...
+        @collection.on 'selected', @applyChange, @
+        @collection.on 'deselected', @applyChange, @
 
     partyChangeFilter: (party) ->
         super(party).concat @unfilteredCollection.where party_name: undefined
 
-    applyChange: (recommendation) ->
+    applyChange: (recommendation, collection) ->
+        is_selected = recommendation == collection.getSelected()
         changeModelFunc = (candidates, attribute) ->
             (model_id, status) ->
                 model = candidates.get(model_id)
                 list = _.clone model.get attribute
-                if recommendation.get('status')
+                if is_selected
                     list[recommendation.id] = true
                 else
                     delete list[recommendation.id]
@@ -558,7 +586,7 @@ class root.RecommendationsView extends root.PartyFilteredListView
         _.each recommendation.get('negative_list')['members'], changeModelFunc(@options.members, 'recommendation_negative')
         _.each recommendation.get('positive_list')['newbies'], changeModelFunc(@options.newbies, 'recommendation_positive')
         _.each recommendation.get('negative_list')['newbies'], changeModelFunc(@options.newbies, 'recommendation_negative')
-        if recommendation.get('status') and weights = recommendation.get('agendas')
+        if is_selected and weights = recommendation.get('agendas')
             if _.isString weights
                 weights = parse_weights weights
             root.lists.agendas.resetWeights weights

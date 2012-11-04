@@ -297,9 +297,67 @@
       return Recommendation.__super__.constructor.apply(this, arguments);
     }
 
+    Recommendation.prototype.defaults = {
+      url: '',
+      img_url: ''
+    };
+
     return Recommendation;
 
   })(Backbone.Model);
+
+  root.SelectableCollection = (function(_super) {
+    var default_attr_name;
+
+    __extends(SelectableCollection, _super);
+
+    function SelectableCollection() {
+      return SelectableCollection.__super__.constructor.apply(this, arguments);
+    }
+
+    default_attr_name = 'selected';
+
+    SelectableCollection.prototype.initialize = function() {
+      var _this = this;
+      SelectableCollection.__super__.initialize.apply(this, arguments);
+      return this.on('select', function(model, collection, options) {
+        var attr_name, old, _ref1, _ref2;
+        if (collection === 'all') {
+          collection = _this;
+        }
+        if (!collection) {
+          collection = model.collection;
+        }
+        if (collection !== _this) {
+          return;
+        }
+        attr_name = (_ref1 = options != null ? options.attr_name : void 0) != null ? _ref1 : default_attr_name;
+        if ((_ref2 = _this.selecteds) == null) {
+          _this.selecteds = {};
+        }
+        old = _this.selecteds[attr_name];
+        _this.selecteds[attr_name] = model;
+        if (old) {
+          old.trigger('deselected', old, _this, {
+            attr_name: attr_name
+          });
+        }
+        return model.trigger('selected', model, _this, {
+          attr_name: attr_name
+        });
+      });
+    };
+
+    SelectableCollection.prototype.getSelected = function(attr_name) {
+      if (attr_name == null) {
+        attr_name = default_attr_name;
+      }
+      return this.selecteds[attr_name];
+    };
+
+    return SelectableCollection;
+
+  })(Backbone.Collection);
 
   root.PromisedCollection = (function(_super) {
 
@@ -324,7 +382,7 @@
 
     return PromisedCollection;
 
-  })(Backbone.Collection);
+  })(root.SelectableCollection);
 
   root.JSONPCollection = (function(_super) {
 
@@ -803,7 +861,7 @@
           index -= 1;
         }
         this.current = index >= 0 ? this.collection.at(index) : {};
-        return this.trigger('change', this.current);
+        return this.trigger('change', this.current, this.collection);
       }
     };
 
@@ -1087,13 +1145,12 @@
 
         _Class.prototype.catchEvents = function() {
           var status;
-          console.log('change', this, arguments);
           status = Boolean(this.$el.find(':checkbox:checked').length);
-          return this.model.set('status', status);
+          return this.model.trigger('select', this.model);
         };
 
         _Class.prototype.events = {
-          'change': 'catchEvents'
+          'click img': 'catchEvents'
         };
 
         _Class.prototype.get_template = function() {
@@ -1107,7 +1164,8 @@
 
     RecommendationsView.prototype.initialize = function() {
       RecommendationsView.__super__.initialize.apply(this, arguments);
-      return this.collection.on('change', this.applyChange, this);
+      this.collection.on('selected', this.applyChange, this);
+      return this.collection.on('deselected', this.applyChange, this);
     };
 
     RecommendationsView.prototype.partyChangeFilter = function(party) {
@@ -1116,14 +1174,15 @@
       }));
     };
 
-    RecommendationsView.prototype.applyChange = function(recommendation) {
-      var changeModelFunc, weights;
+    RecommendationsView.prototype.applyChange = function(recommendation, collection) {
+      var changeModelFunc, is_selected, weights;
+      is_selected = recommendation === collection.getSelected();
       changeModelFunc = function(candidates, attribute) {
         return function(model_id, status) {
           var list, model;
           model = candidates.get(model_id);
           list = _.clone(model.get(attribute));
-          if (recommendation.get('status')) {
+          if (is_selected) {
             list[recommendation.id] = true;
           } else {
             delete list[recommendation.id];
@@ -1135,7 +1194,7 @@
       _.each(recommendation.get('negative_list')['members'], changeModelFunc(this.options.members, 'recommendation_negative'));
       _.each(recommendation.get('positive_list')['newbies'], changeModelFunc(this.options.newbies, 'recommendation_positive'));
       _.each(recommendation.get('negative_list')['newbies'], changeModelFunc(this.options.newbies, 'recommendation_negative'));
-      if (recommendation.get('status') && (weights = recommendation.get('agendas'))) {
+      if (is_selected && (weights = recommendation.get('agendas'))) {
         if (_.isString(weights)) {
           weights = parse_weights(weights);
         }
