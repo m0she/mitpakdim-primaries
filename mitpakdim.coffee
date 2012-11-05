@@ -1,4 +1,6 @@
 root = window.mit ?= {}
+window.console ?=
+    log: ->
 
 ############### UTILITIES ##############
 
