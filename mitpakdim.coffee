@@ -787,6 +787,11 @@ $ ->
         Backbone.history.start()
         $('#loading').hide()
         $('#app_root').show()
+    .fail ->
+        $('loading').text 'הורדת נתונים מהשרת נכשלה... נסיון נוסף עוד מספר שניות'
+        setTimeout ->
+            window.location.reload()
+        , 6*1000
     FB.init
         appId: 362298483856854
     FB.Event.subscribe 'message.send', (targetUrl) ->

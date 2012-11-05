@@ -1513,6 +1513,11 @@
       Backbone.history.start();
       $('#loading').hide();
       return $('#app_root').show();
+    }).fail(function() {
+      $('loading').text('הורדת נתונים מהשרת נכשלה... נסיון נוסף עוד מספר שניות');
+      return setTimeout(function() {
+        return window.location.reload();
+      }, 6 * 1000);
     });
     FB.init({
       appId: 362298483856854
