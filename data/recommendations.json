@@ -4,7 +4,7 @@
             "id": 1,
             "name": "צפון עכשיו",
             "party_name": "הליכוד",
-			"img_url": "https://lh5.googleusercontent.com/TK1bIeCaOeycTI45VBpMGp292P47AP70IpciRdPlcUEGTvgeQhZgovNm4BYj2vAVFlGEqp2RSFc",
+			"img_url": "https://graph.facebook.com/157096571095435/picture?type=thumbnail",
     		"agendas": "1x0i2x0i6x65i7x0i9x100i24x49i26x0i36x0i39x61i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x61i64x64i66x61i71x39i72x0i74x0",
             "positive_list": {
                 "members": [  ],
@@ -19,7 +19,7 @@
             "id": 2,
             "name": "מתארגנים לעבודה",
             "party_name": "העבודה",
-			"img_url": "https://lh6.googleusercontent.com/B3tk5zRYaExkAXUFv3baufh7gB9VDUQ2YhutU37YwT9jDfzXHypZj3Rhy7e3DHZxWEhHSJbh12A",
+			"img_url": "https://graph.facebook.com/272667946168374/picture?type=thumbnail",
 			"agendas": "1x-100i2x48i6x-18i7x37i9x100i24x0i26x20i36x76i39x0i40x29i41x100i44x45i45x-100i48x0i49x29i53x-100i55x0i60x0i61x100i63x100i64x21i66x48i71x100i72x100i74x100",
             "positive_list": {
                 "members": [  ],
@@ -33,6 +33,7 @@
 		{
             "id": 3,
             "name": "חינוך ישראלי",
+			"img_url": "https://graph.facebook.com/343543432348815/picture?type=thumbnail",
 			"party_name": "העבודה",
 			"agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x100i63x0i64x0i66x0i71x0i72x0i74x0",
             "positive_list": {
@@ -48,6 +49,7 @@
             "id": 4,
             "name": "מתפקדות",
 			"party_name": "העבודה",
+			"img_url": "http://mitpakdot.files.wordpress.com/2012/01/mitpakdot_logo_small2.jpg?w=200&h=125",
 			"agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x99i74x0",
             "positive_list": {
                 "members": [  ],
@@ -61,6 +63,7 @@
 		{
             "id": 5,
             "name": "הפורום לשוויון בנטל",
+			"img_url": "https://graph.facebook.com/273106626063080/picture?type=thumbnail",
 			"party_name": "הליכוד",
 			"agendas": "1x0i2x0i6x99i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x0i74x0",
             "positive_list": {
@@ -75,6 +78,7 @@
 		{
             "id": 6,
             "name": "חינוך ישראלי",
+			"img_url": "https://graph.facebook.com/343543432348815/picture?type=thumbnail",
 			"party_name": "הליכוד",
 			"agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x100i63x0i64x0i66x0i71x0i72x0i74x0",
             "positive_list": {
@@ -89,6 +93,7 @@
 		{
             "id": 7,
             "name": "הפורום לשוויון בנטל",
+			"img_url": "https://graph.facebook.com/273106626063080/picture?type=thumbnail",
 			"party_name": "העבודה",
 			"agendas": "1x0i2x0i6x99i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x0i74x0",
             "positive_list": {

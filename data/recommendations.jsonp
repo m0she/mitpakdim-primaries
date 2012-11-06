@@ -13,7 +13,7 @@ window.mit.recommendations = {
                 "newbies": [], 
                 "members": []
             }, 
-            "img_url": "https://lh5.googleusercontent.com/TK1bIeCaOeycTI45VBpMGp292P47AP70IpciRdPlcUEGTvgeQhZgovNm4BYj2vAVFlGEqp2RSFc", 
+            "img_url": "https://graph.facebook.com/157096571095435/picture?type=thumbnail", 
             "id": 1
         }, 
         {
@@ -28,7 +28,7 @@ window.mit.recommendations = {
                 "newbies": [], 
                 "members": []
             }, 
-            "img_url": "https://lh6.googleusercontent.com/B3tk5zRYaExkAXUFv3baufh7gB9VDUQ2YhutU37YwT9jDfzXHypZj3Rhy7e3DHZxWEhHSJbh12A", 
+            "img_url": "https://graph.facebook.com/272667946168374/picture?type=thumbnail", 
             "id": 2
         }, 
         {
@@ -43,6 +43,7 @@ window.mit.recommendations = {
                 "newbies": [], 
                 "members": []
             }, 
+            "img_url": "https://graph.facebook.com/343543432348815/picture?type=thumbnail", 
             "id": 3
         }, 
         {
@@ -57,6 +58,7 @@ window.mit.recommendations = {
                 "newbies": [], 
                 "members": []
             }, 
+            "img_url": "http://mitpakdot.files.wordpress.com/2012/01/mitpakdot_logo_small2.jpg?w=200&h=125", 
             "id": 4
         }, 
         {
@@ -71,6 +73,7 @@ window.mit.recommendations = {
                 "newbies": [], 
                 "members": []
             }, 
+            "img_url": "https://graph.facebook.com/273106626063080/picture?type=thumbnail", 
             "id": 5
         }, 
         {
@@ -85,6 +88,7 @@ window.mit.recommendations = {
                 "newbies": [], 
                 "members": []
             }, 
+            "img_url": "https://graph.facebook.com/343543432348815/picture?type=thumbnail", 
             "id": 6
         }, 
         {
@@ -102,7 +106,7 @@ window.mit.recommendations = {
             "id": 7
         }, 
         {
-            "agendas": "1x0i2x74i6x12i7x69i9x100i24x100i26x22i36x21i39x0i40x0i41x40i44x0i45x0i48x0i49x23i53x0i55x0i60x49i61x66i63x100i64x100i66x71i71x59i72x9i74x37?", 
+            "agendas": "1x0i2x74i6x12i7x69i9x100i24x100i26x22i36x21i39x0i40x0i41x40i44x0i45x0i48x0i49x23i53x0i55x0i60x49i61x66i63x100i64x100i66x71i71x59i72x9i74x37", 
             "name": "\u05d7\u05d5\u05d2 \u05d4\u05e9\u05db\u05d5\u05e0\u05d5\u05ea \u05d5\u05e4\u05e8\u05d9\u05e4\u05e8\u05d9\u05d4", 
             "positive_list": {
                 "newbies": [], 
