@@ -908,7 +908,7 @@
     CurrentPartyView.prototype.el = ".current_party";
 
     CurrentPartyView.prototype.render = function() {
-      return this.$('.current_party_name').text(root.global.party.get('name'));
+      return this.$('.current_party_logo_back').html("<img class='current_party_logo' src='" + (root.global.party.get('picture_url')) + "'/>");
     };
 
     return CurrentPartyView;

@@ -433,7 +433,7 @@ class root.DropdownContainer extends root.ListView
 class root.CurrentPartyView extends Backbone.View
     el: ".current_party"
     render: =>
-        @$('.current_party_name').text root.global.party.get('name')
+        @$('.current_party_logo_back').html "<img class='current_party_logo' src='#{root.global.party.get('picture_url')}'/>"
 
 class root.CandidatesMainView extends Backbone.View
     el: ".candidates_container"
