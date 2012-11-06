@@ -415,6 +415,7 @@ body {
     display : none;
     font-size : 12px;
     margin-right : 72px;
+    padding-bottom : 4px;
 }
 .candidate_instance .links a {
     color : #000;
@@ -423,6 +424,7 @@ body {
 }
 .candidate_instance .links a:hover {
     text-decoration : underline;
+    color : #00507d;
 }
 .candidate_instance .links .icon {
     display : inline-block;
