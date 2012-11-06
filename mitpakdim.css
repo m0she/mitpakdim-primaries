@@ -75,6 +75,9 @@ body {
     font-size : 14px;
     font-weight : 600;
 }
+.entrance_page .districts_container {
+    display : none;
+}
 .entrance_page input {
     margin-top : 20px;
 }
