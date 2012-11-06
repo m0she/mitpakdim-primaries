@@ -110,6 +110,11 @@
                     print("-".repeat(_.size(recommendation_negative)));
                     %><span class="name"><%= name %></span>
                     <div class="score<% if (score > 0) { %> positive<% } %>"><%= simplified_score %></div>
+                    <div class="links">
+                        <% if (typeof facebook_link_url != 'undefined') { %><a class="facebook" href="<%= facebook_link_url %>" target="_blank"><div class="icon"></div>לדף הפייסבוק</a><% } %>
+                        <% if (typeof resume_link_url != 'undefined') { %><a class="resume" href="<%= resume_link_url %>" target="_blank"><div class="icon"></div>קורות חיים</a><% } %>
+                        <% if (typeof oknesset_link_url != 'undefined') { %><a class="oknesset" href="<%= oknesset_link_url %>" target="_blank"><div class="icon"></div>הח"כ <strong>בכנסת פתוחה</strong></a><% } %>
+                    </div>
                     <div class="role_description"><% if (typeof current_role_descriptions != 'undefined') { %><%= current_role_descriptions %><% } %></div>
                 </div>
             </div>

@@ -411,6 +411,41 @@ body {
     font-size : 14px;
     font-weight : 700;
 }
+.candidate_instance .links {
+    display : none;
+    font-size : 12px;
+    margin-right : 72px;
+}
+.candidate_instance .links a {
+    color : #000;
+    display : block;
+    text-decoration : none;
+}
+.candidate_instance .links a:hover {
+    text-decoration : underline;
+}
+.candidate_instance .links .icon {
+    display : inline-block;
+    margin : 0 -6px -2px 3px;
+}
+.candidate_instance .links .facebook .icon {
+    background-image : url("./static/facebook_link.png");
+    width : 20px;
+    height : 22px;
+}
+.candidate_instance .links .resume .icon {
+    background-image : url("./static/resume_link.png");
+    width : 20px;
+    height : 22px;
+}
+.candidate_instance .links .oknesset .icon {
+    background-image : url("./static/ok_link.png");
+    height : 21px;
+    width : 21px;
+}
+.candidate_instance.selected .links {
+    display : block;
+}
 .candidate_instance .role_description {
     font-size : 12px;
     font-weight : 400;
