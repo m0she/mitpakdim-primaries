@@ -21,12 +21,21 @@ body {
     padding-top : 20px;
 }
 .page_top_bar .icons {
-    background-image : url("./static/header_icons.png");
-    height : 62px;
-    width : 234px;
     position : absolute;
     top : 2px;
     left : 10px;
+}
+.page_top_bar .icons .oknesset {
+    background-image : url("./static/oknesset_header_icon.png");
+    display : inline-block;
+    height : 62px;
+    width : 82px;
+}
+.page_top_bar .icons .mitpakdim {
+    background-image : url("./static/mitpakdim_header_icon.png");
+    display : inline-block;
+    height : 62px;
+    width : 151px;
 }
 .page_top_bar .text .logo {
     background-image : url("./static/header_text.png");
