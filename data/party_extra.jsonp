@@ -1,4 +1,57 @@
 if (!window.mit) window.mit = {};
 window.mit.party_extra = {
-    "objects": []
+    "objects": [
+        {
+            "picture_url": "https://graph.facebook.com/LikudNetanyahu/picture?type=square", 
+            "id": 2
+        }, 
+        {
+            "picture_url": "http://upload.wikimedia.org/wikipedia/he/0/01/Israelblogo.JPG", 
+            "id": 5
+        }, 
+        {
+            "picture_url": "http://www.nrg.co.il/images/archive/300x225/1/002/608.jpg", 
+            "id": 7
+        }, 
+        {
+            "picture_url": "http://upload.wikimedia.org/wikipedia/he/a/a3/Logo_haatzmaut.png", 
+            "id": 13
+        }, 
+        {
+            "picture_url": "http://upload.wikimedia.org/wikipedia/he/a/a6/Yahadutlogo.JPG", 
+            "id": 4
+        }, 
+        {
+            "picture_url": "http://upload.wikimedia.org/wikipedia/he/4/43/%D7%94%D7%91%D7%99%D7%AA-%D7%94%D7%99%D7%94%D7%95%D7%93%D7%99-%D7%9E%D7%A4%D7%93%D7%9C-%D7%94%D7%97%D7%93%D7%A9%D7%94-1.png", 
+            "id": 12
+        }, 
+        {
+            "picture_url": "http://upload.wikimedia.org/wikipedia/he/e/ec/Logo_of_the_Kadima_Party.svg", 
+            "id": 6
+        }, 
+        {
+            "picture_url": "http://upload.wikimedia.org/wikipedia/he/a/a6/Logo_of_the_Israeli_Labor_Party.svg", 
+            "id": 3
+        }, 
+        {
+            "picture_url": "http://upload.wikimedia.org/wikipedia/commons/1/1c/NewWorld.jpg", 
+            "id": 8
+        }, 
+        {
+            "picture_url": "http://upload.wikimedia.org/wikipedia/he/d/d1/Raamtaallogo.jpg", 
+            "id": 10
+        }, 
+        {
+            "picture_url": "http://upload.wikimedia.org/wikipedia/he/6/68/%D7%94%D7%90%D7%99%D7%97%D7%95%D7%93-%D7%94%D7%9C%D7%90%D7%95%D7%9E%D7%99-02.png", 
+            "id": 1
+        }, 
+        {
+            "picture_url": "http://upload.wikimedia.org/wikipedia/he/3/3a/MeretzLogo.gif", 
+            "id": 11
+        }, 
+        {
+            "picture_url": "http://upload.wikimedia.org/wikipedia/he/d/d9/Baladlogo.jpg", 
+            "id": 9
+        }
+    ]
 }
