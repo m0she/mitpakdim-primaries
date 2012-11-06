@@ -31,9 +31,9 @@ body {
 .page_top_bar .text .logo {
     background-image : url("./static/header_text.png");
     display : inline-block;
-    height : 38px;
-    width : 136px;
-    margin-top : -3px;
+    height : 29px;
+    width : 91px;
+    margin-top : -1px;
     vertical-align : middle;
 }
 
