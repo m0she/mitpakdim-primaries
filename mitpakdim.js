@@ -1170,7 +1170,7 @@
     };
 
     RecommendationsItemView.prototype.events = {
-      'click img': function() {
+      'click .recommendation_item': function() {
         return this.model.trigger('select', this.model);
       }
     };

@@ -70,7 +70,10 @@
                         <div class="caption">לכל אחד מהנושאים החשובים לך, סמן את תמיכתך בו ואת חשיבותו עבורך באמצעות בחירת ערך.</div>
                         <div class="instructions_bar"></div>
                     </div>
-                    <div class="recommendations_container">Recommendations: <div class="recommendations"></div></div>
+                    <div class="recommendations_container">
+                        <div class="caption">הצג לי המלצות של קבוצת מתפקדים הבאה:</div>
+                        <div class="recommendations"></div>
+                    </div>
                 </div>
                 <div class="agendas_container">
                     <div class="agendas"></div>
@@ -130,8 +133,9 @@
         </script>
         <script type="text/template" id='recommendation_template'>
             <div class="recommendation_item<% if (model.isSelected()) { %> selected<% } %>">
-                <img src="<%= img_url %>" alt="<%= name %>" title="<%= name %>" /><%= name %>
-                <a class="details" href="<%= url %>">לפרטים...</span>
+                <img src="<%= img_url %>" alt="<%= name %>" title="<%= name %>" /><br/>
+                <span class="name"><%= name %></span>
+                <% if (url) { %><a class="details" href="<%= url %>">לפרטים...</a><% } %>
             </div>
         </script>
     </body>

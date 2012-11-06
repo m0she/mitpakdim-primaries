@@ -569,7 +569,7 @@ class root.RecommendationsItemView extends root.ListViewItem
             @$('.recommendation_item').removeClass 'selected'
 
     events:
-        'click img': ->
+        'click .recommendation_item': ->
             @model.trigger 'select', @model
 
     get_template: ->

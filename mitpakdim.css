@@ -81,6 +81,8 @@ body {
 
 #loading {
     direction : rtl;
+    width : 960px;
+    margin : 0 auto;
 }
 #loading h1 {
     color : #00507F;
@@ -93,6 +95,7 @@ body {
     direction : rtl;
     vertical-align : top;
     width : 100%;
+    padding-bottom : 270px;
 }
 .party_page {
     margin : 0 auto;
@@ -112,7 +115,7 @@ body {
     display: inline-block;
 }
 .instructions {
-    margin : 10px 17px 0 0;
+    margin : 0 17px 0 0;
 }
 .instructions .caption {
     color : #00507F;
@@ -128,7 +131,7 @@ body {
 }
 .agendas_container {
     display : inline-block;
-    margin-right : 13px;
+    margin-right : 12px;
     width : 410px;
     vertical-align : top;
 }
@@ -270,7 +273,7 @@ body {
 .current_party {
     width : 100%;
     margin-bottom : -40px;
-    margin-top : 150px;
+    margin-top : 10px;
     position : relative;
 }
 #change_party {
@@ -415,8 +418,42 @@ body {
 .candidate_instance .score.positive {
     color : #00507d;
 }
+.recommendations_container {
+    vertical-align : top;
+    margin-right : 11px;
+}
+.recommendations_container .caption {
+    color : #00507F;
+    font-size : 14px;
+    font-weight : 600;
+    margin : 10px 7px 0 0;
+    width : 400px;
+}
+.recommendations {
+    white-space : nowrap;
+    width : 510px;
+}
+.recommendations > div {
+    display : inline-block;
+    height : 75px;
+    max-width : 98px;
+    font-size : 11px;
+    padding-top : 1px;
+    margin-top : 2px;
+    overflow : hidden;
+    vertical-align : top;
+    white-space : normal;
+}
+.recommendation_item {
+    padding : 5px 10px;
+    cursor : pointer;
+}
+.recommendation_item img {
+    height : 40px;
+}
 .recommendation_item.selected {
-    background-color: #8f8;
+    background-color: #ccc;
+    border-radius : 8px;
 }
 
 .social_bar {
