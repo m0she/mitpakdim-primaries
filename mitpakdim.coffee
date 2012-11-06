@@ -49,6 +49,9 @@ ga =
     social: (args...) ->
         _gaq.push ['_trackSocial'].concat args
 
+root.logfunc = (name) -> ->
+    console.log name, @, arguments
+
 ############### JQUERY UI EXTENSIONS ##############
 
 $.widget "mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {
@@ -111,6 +114,7 @@ root.JSONPCachableSync = (callback_name) ->
 
 root.syncOptions =
     dataType: 'jsonp'
+    timeout: 20000
 
 # Assume a repo has a key named objects with a list of objects identifiable by an id key
 smartSync = (method, model, options) ->
@@ -788,7 +792,7 @@ $ ->
         $('#loading').hide()
         $('#app_root').show()
     .fail ->
-        $('loading').text 'הורדת נתונים מהשרת נכשלה... נסיון נוסף עוד מספר שניות'
+        $('#loading').text 'הורדת נתונים מהשרת נכשלה... נסיון נוסף עוד מספר שניות'
         setTimeout ->
             window.location.reload()
         , 6*1000
