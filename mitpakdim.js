@@ -1347,6 +1347,9 @@
       this.$el.on('click', '#party_selected', function() {
         var district, party, _ref2;
         _ref2 = [_this.partyListView.current, _this.districtListView.current], party = _ref2[0], district = _ref2[1];
+        if (!((party != null ? party.id : void 0) != null)) {
+          return;
+        }
         if (district.id) {
           ga.event('party', 'choose', "party_" + party.id + "_district_" + district.id);
         } else {

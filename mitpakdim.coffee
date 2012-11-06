@@ -670,6 +670,8 @@ class root.EntranceView extends Backbone.View
 
         @$el.on 'click', '#party_selected', =>
             [party,district] = [@partyListView.current, @districtListView.current]
+            if not party?.id?
+                return
             if district.id
                 ga.event 'party', 'choose', "party_#{party.id}_district_#{district.id}"
             else
