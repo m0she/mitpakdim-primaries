@@ -125,6 +125,14 @@
                         <% if (typeof oknesset_link_url != 'undefined') { %><a class="oknesset" href="<%= oknesset_link_url %>" target="_blank"><div class="icon"></div>הח"כ <strong>בכנסת פתוחה</strong></a><% } %>
                     </div>
                     <div class="role_description"><% if (typeof current_role_descriptions != 'undefined') { %><%= current_role_descriptions %><% } %></div>
+                    <div class="remarks">
+                        <% if (typeof change_party_remark != 'undefined') { %>
+                            <div class="remark_icon change_party" title="<%= change_party_remark %>"></div>
+                        <% } %>
+                        <% if (typeof minister_remark != 'undefined') { %>
+                            <div class="remark_icon minister_remark" title="<%= minister_remark %>"></div>
+                        <% } %>
+                    </div>
                 </div>
             </div>
         </script>

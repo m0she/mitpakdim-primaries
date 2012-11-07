@@ -512,6 +512,18 @@ body {
 .candidate_instance .score.positive {
     color : #00507d;
 }
+.candidate_instance .remarks {
+    text-align : left;
+    margin-left: -10px;
+}
+.candidate_instance .remark_icon {
+    background-image : url("./static/member_remark.png");
+    display : inline-block;
+    height : 20px;
+    width : 22px;
+    margin-top : 4px;
+}
+
 .recommendations_container {
     vertical-align : top;
     margin-right : 11px;
