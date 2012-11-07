@@ -34,7 +34,6 @@
             "id": 3,
             "name": "חינוך ישראלי",
 			"img_url": "https://graph.facebook.com/343543432348815/picture?type=thumbnail",
-			"party_name": "העבודה",
 			"agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x100i63x0i64x0i66x0i71x0i72x0i74x0",
             "positive_list": {
                 "members": [  ],
@@ -48,7 +47,6 @@
 		{
             "id": 4,
             "name": "מתפקדות",
-			"party_name": "העבודה",
 			"img_url": "http://mitpakdot.files.wordpress.com/2012/01/mitpakdot_logo_small2.jpg?w=200&h=125",
 			"agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x99i74x0",
             "positive_list": {
@@ -63,38 +61,7 @@
 		{
             "id": 5,
             "name": "הפורום לשוויון בנטל",
-			"img_url": "https://graph.facebook.com/273106626063080/picture?type=thumbnail",
-			"party_name": "הליכוד",
-			"agendas": "1x0i2x0i6x99i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x0i74x0",
-            "positive_list": {
-                "members": [  ],
-                "newbies": [  ]
-            },
-            "negative_list": {
-                "members": [  ],
-                "newbies": [ ]
-            }
-        },
-		{
-            "id": 6,
-            "name": "חינוך ישראלי",
-			"img_url": "https://graph.facebook.com/343543432348815/picture?type=thumbnail",
-			"party_name": "הליכוד",
-			"agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x100i63x0i64x0i66x0i71x0i72x0i74x0",
-            "positive_list": {
-                "members": [  ],
-                "newbies": [  ]
-            },
-            "negative_list": {
-                "members": [  ],
-                "newbies": [ ]
-            }
-        },
-		{
-            "id": 7,
-            "name": "הפורום לשוויון בנטל",
-			"img_url": "https://graph.facebook.com/273106626063080/picture?type=thumbnail",
-			"party_name": "העבודה",
+			"img_url": "http://profile.ak.fbcdn.net/hprofile-ak-snc7/276917_272126646161078_1289964971_q.jpg",
 			"agendas": "1x0i2x0i6x99i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x0i74x0",
             "positive_list": {
                 "members": [  ],

@@ -2,7 +2,7 @@
     "objects" : [
         {
             "id": 2,
-            "picture_url" : "https://graph.facebook.com/LikudNetanyahu/picture?type=square"
+			"picture_url" : "http://upload.wikimedia.org/wikipedia/commons/9/99/Likud_Logo.png"
         },
 		{
             "id": 5,
