@@ -274,7 +274,9 @@ body {
 .agenda_item .extra_info {
     cursor : default;
     white-space : normal;
-    background-color : #e9eaea;
+    background-image : url("./static/agenda_repeat.png");
+    background-repeat : repeat-x;
+    background-color : #b5c7d0;
     border-width : 3px;
     border-radius : 3px;
     border-style : solid;
@@ -298,7 +300,12 @@ body {
     font-weight : 700;
 }
 .agenda_item .extra_info .owner {
+    color : #00507d;
     font-size : 14px;
+}
+.agenda_item .extra_info .link {
+    display : block;
+    padding : 3px 0 1px 0;
 }
 .agenda_item .extra_info .description {
     margin-top : 8px;
