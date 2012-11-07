@@ -9,6 +9,7 @@ String::repeat = ( num ) ->
 
 root.facebookShare = (link) ->
     ga.social 'Facebook', 'share', link
+    base_url = location.href.replace /(\/)?(index.html)?(\/)?(#.*)?$/, ''
     FB.ui
             display: 'popup'
             method: 'feed'
@@ -16,6 +17,7 @@ root.facebookShare = (link) ->
             link: link
             caption: 'הפעם בוחרים חכם'
             description: 'בואו תראו איזה מתמודדים באמת עובדים בשבילכם'
+            picture: base_url + '/static/thumbnail-01.jpg'
         ,
             -> console.log('Facebook callback', @, arguments)
 

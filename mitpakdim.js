@@ -19,14 +19,17 @@
   };
 
   root.facebookShare = function(link) {
+    var base_url;
     ga.social('Facebook', 'share', link);
+    base_url = location.href.replace(/(\/)?(index.html)?(\/)?(#.*)?$/, '');
     return FB.ui({
       display: 'popup',
       method: 'feed',
       name: 'מדח"כ',
       link: link,
       caption: 'הפעם בוחרים חכם',
-      description: 'בואו תראו איזה מתמודדים באמת עובדים בשבילכם'
+      description: 'בואו תראו איזה מתמודדים באמת עובדים בשבילכם',
+      picture: base_url + '/static/thumbnail-01.jpg'
     }, function() {
       return console.log('Facebook callback', this, arguments);
     });
