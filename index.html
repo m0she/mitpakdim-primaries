@@ -45,8 +45,11 @@
                     <div class="links">
                         <a href="./qna.html" target="_blank">שאלות ותשובות</a>
                     </div>
-    				<div class="links">
+                    <div class="links">
                         <a href="https://docs.google.com/spreadsheet/viewform?formkey=dHhGX1lVQV9HcWdBNy1QWXdGR2lnLVE6MQ#gid=0" target="_blank">משוב</a>
+                    </div>
+                    <div class="links">
+                        <a href="./about.html" target="_blank">אודות</a>
                     </div>
                 </div>
             </div>
@@ -60,7 +63,7 @@
                 <h1>מתפקד/ת יקר/ה,</h1>
                 <p>
                     כלי זה פותח ע"י תנועת <a href="http://mitpakdim.co.il/" target="_blank">"מתפקדים"</a> ו<a href="http://www.hasadna.org.il/" target="_blank">ה"סדנא לידע ציבורי"</a> על מנת לתת לך כלים לבצע בחירה מושכלת של המועמדים בבחירות המקדימות במפלגתך (פריימריז). כל שעליך לעשות הוא לבחון את האג'נדות המוצגות ולבחור מה עמדתך לגבי כל אג'נדה. באופן אוטמטי המערכת תדרג את חברי הכנסת והמועמדים על פי מידת ההתאמה של השקפתם להשקפתך. או במילים אחרות - מי מהם באמת עבד בשבילך ב-4 שנים האחרונות ולכן סבירות גבוהה יותר שיעבוד בשבילך בכנסת הבאה.<br/>
-                    לתשומת לבך: המדדים המוצגים בכלי זה נוצרו ע"י ארגונים ותנועות שונות ומייצגים את האג'נדה - השקפת העולם הסובייקטיבית של אותו ארגון לאחר ניתוח הצעות החוק והצבעות הח"כים בכנסת הנשאבים מאתר <a class="oknesset" href="http://oknesset.org/" target="_blank">"כנסת פתוחה"</a>. 
+                    לתשומת לבך: המדדים המוצגים בכלי זה נוצרו ע"י ארגונים ותנועות שונות ומייצגים את האג'נדה - השקפת העולם הסובייקטיבית של אותו ארגון לאחר ניתוח הצעות החוק והצבעות הח"כים בכנסת הנשאבים מאתר <a class="oknesset" href="http://oknesset.org/" target="_blank">"כנסת פתוחה"</a>.
                 </p>
                 <p>
                     בסיום השימוש בכלי תוכל/י להפיק דף/לשתף בפייס ובו כל הפרטים הדרושים לך על מנת להגיע לקלפי ולהצביע לפי השקפותיך.
@@ -106,9 +109,6 @@
                     </div>
                 </div>
             </div>
-            <!--
-			<input type="button" value="&#1492;&#1510;&#1490; &#1502;&#1513;&#1511;&#1493;&#1500;&#1493;&#1514;" id="show_weights" />
-            -->
         </div>
         <script type="text/template" id='candidate_template'>
             <div class="content">
@@ -142,10 +142,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="owner">נערך ע&quot;י: <%= public_owner_name %></div> 
+                <div class="owner">נערך ע&quot;י: <%= public_owner_name %></div>
             </a>
             </div>
-            <div class="slider" id="agenda_<%= id %>"></div> 
+            <div class="slider" id="agenda_<%= id %>"></div>
         </script>
         <script type="text/template" id='recommendation_template'>
             <div class="recommendation_item<% if (model.isSelected()) { %> selected<% } %>">
