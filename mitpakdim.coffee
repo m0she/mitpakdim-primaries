@@ -267,7 +267,7 @@ class root.PartyList extends root.JSONPCollection
     model: root.MiscModel
     multiSync: [{
         url: "http://www.oknesset.org/api/v2/party/"
-        disable_repo: window.mit.party
+        repo: window.mit.party
         sync: root.JSONPCachableSync('parties')
     }, {
         repo: window.mit.party_extra
@@ -281,7 +281,7 @@ class root.AgendaList extends root.JSONPCollection
     comparator: (agenda) ->
         -agenda.get 'num_followers'
     syncOptions:
-        disable_repo: window.mit.agenda
+        repo: window.mit.agenda
         sync: root.JSONPCachableSync('agendas')
 
     resetWeights: (weights) ->
@@ -300,7 +300,7 @@ class root.MemberList extends root.JSONPCollection
     model: root.Member
     multiSync: [{
         url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name,links"
-        disable_repo: window.mit.combined_members
+        repo: window.mit.combined_members
         sync: root.JSONPCachableSync('members')
     }, {
         repo: window.mit.member_extra
