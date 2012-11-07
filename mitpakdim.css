@@ -294,14 +294,20 @@ body {
     vertical-align : top;
     overflow-y : auto;
 }
-.agenda_item .extra_info .name {
-    color : #00507d;
-    font-size : 14px;
-    font-weight : 700;
-}
+.agenda_item .extra_info .name,
 .agenda_item .extra_info .owner {
     color : #00507d;
     font-size : 14px;
+    max-width : 170px;
+}
+.agenda_item .extra_info .logo {
+    position : absolute;
+    left : 15px;
+    top : 8px;
+    height : 35px;
+}
+.agenda_item .extra_info .name {
+    font-weight : 700;
 }
 .agenda_item .extra_info .link {
     display : block;

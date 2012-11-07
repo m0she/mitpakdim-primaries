@@ -139,6 +139,9 @@
                             <div class="owner"><%= public_owner_name %></div>
                             <div class="description"><%= description %></div>
                             <a class="link" href="http://oknesset.org<%= absolute_url %>">למידע נוסף...</a>
+                            <% if ((typeof image != "undefined") && image) { %>
+                                <img class="logo" src="http://oknesset.org<%= image %>"/>
+                            <% } %>
                         </div>
                     </div>
                 </div>
