@@ -23,8 +23,10 @@ root.facebookShare = (link) ->
 
 root.twitterShare = (link) ->
     ga.social 'Twitter', 'share', link
-    window.open "https://twitter.com/share?" + $.param(url: link),
-        'tweet', 'width=575,height=400,left=672,top=320,scrollbars=1'
+    window.open "https://twitter.com/share?" + $.param(
+        url: link
+        text: "ראו את דירוג המתמודדים שלי לפריימריז במפלגת #{root.global.party.get('name')} באמצעות המדח\"כ"
+    ), 'tweet', 'width=575,height=400,left=672,top=320,scrollbars=1'
 
 getShareLink = (weights) ->
     base = window.location.href.replace /#.*$/, ''

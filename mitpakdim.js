@@ -38,7 +38,8 @@
   root.twitterShare = function(link) {
     ga.social('Twitter', 'share', link);
     return window.open("https://twitter.com/share?" + $.param({
-      url: link
+      url: link,
+      text: "ראו את דירוג המתמודדים שלי לפריימריז במפלגת " + (root.global.party.get('name')) + " באמצעות המדח\"כ"
     }), 'tweet', 'width=575,height=400,left=672,top=320,scrollbars=1');
   };
 
