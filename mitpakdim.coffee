@@ -14,8 +14,8 @@ root.facebookShare = (link) ->
             method: 'feed'
             name: 'מדח"כ'
             link: link
-            caption: 'The way to choose your candidates'
-            description: 'Learn about your candidates by prioritizing the agendas you care about'
+            caption: 'הפעם בוחרים חכם'
+            description: 'בואו תראו איזה מתמודדים באמת עובדים בשבילכם'
         ,
             -> console.log('Facebook callback', @, arguments)
 
