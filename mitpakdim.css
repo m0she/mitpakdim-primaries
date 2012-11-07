@@ -377,7 +377,7 @@ body {
     background-repeat : repeat;
     position  : absolute;
     left : 0;
-    top : 0;
+    top : 80px;
     bottom : 0;
     width : 50%;
 }
@@ -390,6 +390,7 @@ body {
     font-size : 14px;
     font-weight : 400;
     margin-right : 10px;
+    padding : 2px 0 14px 0;
 }
 .members_container .title strong,
 .newbies_container .title strong {
@@ -398,12 +399,12 @@ body {
 .members_container {
     display : inline-block;
     width : 50%;
-    padding-top : 40px;
+    padding-top : 10px;
     vertical-align : top;
     position : relative;
 }
 .newbies_container {
-    padding-top : 40px;
+    padding-top : 10px;
     display : inline-block;
     width : 50%;
     vertical-align : top;
@@ -563,20 +564,31 @@ body {
 }
 
 .social_bar {
+    width : 100%;
+    height : 40px;
+}
+.social_bar.top {
+    margin-top : 39px;
+    border-width : 0 0 1px 0;
+    border-style : solid;
+    border-color : #ddd;
+    text-align : center;
+}
+.social_bar.bottom {
     background-color : #464646;
     position : absolute;
     bottom : 0;
     left : 0;
-    width : 100%;
-    height : 40px;
 }
 .social_bar .vertical_aligner {
     display : inline-block;
     height : 100%;
     vertical-align : middle;
 }
-.social_bar .caption {
+.social_bar.bottom .caption {
     color : #fff;
+}
+.social_bar .caption {
     display : inline-block;
     font-size : 14px;
     font-weight : 400;
