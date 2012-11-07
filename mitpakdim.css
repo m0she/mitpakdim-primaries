@@ -175,7 +175,7 @@ body {
     border-style : solid;
     font-size : 14px;
     font-weight : 700;
-    height : 58px;
+    height : 68px;
     padding : 10px 0 15px 0;
     position : relative;
 }
@@ -247,14 +247,21 @@ body {
     width : 12px;
 }
 .agenda_title {
-    height : 21px;
+    height : 28px;
     white-space : nowrap;
 }
 .agenda_title .name {
     color : #000;
+    display : inline-block;
+}
+.agenda_title > .owner {
+    color : #666;
+    font-size : 12px;
+    font-weight : 400;
 }
 .agenda_item .extra_info_wrapper {
     display : inline-block;
+    height : 21px;
 }
 .agenda_item .extra_info_icon {
     background-image : url("./static/agenda_hint.png");
