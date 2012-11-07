@@ -60,7 +60,7 @@
         },
 		{
             "id": 5,
-            "name": "הפורום לשוויון בנטל",
+            "name": "הפורום לשוויון בנטל",			
 			"img_url": "http://profile.ak.fbcdn.net/hprofile-ak-snc7/276917_272126646161078_1289964971_q.jpg",
 			"agendas": "1x0i2x0i6x99i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x0i74x0",
             "positive_list": {
@@ -75,6 +75,7 @@
 		{
             "id": 8,
             "name": "חוג השכונות ופריפריה",
+			"img_url": "https://s-static.ak.facebook.com/rsrc.php/v2/y2/r/G8hoBipVFJR.png",
             "party_name": "העבודה",
 			"agendas": "1x0i2x74i6x12i7x69i9x100i24x100i26x22i36x21i39x0i40x0i41x40i44x0i45x0i48x0i49x23i53x0i55x0i60x49i61x66i63x100i64x100i66x71i71x59i72x9i74x37",
             "positive_list": {
