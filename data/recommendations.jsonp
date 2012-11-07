@@ -85,6 +85,7 @@ window.mit.recommendations = {
                 "newbies": [], 
                 "members": []
             }, 
+            "img_url": "https://s-static.ak.facebook.com/rsrc.php/v2/y2/r/G8hoBipVFJR.png", 
             "id": 8
         }
     ]
