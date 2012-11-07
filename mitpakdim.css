@@ -130,7 +130,7 @@ body {
 }
 .main_top {
     background-image : url("./static/instructions_back.png");
-    height : 125px;
+    height : 145px;
     width : 980px;
     margin-right : -10px;
 }
@@ -147,10 +147,18 @@ body {
     margin : 10px 12px 0 0;
     width : 400px;
 }
+.instructions .remark {
+    color : #00507F;
+    font-size : 12px;
+    font-weight : 400;
+    margin : 3px 12px 0 0;
+    width : 420px;
+}
 .instructions_bar {
     background-image : url("./static/instructions.png");
     height : 57px;
     width : 426px;
+    margin-top : 7px;
 }
 .agendas_container {
     display : inline-block;
@@ -511,7 +519,7 @@ body {
     white-space : normal;
 }
 .recommendation_item {
-    padding : 5px 10px;
+    padding : 17px 10px 5px 10px;
     cursor : pointer;
 }
 .recommendation_item img {
