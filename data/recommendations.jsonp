@@ -38,7 +38,6 @@ window.mit.recommendations = {
                 "newbies": [], 
                 "members": []
             }, 
-            "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
             "negative_list": {
                 "newbies": [], 
                 "members": []
@@ -68,42 +67,12 @@ window.mit.recommendations = {
                 "newbies": [], 
                 "members": []
             }, 
-            "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "negative_list": {
                 "newbies": [], 
                 "members": []
             }, 
-            "img_url": "https://graph.facebook.com/273106626063080/picture?type=thumbnail", 
+            "img_url": "http://profile.ak.fbcdn.net/hprofile-ak-snc7/276917_272126646161078_1289964971_q.jpg", 
             "id": 5
-        }, 
-        {
-            "agendas": "1x0i2x0i6x0i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x100i63x0i64x0i66x0i71x0i72x0i74x0", 
-            "name": "\u05d7\u05d9\u05e0\u05d5\u05da \u05d9\u05e9\u05e8\u05d0\u05dc\u05d9", 
-            "positive_list": {
-                "newbies": [], 
-                "members": []
-            }, 
-            "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
-            "negative_list": {
-                "newbies": [], 
-                "members": []
-            }, 
-            "img_url": "https://graph.facebook.com/343543432348815/picture?type=thumbnail", 
-            "id": 6
-        }, 
-        {
-            "agendas": "1x0i2x0i6x99i7x0i9x0i24x0i26x0i36x0i39x0i40x0i41x0i44x0i45x0i48x0i49x0i53x0i55x0i60x0i61x0i63x0i64x0i66x0i71x0i72x0i74x0", 
-            "name": "\u05d4\u05e4\u05d5\u05e8\u05d5\u05dd \u05dc\u05e9\u05d5\u05d5\u05d9\u05d5\u05df \u05d1\u05e0\u05d8\u05dc", 
-            "positive_list": {
-                "newbies": [], 
-                "members": []
-            }, 
-            "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
-            "negative_list": {
-                "newbies": [], 
-                "members": []
-            }, 
-            "id": 7
         }, 
         {
             "agendas": "1x0i2x74i6x12i7x69i9x100i24x100i26x22i36x21i39x0i40x0i41x40i44x0i45x0i48x0i49x23i53x0i55x0i60x49i61x66i63x100i64x100i66x71i71x59i72x9i74x37", 
