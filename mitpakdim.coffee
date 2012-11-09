@@ -179,6 +179,22 @@ class root.Candidate extends Backbone.Model
         score : 'N/A'
         participating : true
 
+    parseLinks : (data) ->
+        if data.links and _.isArray data.links
+            _.each data.links, (link) ->
+                if link?.title?.search('פייסבוק') isnt -1 or link?.title?.search(/facebook/i) isnt -1
+                    data.facebook_link_url = link.url
+                if link?.title?.search('הכנסת') isnt -1
+                    data.resume_link_url = link.url
+        if data.absolute_url
+            data.oknesset_link_url = "http://oknesset.org" + data.absolute_url
+        data
+
+    parse : (data) ->
+        data = super(data)
+        @parseLinks data
+        data
+
     getAgendas: ->
         if not @get('agendas')
             console.log "Trying to use candidate agendas before fetched", @
@@ -194,20 +210,6 @@ class root.Candidate extends Backbone.Model
         set_default 'recommendation_negative', {}
 
 class root.Member extends root.Candidate
-    parseLinks : (data) ->
-        if data.links and _.isArray data.links
-            _.each data.links, (link) ->
-                if link?.title?.search('פייסבוק') isnt -1
-                    data.facebook_link_url = link.url
-                if link?.title?.search('הכנסת') isnt -1
-                    data.resume_link_url = link.url
-        if data.absolute_url
-            data.oknesset_link_url = "http://oknesset.org" + data.absolute_url
-        data
-    parse : (data) ->
-        data = super(data)
-        @parseLinks data
-        data
 class root.Newbie extends root.Candidate
     parse: (response) ->
         ret = super arguments...

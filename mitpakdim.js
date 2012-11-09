@@ -301,6 +301,30 @@
       participating: true
     };
 
+    Candidate.prototype.parseLinks = function(data) {
+      if (data.links && _.isArray(data.links)) {
+        _.each(data.links, function(link) {
+          var _ref2, _ref3, _ref4;
+          if ((link != null ? (_ref2 = link.title) != null ? _ref2.search('פייסבוק') : void 0 : void 0) !== -1 || (link != null ? (_ref3 = link.title) != null ? _ref3.search(/facebook/i) : void 0 : void 0) !== -1) {
+            data.facebook_link_url = link.url;
+          }
+          if ((link != null ? (_ref4 = link.title) != null ? _ref4.search('הכנסת') : void 0 : void 0) !== -1) {
+            return data.resume_link_url = link.url;
+          }
+        });
+      }
+      if (data.absolute_url) {
+        data.oknesset_link_url = "http://oknesset.org" + data.absolute_url;
+      }
+      return data;
+    };
+
+    Candidate.prototype.parse = function(data) {
+      data = Candidate.__super__.parse.call(this, data);
+      this.parseLinks(data);
+      return data;
+    };
+
     Candidate.prototype.getAgendas = function() {
       if (!this.get('agendas')) {
         console.log("Trying to use candidate agendas before fetched", this);
@@ -332,30 +356,6 @@
     function Member() {
       return Member.__super__.constructor.apply(this, arguments);
     }
-
-    Member.prototype.parseLinks = function(data) {
-      if (data.links && _.isArray(data.links)) {
-        _.each(data.links, function(link) {
-          var _ref2, _ref3;
-          if ((link != null ? (_ref2 = link.title) != null ? _ref2.search('פייסבוק') : void 0 : void 0) !== -1) {
-            data.facebook_link_url = link.url;
-          }
-          if ((link != null ? (_ref3 = link.title) != null ? _ref3.search('הכנסת') : void 0 : void 0) !== -1) {
-            return data.resume_link_url = link.url;
-          }
-        });
-      }
-      if (data.absolute_url) {
-        data.oknesset_link_url = "http://oknesset.org" + data.absolute_url;
-      }
-      return data;
-    };
-
-    Member.prototype.parse = function(data) {
-      data = Member.__super__.parse.call(this, data);
-      this.parseLinks(data);
-      return data;
-    };
 
     return Member;
 
