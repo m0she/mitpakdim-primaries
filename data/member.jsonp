@@ -1100,7 +1100,7 @@ window.mit.member = {
                     "title": "\u05d3\u05e0\u05d9 \u05d3\u05e0\u05d5\u05df \u05d1\u05d8\u05d5\u05d5\u05d9\u05d8\u05e8"
                 }, 
                 {
-                    "url": "http://www.facebook.com/pages/rwz-lknst-dbrw-m-hhkym-bpyysbwq/361038228813?v=wall#!/danny.danon?ref=ts\n", 
+                    "url": "https://www.facebook.com/DanonDanny", 
                     "title": "\u05d3\u05e0\u05d9 \u05d3\u05e0\u05d5\u05df \u05d1\u05e4\u05d9\u05d9\u05e1\u05d1\u05d5\u05e7"
                 }, 
                 {
@@ -2284,12 +2284,12 @@ window.mit.member = {
                     "title": "\u05d4\u05e8\u05e1\u05e1 \u05e9\u05dc \u05e0\u05d7\u05de\u05df \u05e9\u05d9"
                 }, 
                 {
-                    "url": "http://www.facebook.com/profile.php?id=1582312040\n", 
-                    "title": "\u05e0\u05d7\u05de\u05df \u05e9\u05d9 \u05d1\u05e4\u05d9\u05d9\u05e1\u05d1\u05d5\u05e7"
-                }, 
-                {
                     "url": "http://www.knesset.gov.il/mk/heb/mk.asp?mk_individual_id_t=818", 
                     "title": "\u05e0\u05d7\u05de\u05df \u05e9\u05d9 \u05d1\u05d0\u05ea\u05e8 \u05d4\u05db\u05e0\u05e1\u05ea"
+                }, 
+                {
+                    "url": "http://www.facebook.com/NachmanShai", 
+                    "title": "\u05e0\u05d7\u05de\u05df \u05e9\u05d9 \u05d1\u05e4\u05d9\u05d9\u05e1\u05d1\u05d5\u05e7"
                 }
             ], 
             "absolute_url": "/member/818/%D7%A0%D7%97%D7%9E%D7%9F-%D7%A9%D7%99/", 
