@@ -37,6 +37,12 @@ body {
     height : 62px;
     width : 151px;
 }
+.page_top_bar .fblike_container {
+    position: absolute;
+    top: 26px;
+    left: 420px;
+    direction: ltr;
+}
 .page_top_bar .text .logo {
     background-image : url("./static/header_text.png");
     display : inline-block;
@@ -595,7 +601,7 @@ body {
     padding : 0 8px 1px 0;
     vertical-align : middle;
 }
-#fb_share {
+.fb_share {
     background-image : url("./static/fb_share.png");
     cursor : pointer;
     display : inline-block;
@@ -604,12 +610,30 @@ body {
     margin : 2px 8px 0 0;
     vertical-align : middle;
 }
-#tweet_share {
+.tweet_share {
     background-image : url("./static/twitter_share.png");
     cursor : pointer;
     display : inline-block;
     height : 22px;
     width : 57px;
+    margin : 1px 8px 0 0;
+    vertical-align : middle;
+}
+.separator {
+    display : inline-block;
+    background: #fff;
+    width: 1px;
+    height: 32px;
+    margin: 0 10px;
+    vertical-align : middle;
+    border-left: 1px solid white;
+}
+.print {
+    background-image : url("./static/print2.png");
+    cursor : pointer;
+    display : inline-block;
+    height : 35px;
+    width : 35px;
     margin : 1px 8px 0 0;
     vertical-align : middle;
 }

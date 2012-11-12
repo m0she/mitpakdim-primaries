@@ -1424,11 +1424,15 @@
     };
 
     AppView.prototype.events = {
-      'click #fb_share': function(event) {
+      'click .fb_share': function(event) {
         return root.facebookShare(getShareLink(root.lists.agendas.getWeights()));
       },
-      'click #tweet_share': function(event) {
+      'click .tweet_share': function(event) {
         return root.twitterShare(getShareLink(root.lists.agendas.getWeights()));
+      },
+      'click .print': function(event) {
+        ga.event('print');
+        return window.print();
       },
       'click input:button#show_weights': function(event) {
         var instructions;
@@ -1563,6 +1567,7 @@
     FB.Event.subscribe('message.send', function(targetUrl) {
       return ga.social('facebook', 'send', targetUrl);
     });
+    FB.XFBML.parse();
   });
 
 }).call(this);
