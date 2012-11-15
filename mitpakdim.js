@@ -1431,7 +1431,7 @@
         return root.twitterShare(getShareLink(root.lists.agendas.getWeights()));
       },
       'click .print': function(event) {
-        ga.event('print');
+        ga.event('print', "party_" + root.global.party.id);
         return window.print();
       },
       'click input:button#show_weights': function(event) {
