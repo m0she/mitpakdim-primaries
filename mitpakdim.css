@@ -40,7 +40,7 @@ body {
 .page_top_bar .fblike_container {
     position: absolute;
     top: 26px;
-    left: 420px;
+    left: 340px;
     direction: ltr;
 }
 .page_top_bar .text .logo {
@@ -58,8 +58,10 @@ body {
     display : inline-block;
     font-size : 14px;
     font-weight : 700;
-    padding-right : 40px;
+    padding-right : 20px;
+    padding-left : 20px;
     vertical-align : middle;
+	
 }
 .page_top_bar .text .links a {
     color : #fff;
@@ -625,6 +627,15 @@ body {
     width: 1px;
     height: 32px;
     margin: 0 10px;
+    vertical-align : middle;
+    border-left: 1px solid white;
+}
+.separator4menu {
+    display : inline-block;
+    background: #fff;
+    width: 1px;
+    height: 32px;
+    margin: 0 2px;
     vertical-align : middle;
     border-left: 1px solid white;
 }
