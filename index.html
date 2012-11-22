@@ -158,6 +158,13 @@
                         <% if (typeof oknesset_link_url != 'undefined') { %><a class="oknesset" href="<%= oknesset_link_url %>" target="_blank"><div class="icon"></div>הח"כ <strong>בכנסת פתוחה</strong></a><% } %>
                     </div>
                     <div class="role_description"><% if (typeof current_role_descriptions != 'undefined') { %><%= current_role_descriptions %><% } %></div>
+					<div class="work_plan">
+					<% if (typeof minister_work_plan_2009 != 'undefined' || typeof minister_work_plan_2010 != 'undefined' || typeof minister_work_plan_2011 != 'undefined' || typeof minister_work_plan_2012 != 'undefined') { %>תוכניות העבודה לשנים:<br><% } %>
+					<% if (typeof minister_work_plan_2009 != 'undefined') { %><a class="resume" href="<%= minister_work_plan_2009 %>" target="_blank">2009</a><% } %>
+					<% if (typeof minister_work_plan_2010 != 'undefined') { %><a class="resume" href="<%= minister_work_plan_2010 %>" target="_blank">2010</a><% } %>
+					<% if (typeof minister_work_plan_2011 != 'undefined') { %><a class="resume" href="<%= minister_work_plan_2011 %>" target="_blank">2011</a><% } %>
+					<% if (typeof minister_work_plan_2012 != 'undefined') { %><a class="resume" href="<%= minister_work_plan_2012 %>" target="_blank">2012</a><% } %>
+					</div>
                     <div class="remarks">
                         <% if (typeof change_party_remark != 'undefined') { %>
                             <div class="remark_icon change_party" title="<%= change_party_remark %>"></div>
