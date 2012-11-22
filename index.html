@@ -57,15 +57,15 @@
                     <div class="links">
                         <a href="./qna.html" target="_blank">שאלות ותשובות</a>
                     </div>
-					<div class="separator4menu"></div>
+                    <div class="separator4menu"></div>
                     <div class="links">
                         <a href="https://docs.google.com/spreadsheet/viewform?formkey=dHhGX1lVQV9HcWdBNy1QWXdGR2lnLVE6MQ#gid=0" target="_blank">משוב</a>
                     </div>
-					<div class="separator4menu"></div>
-					<div class="links">
+                    <div class="separator4menu"></div>
+                    <div class="links">
                         <a href="http://www.youtube.com/watch?v=nTw1IpFseFs&feature=plcp" target="_blank">סרטון</a>
                     </div>
-					<div class="separator4menu"></div>
+                    <div class="separator4menu"></div>
                     <div class="links">
                         <a href="./about.html" target="_blank">אודות</a>
                     </div>
@@ -127,9 +127,9 @@
                         </div>
                         <div class="members_container"><div class="title">סדר המתמודדים<strong> המכהנים </strong>לפי בחירותך</div><div class="members"></div></div
                         ><div class="newbies_container"><div class="title">סדר המתמודדים<strong> החדשים </strong>לפי בחירותך</div><div class="newbies"></div><div class="title" ><br>מופיע ברשימה רק מי <strong>שבחר</strong> להכניס את הנתונים שלו על ידי הרשמה לכלי
-    					בעזרת שליחת דוא"ל לכתובת:
-				<a href="mailto:primaries@mitpakdim.co.il?Subject=בקשה להרשמה למדחכ">primaries@mitpakdim.co.il</a>
-						</div></div>
+                        בעזרת שליחת דוא"ל לכתובת:
+                        <a href="mailto:primaries@mitpakdim.co.il?Subject=בקשה להרשמה למדחכ">primaries@mitpakdim.co.il</a>
+                        </div></div>
                         <div class="social_bar bottom">
                             <div class="vertical_aligner"></div>
                             <div class="caption">שתף את הרשימה שלך:</div>
@@ -158,6 +158,13 @@
                         <% if (typeof oknesset_link_url != 'undefined') { %><a class="oknesset" href="<%= oknesset_link_url %>" target="_blank"><div class="icon"></div>הח"כ <strong>בכנסת פתוחה</strong></a><% } %>
                     </div>
                     <div class="role_description"><% if (typeof current_role_descriptions != 'undefined') { %><%= current_role_descriptions %><% } %></div>
+                    <% if (typeof minister_work_plans != 'undefined') { %>
+                        <div class="work_plan">תוכניות העבודה לשנים:<br>
+                        <% _.each(minister_work_plans, function (url, year) { %>
+                            <a class="resume" href="<%= url %>" target="_blank"><%= year %></a>
+                        <% }); %>
+                        </div>
+                    <% } %>
                     <div class="remarks">
                         <% if (typeof change_party_remark != 'undefined') { %>
                             <div class="remark_icon change_party" title="<%= change_party_remark %>"></div>
@@ -167,7 +174,7 @@
                         <% } %>
                     </div>
                 </div>
-            </div>			
+            </div>
         </script>
         <script type="text/template" id='agenda_template'>
             <div class="agenda_title">

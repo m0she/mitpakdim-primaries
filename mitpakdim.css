@@ -513,6 +513,12 @@ body {
     font-weight : 400;
     line-height : 120%;
 }
+.candidate_instance .work_plan {
+    font-size : 12px;
+    font-weight : 400;
+    line-height : 120%;
+	margin: 3px 2px 0 5px;
+}
 .candidate_instance .score {
     color : #f8b617;
     font-size : 13px;
