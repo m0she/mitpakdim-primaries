@@ -87,29 +87,35 @@ window.mit.member_extra = {
             "district": "\u05d0\u05e8\u05e6\u05d9"
         }, 
         {
-            "minister_work_plan_2010": "http://www.vpmo.gov.il/About/workplans/Pages/workplan2010.aspx", 
-            "minister_work_plan_2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_negevgalil.pdf", 
-            "minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf", 
             "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "minister_work_plans": {
+                "2009": "http://www.vpmo.gov.il/About/workplans/Pages/workplan20099.aspx", 
+                "2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_negevgalil.pdf", 
+                "2010": "http://www.vpmo.gov.il/About/workplans/Pages/workplan2010.aspx", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
             "district": "\u05d0\u05e8\u05e6\u05d9", 
-            "minister_work_plan_2009": "http://www.vpmo.gov.il/About/workplans/Pages/workplan20099.aspx", 
             "id": 230
         }, 
         {
-            "minister_work_plan_2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Pages/plans2010.aspx", 
-            "minister_work_plan_2011": "http://www.pmo.gov.il/IsraelGov/YearPlans/Pages/plans2011.aspx", 
-            "minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf", 
             "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "minister_work_plans": {
+                "2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Pages/plans2009.aspx", 
+                "2011": "http://www.pmo.gov.il/IsraelGov/YearPlans/Pages/plans2011.aspx", 
+                "2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Pages/plans2010.aspx", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
             "district": "\u05d0\u05e8\u05e6\u05d9", 
-            "minister_work_plan_2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Pages/plans2009.aspx", 
             "id": 90
         }, 
         {
-            "minister_work_plan_2011": "http://www.news1.co.il/uploadFiles/717083156108857.pdf", 
-            "minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf", 
             "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
-            "id": 725, 
-            "district": "\u05d0\u05e8\u05e6\u05d9"
+            "minister_work_plans": {
+                "2011": "http://www.news1.co.il/uploadFiles/717083156108857.pdf", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "id": 725
         }, 
         {
             "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
@@ -117,11 +123,13 @@ window.mit.member_extra = {
             "district": "\u05d0\u05e8\u05e6\u05d9"
         }, 
         {
-            "minister_work_plan_2011": "http://old.sviva.gov.il/Enviroment/Static/Binaries/ModulKvatzim/roham_haganat_hasviva_2011_1.pdf", 
-            "minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf", 
             "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
-            "id": 734, 
-            "district": "\u05d0\u05e8\u05e6\u05d9"
+            "minister_work_plans": {
+                "2011": "http://old.sviva.gov.il/Enviroment/Static/Binaries/ModulKvatzim/roham_haganat_hasviva_2011_1.pdf", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "id": 734
         }, 
         {
             "id": 88, 
@@ -144,21 +152,23 @@ window.mit.member_extra = {
             "district": "\u05d0\u05e8\u05e6\u05d9"
         }, 
         {
-            "minister_work_plan_2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2010/otsar.ppt", 
-            "minister_work_plan_2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_otzar.pdf", 
-            "minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf", 
             "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "minister_work_plans": {
+                "2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2009/Mof130109.ppt", 
+                "2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_otzar.pdf", 
+                "2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2010/otsar.ppt", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
             "district": "\u05d0\u05e8\u05e6\u05d9", 
-            "minister_work_plan_2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2009/Mof130109.ppt", 
             "id": 695
         }, 
         {
-            "minister_work_plan_2010": "", 
-            "minister_work_plan_2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_hasbara.pdf", 
-            "minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf", 
             "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "minister_work_plans": {
+                "2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_hasbara.pdf", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
             "district": "\u05d0\u05e8\u05e6\u05d9", 
-            "minister_work_plan_2009": "", 
             "id": 1
         }, 
         {
@@ -166,12 +176,14 @@ window.mit.member_extra = {
             "district": "\u05d0\u05e8\u05e6\u05d9"
         }, 
         {
-            "minister_work_plan_2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2010/tayarut.ppt", 
-            "minister_work_plan_2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_tahbura.pdf", 
-            "minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf", 
             "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "minister_work_plans": {
+                "2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2009/transport220109.ppt", 
+                "2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_tahbura.pdf", 
+                "2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2010/tayarut.ppt", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
             "district": "\u05d0\u05e8\u05e6\u05d9", 
-            "minister_work_plan_2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2009/transport220109.ppt", 
             "id": 69
         }, 
         {
@@ -179,26 +191,32 @@ window.mit.member_extra = {
             "district": "\u05d0\u05e8\u05e6\u05d9"
         }, 
         {
-            "minister_work_plan_2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_seniors.pdf", 
-            "minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf", 
             "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
-            "id": 738, 
-            "district": "\u05d0\u05e8\u05e6\u05d9"
+            "minister_work_plans": {
+                "2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_seniors.pdf", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "id": 738
         }, 
         {
-            "minister_work_plan_2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2010/science.ppt", 
-            "minister_work_plan_2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_tarbut_sport.pdf", 
-            "minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf", 
             "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "minister_work_plans": {
+                "2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2009/mds180109.ppt", 
+                "2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_tarbut_sport.pdf", 
+                "2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2010/science.ppt", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
             "district": "\u05d0\u05e8\u05e6\u05d9", 
-            "minister_work_plan_2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2009/mds180109.ppt", 
             "id": 70
         }, 
         {
-            "minister_work_plan_2012": "http://www.miki.org.il/shipu/", 
             "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
             "id": 9, 
-            "district": "\u05d0\u05e8\u05e6\u05d9"
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "minister_work_plans": {
+                "2012": "http://www.miki.org.il/shipu/"
+            }
         }, 
         {
             "id": 831, 
@@ -209,12 +227,14 @@ window.mit.member_extra = {
             "district": "\u05d0\u05e8\u05e6\u05d9"
         }, 
         {
-            "minister_work_plan_2010": "http://www.vpmo.gov.il/About/workplans/Pages/workplan2010.aspx", 
-            "minister_work_plan_2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_negevgalil.pdf", 
-            "minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf", 
             "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "minister_work_plans": {
+                "2009": "http://www.vpmo.gov.il/About/workplans/Pages/workplan20099.aspx", 
+                "2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_negevgalil.pdf", 
+                "2010": "http://www.vpmo.gov.il/About/workplans/Pages/workplan2010.aspx", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
             "district": "\u05d0\u05e8\u05e6\u05d9", 
-            "minister_work_plan_2009": "http://www.vpmo.gov.il/About/workplans/Pages/workplan20099.aspx", 
             "id": 122
         }, 
         {

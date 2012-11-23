@@ -1,232 +1,252 @@
 {
-    "objects" : [
-		{
-            "id": 731,
-            "participating": false
-        },
-		{
-            "id": 824,
-            "participating": false
-        },
-		{
-            "id": 724,
-            "participating": false
-        },
-		{
-            "id": 771,
-			"party_name": "הליכוד",
-			"change_party_remark": "שימו לב שדפוסי הצבעה של ח''כים שעברו בין מפלגות מבוססים על כהונתם באופוזיציה."
-        },
-		{
-            "id": 821,
-			"party_name": "הליכוד",
-			"change_party_remark": "שימו לב שדפוסי הצבעה של ח''כים שעברו בין מפלגות מבוססים על כהונתם באופוזיציה."
-        },
-		{
-            "id": 848,
-			"party_name": "הליכוד",
-			"change_party_remark": "שימו לב שדפוסי הצבעה של ח''כים שעברו בין מפלגות מבוססים על כהונתם באופוזיציה."
-        },
-		{
-            "id": 850,
-			"party_name": "העבודה",
-			"change_party_remark": "שימו לב שדפוסי הצבעה של ח''כים שעברו בין מפלגות מבוססים על כהונתם במפלגה שונה."
-        },
-		{
-            "id": 818,
-			"party_name": "העבודה",
-			"change_party_remark": "שימו לב שדפוסי הצבעה של ח''כים שעברו בין מפלגות מבוססים על כהונתם במפלגה שונה."
-        },
-		{
-            "id": 5,
-            "participating": false
-        },
-		{
-            "id": 100,
-            "participating": false
-        },
-		{
-            "id": 96,
-            "participating": false
-        },
-		{
-            "id": 45,
-            "participating": false
-        },
-		{
-            "id": 730,
-            "participating": false
-        },
-		{
-            "id": 16,
-            "participating": false
-        },
-		{
-            "id": 697,
-            "participating": false
-        },
-		{
-            "id": 115,
-            "participating": false
-        },
-		{
-            "id": 204,
-            "participating": false
-        },
-		{
-            "id": 213,
-            "participating": false
-        },
-		{
-            "id": 103,
-            "participating": false
-        },
-		{
-            "id": 830,
-			"district": "ארצי"
-        },
-		{
-            "id": 230,
-			"district": "ארצי",
-			"minister_remark": "כלי זה נועד לנתח דפוסי הצבעה של נבחרי הציבור ולא פעילות באפיקי השפעה אחרים.",
-			"minister_work_plan_2009": "http://www.vpmo.gov.il/About/workplans/Pages/workplan20099.aspx",
-			"minister_work_plan_2010": "http://www.vpmo.gov.il/About/workplans/Pages/workplan2010.aspx",
-			"minister_work_plan_2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_negevgalil.pdf",
-			"minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
-        },
-		{
-            "id": 90,
-			"district": "ארצי",
-			"minister_remark": "כלי זה נועד לנתח דפוסי הצבעה של נבחרי הציבור ולא פעילות באפיקי השפעה אחרים.",
-			"minister_work_plan_2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Pages/plans2009.aspx",
-			"minister_work_plan_2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Pages/plans2010.aspx",
-			"minister_work_plan_2011": "http://www.pmo.gov.il/IsraelGov/YearPlans/Pages/plans2011.aspx",
-			"minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
-        },
-		{
-            "id": 725,
-			"district": "ארצי",
-			"minister_remark": "כלי זה נועד לנתח דפוסי הצבעה של נבחרי הציבור ולא פעילות באפיקי השפעה אחרים.",
-			"minister_work_plan_2011": "http://www.news1.co.il/uploadFiles/717083156108857.pdf",
-			"minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
-        },
-		{
-            "id": 723,
-			"district": "ארצי",
-			"minister_remark": "כלי זה נועד לנתח דפוסי הצבעה של נבחרי הציבור ולא פעילות באפיקי השפעה אחרים."
-        },
-		{
-            "id": 734,
-			"district": "ארצי",
-			"minister_remark": "כלי זה נועד לנתח דפוסי הצבעה של נבחרי הציבור ולא פעילות באפיקי השפעה אחרים.",
-			"minister_work_plan_2011": "http://old.sviva.gov.il/Enviroment/Static/Binaries/ModulKvatzim/roham_haganat_hasviva_2011_1.pdf",
-			"minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
-        },
-		{
-            "id": 88,
-			"district": "ארצי"
-        },
-		{
-            "id": 828,
-			"district": "ארצי"
-        },
-		{
-            "id": 768,
-			"district": "ארצי"
-        },
-		{
-            "id": 14,
-			"district": "ארצי"
-        },
-		{
-            "id": 212,
-			"district": "ארצי"
-        },
-		{
-            "id": 695,
-			"district": "ארצי",
-			"minister_remark": "כלי זה נועד לנתח דפוסי הצבעה של נבחרי הציבור ולא פעילות באפיקי השפעה אחרים.",
-			"minister_work_plan_2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2009/Mof130109.ppt",
-			"minister_work_plan_2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2010/otsar.ppt",
-			"minister_work_plan_2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_otzar.pdf",
-			"minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
-        },
-		{
-            "id": 1,
-			"district": "ארצי",
-			"minister_remark": "כלי זה נועד לנתח דפוסי הצבעה של נבחרי הציבור ולא פעילות באפיקי השפעה אחרים.",
-			"minister_work_plan_2009": "",
-			"minister_work_plan_2010": "",
-			"minister_work_plan_2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_hasbara.pdf",
-			"minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
-        },
-		{
-            "id": 826,
-			"district": "ארצי"
-        },
-		{
-            "id": 69,
-			"district": "ארצי",
-			"minister_remark": "כלי זה נועד לנתח דפוסי הצבעה של נבחרי הציבור ולא פעילות באפיקי השפעה אחרים.",
-			"minister_work_plan_2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2009/transport220109.ppt",
-			"minister_work_plan_2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2010/tayarut.ppt",
-			"minister_work_plan_2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_tahbura.pdf",
-			"minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
-        },
-		{
-            "id": 829,
-			"district": "ארצי"
-        },
-		{
-            "id": 738,
-			"district": "ארצי",
-			"minister_remark": "כלי זה נועד לנתח דפוסי הצבעה של נבחרי הציבור ולא פעילות באפיקי השפעה אחרים.",
-			"minister_work_plan_2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_seniors.pdf",
-			"minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
-        },
-		{
-            "id": 70,
-			"district": "ארצי",
-			"minister_remark": "כלי זה נועד לנתח דפוסי הצבעה של נבחרי הציבור ולא פעילות באפיקי השפעה אחרים.",
-			"minister_work_plan_2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2009/mds180109.ppt",
-			"minister_work_plan_2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2010/science.ppt",
-			"minister_work_plan_2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_tarbut_sport.pdf",
-			"minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
-        },
-		{
-            "id": 9,
-			"district": "ארצי",
-			"minister_remark": "כלי זה נועד לנתח דפוסי הצבעה של נבחרי הציבור ולא פעילות באפיקי השפעה אחרים.",
-			"minister_work_plan_2012": "http://www.miki.org.il/shipu/"
-        },
-		{
-            "id": 831,
-			"district": "ארצי"
-        },
-		{
-            "id": 823,
-			"district": "ארצי"
-        },
-		{
-            "id": 122,
-			"district": "ארצי",
-			"minister_remark": "כלי זה נועד לנתח דפוסי הצבעה של נבחרי הציבור ולא פעילות באפיקי השפעה אחרים.",
-			"minister_work_plan_2009": "http://www.vpmo.gov.il/About/workplans/Pages/workplan20099.aspx",
-			"minister_work_plan_2010": "http://www.vpmo.gov.il/About/workplans/Pages/workplan2010.aspx",
-			"minister_work_plan_2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_negevgalil.pdf",
-			"minister_work_plan_2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
-        },
-		{
-            "id": 1,
-			"district": "ארצי"
-        },
-		{
-            "id": 825,
-			"district": "ארצי"
-        },
-		{
-            "id": 114,
-			"district": "ארצי"
+    "objects": [
+        {
+            "participating": false, 
+            "id": 731
+        }, 
+        {
+            "participating": false, 
+            "id": 824
+        }, 
+        {
+            "participating": false, 
+            "id": 724
+        }, 
+        {
+            "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
+            "id": 771, 
+            "change_party_remark": "\u05e9\u05d9\u05de\u05d5 \u05dc\u05d1 \u05e9\u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05d7''\u05db\u05d9\u05dd \u05e9\u05e2\u05d1\u05e8\u05d5 \u05d1\u05d9\u05df \u05de\u05e4\u05dc\u05d2\u05d5\u05ea \u05de\u05d1\u05d5\u05e1\u05e1\u05d9\u05dd \u05e2\u05dc \u05db\u05d4\u05d5\u05e0\u05ea\u05dd \u05d1\u05d0\u05d5\u05e4\u05d5\u05d6\u05d9\u05e6\u05d9\u05d4."
+        }, 
+        {
+            "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
+            "id": 821, 
+            "change_party_remark": "\u05e9\u05d9\u05de\u05d5 \u05dc\u05d1 \u05e9\u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05d7''\u05db\u05d9\u05dd \u05e9\u05e2\u05d1\u05e8\u05d5 \u05d1\u05d9\u05df \u05de\u05e4\u05dc\u05d2\u05d5\u05ea \u05de\u05d1\u05d5\u05e1\u05e1\u05d9\u05dd \u05e2\u05dc \u05db\u05d4\u05d5\u05e0\u05ea\u05dd \u05d1\u05d0\u05d5\u05e4\u05d5\u05d6\u05d9\u05e6\u05d9\u05d4."
+        }, 
+        {
+            "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
+            "id": 848, 
+            "change_party_remark": "\u05e9\u05d9\u05de\u05d5 \u05dc\u05d1 \u05e9\u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05d7''\u05db\u05d9\u05dd \u05e9\u05e2\u05d1\u05e8\u05d5 \u05d1\u05d9\u05df \u05de\u05e4\u05dc\u05d2\u05d5\u05ea \u05de\u05d1\u05d5\u05e1\u05e1\u05d9\u05dd \u05e2\u05dc \u05db\u05d4\u05d5\u05e0\u05ea\u05dd \u05d1\u05d0\u05d5\u05e4\u05d5\u05d6\u05d9\u05e6\u05d9\u05d4."
+        }, 
+        {
+            "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
+            "id": 850, 
+            "change_party_remark": "\u05e9\u05d9\u05de\u05d5 \u05dc\u05d1 \u05e9\u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05d7''\u05db\u05d9\u05dd \u05e9\u05e2\u05d1\u05e8\u05d5 \u05d1\u05d9\u05df \u05de\u05e4\u05dc\u05d2\u05d5\u05ea \u05de\u05d1\u05d5\u05e1\u05e1\u05d9\u05dd \u05e2\u05dc \u05db\u05d4\u05d5\u05e0\u05ea\u05dd \u05d1\u05de\u05e4\u05dc\u05d2\u05d4 \u05e9\u05d5\u05e0\u05d4."
+        }, 
+        {
+            "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
+            "id": 818, 
+            "change_party_remark": "\u05e9\u05d9\u05de\u05d5 \u05dc\u05d1 \u05e9\u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05d7''\u05db\u05d9\u05dd \u05e9\u05e2\u05d1\u05e8\u05d5 \u05d1\u05d9\u05df \u05de\u05e4\u05dc\u05d2\u05d5\u05ea \u05de\u05d1\u05d5\u05e1\u05e1\u05d9\u05dd \u05e2\u05dc \u05db\u05d4\u05d5\u05e0\u05ea\u05dd \u05d1\u05de\u05e4\u05dc\u05d2\u05d4 \u05e9\u05d5\u05e0\u05d4."
+        }, 
+        {
+            "participating": false, 
+            "id": 5
+        }, 
+        {
+            "participating": false, 
+            "id": 100
+        }, 
+        {
+            "participating": false, 
+            "id": 96
+        }, 
+        {
+            "participating": false, 
+            "id": 45
+        }, 
+        {
+            "participating": false, 
+            "id": 730
+        }, 
+        {
+            "participating": false, 
+            "id": 16
+        }, 
+        {
+            "participating": false, 
+            "id": 697
+        }, 
+        {
+            "participating": false, 
+            "id": 115
+        }, 
+        {
+            "participating": false, 
+            "id": 204
+        }, 
+        {
+            "participating": false, 
+            "id": 213
+        }, 
+        {
+            "participating": false, 
+            "id": 103
+        }, 
+        {
+            "id": 830, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "minister_work_plans": {
+                "2009": "http://www.vpmo.gov.il/About/workplans/Pages/workplan20099.aspx", 
+                "2010": "http://www.vpmo.gov.il/About/workplans/Pages/workplan2010.aspx", 
+                "2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_negevgalil.pdf", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
+            "id": 230
+        }, 
+        {
+            "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "minister_work_plans": {
+                "2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Pages/plans2009.aspx", 
+                "2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Pages/plans2010.aspx", 
+                "2011": "http://www.pmo.gov.il/IsraelGov/YearPlans/Pages/plans2011.aspx", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
+            "id": 90
+        }, 
+        {
+            "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "minister_work_plans": {
+                "2011": "http://www.news1.co.il/uploadFiles/717083156108857.pdf", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
+            "id": 725
+        }, 
+        {
+            "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "id": 723, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "minister_work_plans": {
+                "2011": "http://old.sviva.gov.il/Enviroment/Static/Binaries/ModulKvatzim/roham_haganat_hasviva_2011_1.pdf", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
+            "id": 734
+        }, 
+        {
+            "id": 88, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 828, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 768, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 14, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 212, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "minister_work_plans": {
+                "2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2009/Mof130109.ppt", 
+                "2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2010/otsar.ppt", 
+                "2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_otzar.pdf", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
+            "id": 695
+        }, 
+        {
+            "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "minister_work_plans": {
+                "2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_hasbara.pdf", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
+            "id": 1
+        }, 
+        {
+            "id": 826, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "minister_work_plans": {
+                "2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2009/transport220109.ppt", 
+                "2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2010/tayarut.ppt", 
+                "2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_tahbura.pdf", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
+            "id": 69
+        }, 
+        {
+            "id": 829, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "minister_work_plans": {
+                "2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_seniors.pdf", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
+            "id": 738
+        }, 
+        {
+            "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "minister_work_plans": {
+                "2009": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2009/mds180109.ppt", 
+                "2010": "http://www.pmo.gov.il/IsraelGov/YearPlans/Documents/2010/science.ppt", 
+                "2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_tarbut_sport.pdf", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
+            "id": 70
+        }, 
+        {
+            "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "id": 9, 
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "minister_work_plans": {
+                "2012": "http://www.miki.org.il/shipu/"
+            }
+        }, 
+        {
+            "id": 831, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 823, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "minister_remark": "\u05db\u05dc\u05d9 \u05d6\u05d4 \u05e0\u05d5\u05e2\u05d3 \u05dc\u05e0\u05ea\u05d7 \u05d3\u05e4\u05d5\u05e1\u05d9 \u05d4\u05e6\u05d1\u05e2\u05d4 \u05e9\u05dc \u05e0\u05d1\u05d7\u05e8\u05d9 \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8 \u05d5\u05dc\u05d0 \u05e4\u05e2\u05d9\u05dc\u05d5\u05ea \u05d1\u05d0\u05e4\u05d9\u05e7\u05d9 \u05d4\u05e9\u05e4\u05e2\u05d4 \u05d0\u05d7\u05e8\u05d9\u05dd.", 
+            "district": "\u05d0\u05e8\u05e6\u05d9", 
+            "minister_work_plans": {
+                "2009": "http://www.vpmo.gov.il/About/workplans/Pages/workplan20099.aspx", 
+                "2010": "http://www.vpmo.gov.il/About/workplans/Pages/workplan2010.aspx", 
+                "2011": "http://www.pmo.gov.il/BranchesAndUnits/direcgeneral/Documents/yearplan_negevgalil.pdf", 
+                "2012": "http://plans.gov.il/Plan2012/Documents/2012plans.pdf"
+            }, 
+            "id": 122
+        }, 
+        {
+            "id": 1, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 825, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
+        }, 
+        {
+            "id": 114, 
+            "district": "\u05d0\u05e8\u05e6\u05d9"
         }
     ]
 }
