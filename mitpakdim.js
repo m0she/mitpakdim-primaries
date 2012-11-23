@@ -602,6 +602,18 @@
 
     MemberList.prototype.sync = multiSync;
 
+    MemberList.prototype.comparator = function(src, dst) {
+      var is_placeholder, last_name;
+      is_placeholder = Number(src.get('is_placeholder')) - Number(dst.get('is_placeholder'));
+      if (is_placeholder !== 0) {
+        return is_placeholder;
+      }
+      last_name = function(agenda) {
+        return agenda.get('name').split(/\s+/).pop();
+      };
+      return last_name(src).localeCompare(last_name(dst));
+    };
+
     MemberList.prototype.parse = function(data) {
       var _this = this;
       return _.filter(MemberList.__super__.parse.call(this, data), function(obj) {

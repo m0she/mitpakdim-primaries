@@ -313,6 +313,14 @@ class root.MemberList extends root.JSONPCollection
     }]
     sync: multiSync
 
+    comparator: (src, dst) ->
+        is_placeholder = Number(src.get 'is_placeholder') - Number(dst.get 'is_placeholder')
+        if is_placeholder != 0
+            return is_placeholder
+        last_name = (agenda) ->
+            agenda.get('name').split(/\s+/).pop()
+        last_name(src).localeCompare(last_name(dst))
+
     parse: (data) ->
         _.filter super(data), (obj) =>
             obj.participating ? true
