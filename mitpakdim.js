@@ -298,7 +298,8 @@
     Candidate.prototype.defaults = {
       selected: false,
       score: 'N/A',
-      participating: true
+      participating: true,
+      is_placeholder: false
     };
 
     Candidate.prototype.parseLinks = function(data) {

@@ -178,6 +178,7 @@ class root.Candidate extends Backbone.Model
         selected : false
         score : 'N/A'
         participating : true
+        is_placeholder : false
 
     parseLinks : (data) ->
         if data.links and _.isArray data.links

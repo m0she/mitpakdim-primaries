@@ -427,6 +427,9 @@ body {
     padding : 5px 0 5px 0;
     position : relative;
 }
+.candidate_instance .placeholder {
+    background-color: #aaa;
+}
 .candidate_instance .content {
     min-height : 60px;
 }
