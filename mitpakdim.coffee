@@ -301,7 +301,16 @@ class root.AgendaList extends root.JSONPCollection
             weights[agenda.id] = agenda.get("uservalue")
         weights
 
-class root.MemberList extends root.JSONPCollection
+class root.CandidatesList extends root.JSONPCollection
+    comparator: (src, dst) ->
+        is_placeholder = Number(src.get 'is_placeholder') - Number(dst.get 'is_placeholder')
+        if is_placeholder != 0
+            return is_placeholder
+        last_name = (agenda) ->
+            agenda.get('name').split(/\s+/).pop()
+        last_name(src).localeCompare(last_name(dst))
+
+class root.MemberList extends root.CandidatesList
     model: root.Member
     multiSync: [{
         url: "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name,links"
@@ -312,14 +321,6 @@ class root.MemberList extends root.JSONPCollection
         sync: root.JSONPCachableSync('members_extra')
     }]
     sync: multiSync
-
-    comparator: (src, dst) ->
-        is_placeholder = Number(src.get 'is_placeholder') - Number(dst.get 'is_placeholder')
-        if is_placeholder != 0
-            return is_placeholder
-        last_name = (agenda) ->
-            agenda.get('name').split(/\s+/).pop()
-        last_name(src).localeCompare(last_name(dst))
 
     parse: (data) ->
         _.filter super(data), (obj) =>
@@ -350,7 +351,7 @@ class root.MemberList extends root.JSONPCollection
                 _.each resp.objects, (obj, index) =>
                     @get(ids[index]).set agendas: agendas_to_hashmap(obj.agendas), silent: true
 
-class root.NewbiesList extends root.JSONPCollection
+class root.NewbiesList extends root.CandidatesList
     model: root.Newbie
     syncOptions:
         disable_repo: window.mit.combined_newbies

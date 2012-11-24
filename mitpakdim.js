@@ -579,6 +579,30 @@
 
   })(root.JSONPCollection);
 
+  root.CandidatesList = (function(_super) {
+
+    __extends(CandidatesList, _super);
+
+    function CandidatesList() {
+      return CandidatesList.__super__.constructor.apply(this, arguments);
+    }
+
+    CandidatesList.prototype.comparator = function(src, dst) {
+      var is_placeholder, last_name;
+      is_placeholder = Number(src.get('is_placeholder')) - Number(dst.get('is_placeholder'));
+      if (is_placeholder !== 0) {
+        return is_placeholder;
+      }
+      last_name = function(agenda) {
+        return agenda.get('name').split(/\s+/).pop();
+      };
+      return last_name(src).localeCompare(last_name(dst));
+    };
+
+    return CandidatesList;
+
+  })(root.JSONPCollection);
+
   root.MemberList = (function(_super) {
 
     __extends(MemberList, _super);
@@ -601,18 +625,6 @@
     ];
 
     MemberList.prototype.sync = multiSync;
-
-    MemberList.prototype.comparator = function(src, dst) {
-      var is_placeholder, last_name;
-      is_placeholder = Number(src.get('is_placeholder')) - Number(dst.get('is_placeholder'));
-      if (is_placeholder !== 0) {
-        return is_placeholder;
-      }
-      last_name = function(agenda) {
-        return agenda.get('name').split(/\s+/).pop();
-      };
-      return last_name(src).localeCompare(last_name(dst));
-    };
 
     MemberList.prototype.parse = function(data) {
       var _this = this;
@@ -666,7 +678,7 @@
 
     return MemberList;
 
-  })(root.JSONPCollection);
+  })(root.CandidatesList);
 
   root.NewbiesList = (function(_super) {
 
@@ -690,7 +702,7 @@
 
     return NewbiesList;
 
-  })(root.JSONPCollection);
+  })(root.CandidatesList);
 
   root.RecommendationList = (function(_super) {
 
