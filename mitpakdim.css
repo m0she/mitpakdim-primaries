@@ -428,7 +428,8 @@ body {
     position : relative;
 }
 .candidate_instance .placeholder {
-    background-color: #aaa;
+    opacity : 0.3;
+    filter : alpha(opacity=30);
 }
 .candidate_instance .content {
     min-height : 60px;
