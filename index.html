@@ -126,9 +126,10 @@
                             <div class="print"></div>
                         </div>
                         <div class="members_container"><div class="title">סדר המתמודדים<strong> המכהנים </strong>לפי בחירותך</div><div class="members"></div></div
-                        ><div class="newbies_container"><div class="title">סדר המתמודדים<strong> החדשים </strong>לפי בחירותך</div><div class="newbies"></div><div class="title" ><br>מופיע ברשימה רק מי <strong>שבחר</strong> להכניס את הנתונים שלו על ידי הרשמה לכלי
+                        ><div class="newbies_container"><div class="title">סדר המתמודדים<strong> החדשים </strong>לפי בחירותך</div><div class="newbies"></div><div class="title" ><br>המתמודדים המופיעים בראש הרשימה הם אלה <strong>שבחרו</strong> להכניס את הנתונים שלהם על ידי הרשמה לכלי
                         בעזרת שליחת דוא"ל לכתובת:
-                        <a href="mailto:primaries@mitpakdim.co.il?Subject=בקשה להרשמה למדחכ">primaries@mitpakdim.co.il</a>
+                        <a href="mailto:primaries@mitpakdim.co.il?Subject=בקשה להרשמה למדחכ">primaries@mitpakdim.co.il</a><br/>
+                        יתר המתמודדים ברשימה זו, המופיעים באפור, לא נרשמו לכלי ואינם מדורגים לפי בחירותך.
                         </div></div>
                         <div class="social_bar bottom">
                             <div class="vertical_aligner"></div>
@@ -151,10 +152,10 @@
                     print("+".repeat(_.size(recommendation_positive)));
                     print("-".repeat(_.size(recommendation_negative)));
                     %><span class="name"><%= name %></span>
-                    <div class="score<% if (score > 0) { %> positive<% } %>"><%= simplified_score %></div>
+                    <div class="score<% if (score > 0) { %> positive<% } %>"><%if (!is_placeholder) {%><%= simplified_score %><%}%></div>
                     <div class="links">
                         <% if (typeof facebook_link_url != 'undefined') { %><a class="facebook" href="<%= facebook_link_url %>" target="_blank"><div class="icon"></div>לדף הפייסבוק</a><% } %>
-                        <% if (typeof resume_link_url != 'undefined') { %><a class="resume" href="<%= resume_link_url %>" target="_blank"><div class="icon"></div>קורות חיים</a><% } %>
+                        <% if (typeof resume_link_url != 'undefined' && !is_placeholder) { %><a class="resume" href="<%= resume_link_url %>" target="_blank"><div class="icon"></div>קורות חיים</a><% } %>
                         <% if (typeof oknesset_link_url != 'undefined') { %><a class="oknesset" href="<%= oknesset_link_url %>" target="_blank"><div class="icon"></div>הח"כ <strong>בכנסת פתוחה</strong></a><% } %>
                     </div>
                     <div class="role_description"><% if (typeof current_role_descriptions != 'undefined') { %><%= current_role_descriptions %><% } %></div>
