@@ -1457,7 +1457,9 @@
       },
       'click .print': function(event) {
         ga.event('print', "party_" + root.global.party.id);
-        return window.print();
+        $('.page_top_bar').add('.agendas_container').add('.main_top').hide();
+        window.print();
+        return $('.page_top_bar').add('.agendas_container').add('.main_top').show();
       },
       'click input:button#show_weights': function(event) {
         var instructions;
