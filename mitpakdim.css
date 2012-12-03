@@ -365,13 +365,13 @@ body {
     text-align : center;
 }
 
-.candidates_container {
+.results_container {
     width : 500px;
     display : inline-block;
     margin-right : 29px;
     vertical-align : top;
 }
-.candidates_container .lists_wrapper {
+.results_container .lists_wrapper {
     border-color : #03527e;
     border-width : 1px;
     border-style : solid;
@@ -389,7 +389,7 @@ body {
     bottom : 0;
     width : 50%;
 }
-.candidates_container .lists_wrapper > * {
+.results_container .lists_wrapper > * {
     white-space : normal;
 }
 .members_container .title,

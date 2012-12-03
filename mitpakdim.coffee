@@ -173,6 +173,22 @@ class root.Agenda extends Backbone.Model
     defaults:
         uservalue: 0
 
+class root.Party extends Backbone.Model
+    defaults:
+        score : 'N/A'
+        selected: false
+    getAgendas: ->
+        ret = {}
+        name = @get 'name'
+        root.lists.agendas.each (agenda) ->
+            matching_party = _.filter agenda.get('parties'), (item) ->
+                item.name == name
+            if matching_party.length == 1
+                ret[agenda.id] = matching_party[0].score
+            else
+                console.log "No party #{name} in agenda #{agenda.get('name')}"
+        ret
+
 class root.Candidate extends Backbone.Model
     defaults :
         score : 'N/A'
@@ -275,7 +291,7 @@ class root.JSONPCollection extends root.PromisedCollection
         return response.objects
 
 class root.PartyList extends root.JSONPCollection
-    model: root.MiscModel
+    model: root.Party
     multiSync: [{
         url: "http://www.oknesset.org/api/v2/party/"
         repo: window.mit.party
@@ -285,14 +301,17 @@ class root.PartyList extends root.JSONPCollection
         sync: root.JSONPCachableSync('parties_extra')
     }]
     sync: multiSync
+    initialize: ->
+        super arguments...
+        @agendas_fetching = $.Deferred().resolve()
 
 class root.AgendaList extends root.JSONPCollection
     model: root.Agenda
-    url: "http://www.oknesset.org/api/v2/agenda/?extra_fields=num_followers,image"
+    url: "http://www.oknesset.org/api/v2/agenda/?extra_fields=num_followers,image,parties"
     comparator: (agenda) ->
         -agenda.get 'num_followers'
     syncOptions:
-        repo: window.mit.agenda
+        xxrepo: window.mit.agenda
         sync: root.JSONPCachableSync('agendas')
 
     resetWeights: (weights) ->
@@ -417,6 +436,10 @@ class root.CandidateView extends root.ListViewItem
         super arguments...
         @model.trigger "select", @model
 
+class root.PartyCandidateView extends root.CandidateView
+    get_template: ->
+        $("#party_candidate_template").html()
+
 class root.ListView extends root.TemplateView
     initialize: ->
         super(arguments...)
@@ -476,7 +499,8 @@ class root.DropdownContainer extends root.ListView
 class root.CurrentPartyView extends Backbone.View
     el: ".current_party"
     render: =>
-        @$('.current_party_logo_back').html "<img class='current_party_logo' src='#{root.global.party.get('picture_url')}'/>"
+        if root.global.party
+            @$('.current_party_logo_back').html "<img class='current_party_logo' src='#{root.global.party.get('picture_url')}'/>"
 
 class root.CandidatesMainView extends Backbone.View
     el: ".candidates_container"
@@ -502,12 +526,13 @@ class root.CandidatesMainView extends Backbone.View
     propagate: =>
         @trigger arguments...
 
-root.CandidatesMainView.create_delegation = (func_name) ->
+create_delegation = (func_name) ->
     delegate = ->
         @membersView[func_name](arguments...)
         @newbiesView[func_name](arguments...)
     @::[func_name] = delegate
 
+root.CandidatesMainView.create_delegation = create_delegation
 root.CandidatesMainView.create_delegation 'calculate'
 root.CandidatesMainView.create_delegation 'filterChange'
 
@@ -525,6 +550,8 @@ class root.PartyFilteredListView extends root.ListView
 
     partyChangeFilter: @::filterByParty
     partyChange: (party) =>
+        if not party?
+            return
         @collection.reset @partyChangeFilter party
 
 class root.CandidateListView extends root.PartyFilteredListView
@@ -533,6 +560,8 @@ class root.CandidateListView extends root.PartyFilteredListView
 
     partyChange: (party) =>
         super(arguments...)
+        if not party?
+            return
         @collection.fetchAgendas()
         @calculate()
 
@@ -563,6 +592,17 @@ class root.CandidateListView extends root.PartyFilteredListView
                 #console.log "agenda: ", (weights[id] or 0), score, weight_sum, (weights[id] or 0) * score / weight_sum
                 memo += (weights[id] or 0) * score / weight_sum
             , 0
+
+class root.PartyCandidatesView extends root.CandidateListView
+    el: ".party_candidates_container .parties"
+    options:
+        itemView: root.PartyCandidateView
+
+    # disable partyChange stuff
+    initialize: ->
+        super arguments...
+    partyChange: (party) =>
+        @collection.reset @unfilteredCollection.models
 
 class root.AgendaListView extends root.ListView
     el: '.agendas'
@@ -680,7 +720,7 @@ class root.EntranceView extends Backbone.View
     el: '.entrance_page'
     initialize: =>
         @partyListView = new root.DropdownContainer
-            el: '.parties'
+            el: '.parties_choose'
             collection: root.lists.parties
             autofetch: false
         @partyListView.on 'change', (model) =>
@@ -729,6 +769,9 @@ class root.AppView extends Backbone.View
         @candidatesView = new root.CandidatesMainView
             members: root.lists.members
             newbies: root.lists.newbies
+        @partyCandidatesView = new root.PartyCandidatesView
+            collection: root.lists.parties
+            autofetch: false
 
         @recommendations = new root.RecommendationList
         @recommendationsView = new root.RecommendationsView
@@ -737,7 +780,7 @@ class root.AppView extends Backbone.View
             newbies: root.lists.newbies
 
         root.lists.agendas.on 'change:uservalue', _.debounce @calculate, 500
-        @candidates = @multiSelectedSetup([root.lists.members, root.lists.newbies])
+        @candidates = @multiSelectedSetup([root.lists.members, root.lists.newbies, root.lists.parties])
         @candidates.on 'selected_change', @updateSelectedCandidate
 
     multiSelectedSetup: (collections) ->
@@ -778,7 +821,7 @@ class root.AppView extends Backbone.View
             window.print()
             $('.page_top_bar').add('.agendas_container').add('.main_top').show()
         'click input:button#show_weights': (event) ->
-            instructions = "\u05DC\u05D4\u05E2\u05EA\u05E7\u05D4\u0020\u05DC\u05D7\u05E5\u0020\u05E2\u05DC\u0020\u05E6\u05D9\u05E8\u05D5\u05E3\u0020\u05D4\u05DE\u05E7\u05E9\u05D9\u05DD\u000A\u0043\u0074\u0072\u006C\u002B\u0043"
+            instructions = "להעתקה לחץ על צירוף המקשים\nCtrl+C"
             window.prompt instructions, encode_weights root.lists.agendas.getWeights()
         'click #change_party': (event) ->
             @candidates.trigger 'select', undefined, "REPLACE_COLLECTION"
@@ -788,9 +831,15 @@ class root.AppView extends Backbone.View
         root.lists.members.getSelected() or root.lists.newbies.getSelected()
 
     calculate: (agenda) =>
-        @candidatesView.calculate()
+        if root.router.mode == root.router.MODE_PARTIES
+            @partyCandidatesView.calculate()
+            event_category = 'change'
+        else
+            @candidatesView.calculate()
+            event_category = 'change_party_' + root.global.party.id
+
         ga.event 'weight',
-            'change_party_' + root.global.party.id,
+            event_category,
             'agenda_' + agenda.id, agenda.get('uservalue')
 
     updateSelectedCandidate : (collection, options) =>
@@ -799,6 +848,10 @@ class root.AppView extends Backbone.View
             return
 
         @agendaListView.showMarkersForCandidate options.new_selected
+
+        if options.new_selected instanceof root.Party
+            ga.event 'candidates', "select", "party_#{options.new_selected.id}"
+            return
         type = if options.new_selected instanceof root.Member then 'member' else 'newbie'
         ga.event 'candidates',
             "select_party_#{root.global.party.id}",
@@ -806,20 +859,35 @@ class root.AppView extends Backbone.View
 
 ############### ROUTERS ##############
 class root.Router extends Backbone.Router
+    MODE_ENTRANCE: 1
+    MODE_MEMBERS: 2
+    MODE_PARTIES: 3
+
     routes:
         '': 'entrance'
-        ':party': 'party'
-        ':party/:district': 'party'
-        ':party/:district/:weights': 'party'
-        ':party//:weights': 'partyNoDistrict'
+        'parties': 'parties'
+        ':party': 'byParty'
+        ':party/:district': 'byParty'
+        ':party/:district/:weights': 'byParty'
+        ':party//:weights': 'byPartyNoDistrict'
 
     entrance: ->
         console.log 'entrance'
-        $('.entrance_page').show()
-        $('.party_page').hide()
+        @setMode @MODE_ENTRANCE
 
-    partyNoDistrict: (party_id, weights) -> @party(party_id, undefined, weights)
-    party: (party_id, district_id, weights) ->
+    setMode: (mode) ->
+        $('.entrance_page').toggle mode==@MODE_ENTRANCE
+        $('.party_page').toggle mode!=@MODE_ENTRANCE
+        $('.party_candidates_container').toggle mode==@MODE_PARTIES
+        $('.candidates_container').toggle mode==@MODE_MEMBERS
+        @mode = mode
+
+    parties: ->
+        root.global.trigger 'change_party', undefined
+        @setMode @MODE_PARTIES
+
+    byPartyNoDistrict: (party_id, weights) -> @party(party_id, undefined, weights)
+    byParty: (party_id, district_id, weights) ->
         console.log 'party', arguments
         model = root.lists.parties.where(id: Number(party_id))[0]
         if not model
@@ -833,8 +901,8 @@ class root.Router extends Backbone.Router
         if weights = parse_weights(weights)
             root.lists.agendas.resetWeights weights
             root.router.navigate party_id
-        $('.party_page').show()
-        $('.entrance_page').hide()
+
+        @setMode @MODE_MEMBERS
 
 ############### INIT ##############
 
@@ -866,9 +934,10 @@ $ ->
         setTimeout ->
             window.location.reload()
         , 6*1000
-    FB.init
-        appId: 362298483856854
-    FB.Event.subscribe 'message.send', (targetUrl) ->
-        ga.social 'facebook', 'send', targetUrl
-    FB.XFBML.parse()
+    if window.location.protocol != "file:"
+        FB.init
+            appId: 362298483856854
+        FB.Event.subscribe 'message.send', (targetUrl) ->
+            ga.social 'facebook', 'send', targetUrl
+        FB.XFBML.parse()
     return

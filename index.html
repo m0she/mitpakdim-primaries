@@ -87,7 +87,7 @@
                     בסיום השימוש בכלי תוכל/י להפיק דף/לשתף בפייס ובו כל הפרטים הדרושים לך על מנת להגיע לקלפי ולהצביע לפי השקפותיך.
                   <br>בעצם המשך השימוש בכלי הנך מצהיר על קבלת תנאי השימוש כמפורט <a class="oknesset" href="legal.html" target="_blank">כאן</a>.
  </p>
-                <div class="parties_container">לשימוש בכלי בחר את המפלגה אליה התפקדת: <select class="parties"></select></div>
+                <div class="parties_container">לשימוש בכלי בחר את המפלגה אליה התפקדת: <select class="parties_choose"></select></div>
                 <div class="districts_container">בחר את מחוז הבחירה שלך (אם קיים): <select class="districts"></select></div>
                 <div class="party_selected_wrapper">
                     <div id="party_selected">בהצלחה בבחירות, לחץ כאן להמשך!</div>
@@ -109,48 +109,59 @@
                 <div class="agendas_container">
                     <div class="agendas"></div>
                 </div>
-                <div class="candidates_container">
-                    <div class="current_party">
-                        <div class="current_party_logo_back"></div>
-                        <div id="change_party">החלף מפלגה</div>
-                    </div>
-                    <div class="lists_wrapper">
-                        <div class="left_background"></div>
-                        <div class="social_bar top">
-                            <div class="vertical_aligner"></div>
-                            <div class="caption">שתף את הרשימה שלך:</div>
-                            <div class="fb_share"></div>
-                            <div class="tweet_share"></div>
-                            <div class="separator"></div>
-                            <div class="caption">הדפס:</div>
-                            <div class="print"></div>
+                <div class="results_container">
+                    <div class="party_candidates_container">
+                        <div class="lists_wrapper">
+                            <div class="title">סדר המפלגות לפי בחירותך</div><div class="parties"></div>
                         </div>
-                        <div class="members_container"><div class="title">סדר המתמודדים<strong> המכהנים </strong>לפי בחירותך</div><div class="members"></div></div
-                        ><div class="newbies_container"><div class="title">סדר המתמודדים<strong> החדשים </strong>לפי בחירותך</div><div class="newbies"></div><div class="title" ><br>המתמודדים המופיעים בראש הרשימה הם אלה <strong>שבחרו</strong> להכניס את הנתונים שלהם על ידי הרשמה לכלי
-                        בעזרת שליחת דוא"ל לכתובת:
-                        <a href="mailto:primaries@mitpakdim.co.il?Subject=בקשה להרשמה למדחכ">primaries@mitpakdim.co.il</a><br/>
-                        יתר המתמודדים ברשימה זו, המופיעים באפור, לא נרשמו לכלי ואינם מדורגים לפי בחירותך.
-                        </div></div>
-                        <div class="social_bar bottom">
-                            <div class="vertical_aligner"></div>
-                            <div class="caption">שתף את הרשימה שלך:</div>
-                            <div class="fb_share"></div>
-                            <div class="tweet_share"></div>
-                            <div class="separator"></div>
-                            <div class="caption">הדפס:</div>
-                            <div class="print"></div>
+                    </div>
+                    <div class="candidates_container">
+                        <div class="current_party">
+                            <div class="current_party_logo_back"></div>
+                            <div id="change_party">החלף מפלגה</div>
+                        </div>
+                        <div class="lists_wrapper">
+                            <div class="left_background"></div>
+                            <div class="social_bar top">
+                                <div class="vertical_aligner"></div>
+                                <div class="caption">שתף את הרשימה שלך:</div>
+                                <div class="fb_share"></div>
+                                <div class="tweet_share"></div>
+                                <div class="separator"></div>
+                                <div class="caption">הדפס:</div>
+                                <div class="print"></div>
+                            </div>
+                            <div class="members_container"><div class="title">סדר המתמודדים<strong> המכהנים </strong>לפי בחירותך</div><div class="members"></div></div
+                            ><div class="newbies_container"><div class="title">סדר המתמודדים<strong> החדשים </strong>לפי בחירותך</div><div class="newbies"></div><div class="title" ><br>המתמודדים המופיעים בראש הרשימה הם אלה <strong>שבחרו</strong> להכניס את הנתונים שלהם על ידי הרשמה לכלי
+                            בעזרת שליחת דוא"ל לכתובת:
+                            <a href="mailto:primaries@mitpakdim.co.il?Subject=בקשה להרשמה למדחכ">primaries@mitpakdim.co.il</a><br/>
+                            יתר המתמודדים ברשימה זו, המופיעים באפור, לא נרשמו לכלי ואינם מדורגים לפי בחירותך.
+                            </div></div>
+                            <div class="social_bar bottom">
+                                <div class="vertical_aligner"></div>
+                                <div class="caption">שתף את הרשימה שלך:</div>
+                                <div class="fb_share"></div>
+                                <div class="tweet_share"></div>
+                                <div class="separator"></div>
+                                <div class="caption">הדפס:</div>
+                                <div class="print"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <script type="text/template" id='candidate_template'>
-            <div class="content<% if (is_placeholder) { %> placeholder<% } %>" <% if (is_placeholder) { %>title="מועמד זה לא הכניס נתונים לכלי ולכן הוא אינו מדורג"<% } else { %>title="לחץ על המתמודד, ותראה מה הן עמדותיו"<% } %>>
+            <% if (is_placeholder) { %>
+              <div class="content placeholder" title="מועמד זה לא הכניס נתונים לכלי ולכן הוא אינו מדורג">
+            <% } else { %>
+              <div class="content" title="לחץ על המתמודד, ותראה מה הן עמדותיו">
+            <% } %>
                 <div class="image"><% if (typeof img_url != 'undefined') { %><img src="<%= img_url %>" /><% } %></div>
-                <div class="info"  >
-                <%
-                    print("+".repeat(_.size(recommendation_positive)));
-                    print("-".repeat(_.size(recommendation_negative)));
+                <div class="info">
+                    <%
+                        print("+".repeat(_.size(recommendation_positive)));
+                        print("-".repeat(_.size(recommendation_negative)));
                     %><span class="name"><%= name %></span>
                     <div class="score<% if (score > 0) { %> positive<% } %>"><%if (!is_placeholder) {%><%= simplified_score %><%}%></div>
                     <div class="links">
@@ -174,6 +185,15 @@
                             <div class="remark_icon minister_remark" title="<%= minister_remark %>"></div>
                         <% } %>
                     </div>
+                </div>
+            </div>
+        </script>
+        <script type="text/template" id='party_candidate_template'>
+            <div class="content" title="לחץ על המפלגה, ותראה מה הן עמדותיה">
+                <div class="image"><% if (typeof picture_url != 'undefined') { %><img src="<%= picture_url %>" /><% } %></div>
+                <div class="info">
+                    <span class="name"><%= name %></span>
+                    <div class="score<% if (score > 0) { %> positive<% } %>"><%= simplified_score %></div>
                 </div>
             </div>
         </script>

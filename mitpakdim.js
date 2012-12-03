@@ -296,7 +296,26 @@
     }
 
     Party.prototype.defaults = {
+      score: 'N/A',
       selected: false
+    };
+
+    Party.prototype.getAgendas = function() {
+      var name, ret;
+      ret = {};
+      name = this.get('name');
+      root.lists.agendas.each(function(agenda) {
+        var matching_party;
+        matching_party = _.filter(agenda.get('parties'), function(item) {
+          return item.name === name;
+        });
+        if (matching_party.length === 1) {
+          return ret[agenda.id] = matching_party[0].score;
+        } else {
+          return console.log("No party " + name + " in agenda " + (agenda.get('name')));
+        }
+      });
+      return ret;
     };
 
     return Party;
@@ -549,6 +568,11 @@
 
     PartyList.prototype.sync = multiSync;
 
+    PartyList.prototype.initialize = function() {
+      PartyList.__super__.initialize.apply(this, arguments);
+      return this.agendas_fetching = $.Deferred().resolve();
+    };
+
     return PartyList;
 
   })(root.JSONPCollection);
@@ -563,14 +587,14 @@
 
     AgendaList.prototype.model = root.Agenda;
 
-    AgendaList.prototype.url = "http://www.oknesset.org/api/v2/agenda/?extra_fields=num_followers,image";
+    AgendaList.prototype.url = "http://www.oknesset.org/api/v2/agenda/?extra_fields=num_followers,image,parties";
 
     AgendaList.prototype.comparator = function(agenda) {
       return -agenda.get('num_followers');
     };
 
     AgendaList.prototype.syncOptions = {
-      repo: window.mit.agenda,
+      xxrepo: window.mit.agenda,
       sync: root.JSONPCachableSync('agendas')
     };
 
@@ -1010,7 +1034,9 @@
     CurrentPartyView.prototype.el = ".current_party";
 
     CurrentPartyView.prototype.render = function() {
-      return this.$('.current_party_logo_back').html("<img class='current_party_logo' src='" + (root.global.party.get('picture_url')) + "'/>");
+      if (root.global.party) {
+        return this.$('.current_party_logo_back').html("<img class='current_party_logo' src='" + (root.global.party.get('picture_url')) + "'/>");
+      }
     };
 
     return CurrentPartyView;
@@ -1101,6 +1127,9 @@
     PartyFilteredListView.prototype.partyChangeFilter = PartyFilteredListView.prototype.filterByParty;
 
     PartyFilteredListView.prototype.partyChange = function(party) {
+      if (!(party != null)) {
+        return;
+      }
       return this.collection.reset(this.partyChangeFilter(party));
     };
 
@@ -1123,6 +1152,9 @@
 
     CandidateListView.prototype.partyChange = function(party) {
       CandidateListView.__super__.partyChange.apply(this, arguments);
+      if (!(party != null)) {
+        return;
+      }
       this.collection.fetchAgendas();
       return this.calculate();
     };
@@ -1187,11 +1219,12 @@
     };
 
     PartyCandidatesView.prototype.initialize = function() {
-      PartyCandidatesView.__super__.initialize.apply(this, arguments);
-      return this.setCollection(this.unfilteredCollection);
+      return PartyCandidatesView.__super__.initialize.apply(this, arguments);
     };
 
-    PartyCandidatesView.prototype.partyChange = function(party) {};
+    PartyCandidatesView.prototype.partyChange = function(party) {
+      return this.collection.reset(this.unfilteredCollection.models);
+    };
 
     return PartyCandidatesView;
 
@@ -1517,7 +1550,7 @@
         newbies: root.lists.newbies
       });
       root.lists.agendas.on('change:uservalue', _.debounce(this.calculate, 500));
-      this.candidates = this.multiSelectedSetup([root.lists.members, root.lists.newbies]);
+      this.candidates = this.multiSelectedSetup([root.lists.members, root.lists.newbies, root.lists.parties]);
       return this.candidates.on('selected_change', this.updateSelectedCandidate);
     };
 
@@ -1609,8 +1642,15 @@
     };
 
     AppView.prototype.calculate = function(agenda) {
-      this.candidatesView.calculate();
-      return ga.event('weight', 'change_party_' + root.global.party.id, 'agenda_' + agenda.id, agenda.get('uservalue'));
+      var event_category;
+      if (root.router.mode === root.router.MODE_PARTIES) {
+        this.partyCandidatesView.calculate();
+        event_category = 'change';
+      } else {
+        this.candidatesView.calculate();
+        event_category = 'change_party_' + root.global.party.id;
+      }
+      return ga.event('weight', event_category, 'agenda_' + agenda.id, agenda.get('uservalue'));
     };
 
     AppView.prototype.updateSelectedCandidate = function(collection, options) {
@@ -1620,6 +1660,10 @@
         return;
       }
       this.agendaListView.showMarkersForCandidate(options.new_selected);
+      if (options.new_selected instanceof root.Party) {
+        ga.event('candidates', "select", "party_" + options.new_selected.id);
+        return;
+      }
       type = options.new_selected instanceof root.Member ? 'member' : 'newbie';
       return ga.event('candidates', "select_party_" + root.global.party.id, "" + type + "_" + options.new_selected.id);
     };
@@ -1660,10 +1704,12 @@
       $('.entrance_page').toggle(mode === this.MODE_ENTRANCE);
       $('.party_page').toggle(mode !== this.MODE_ENTRANCE);
       $('.party_candidates_container').toggle(mode === this.MODE_PARTIES);
-      return $('.candidates_container').toggle(mode === this.MODE_MEMBERS);
+      $('.candidates_container').toggle(mode === this.MODE_MEMBERS);
+      return this.mode = mode;
     };
 
     Router.prototype.parties = function() {
+      root.global.trigger('change_party', void 0);
       return this.setMode(this.MODE_PARTIES);
     };
 
@@ -1729,13 +1775,15 @@
         return window.location.reload();
       }, 6 * 1000);
     });
-    FB.init({
-      appId: 362298483856854
-    });
-    FB.Event.subscribe('message.send', function(targetUrl) {
-      return ga.social('facebook', 'send', targetUrl);
-    });
-    FB.XFBML.parse();
+    if (window.location.protocol !== "file:") {
+      FB.init({
+        appId: 362298483856854
+      });
+      FB.Event.subscribe('message.send', function(targetUrl) {
+        return ga.social('facebook', 'send', targetUrl);
+      });
+      FB.XFBML.parse();
+    }
   });
 
 }).call(this);
