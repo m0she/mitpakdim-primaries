@@ -175,7 +175,6 @@ class root.Agenda extends Backbone.Model
 
 class root.Candidate extends Backbone.Model
     defaults :
-        selected : false
         score : 'N/A'
         participating : true
         is_placeholder : false
@@ -231,21 +230,28 @@ class root.SelectableCollection extends Backbone.Collection
     default_attr_name = 'selected'
     initialize: ->
         super arguments...
-        @on 'select', (model, collection, options) =>
+        @on 'select', (new_model, collection, options) =>
             if collection == 'all'
                 collection = @
             if not collection
-                collection = model.collection
+                collection = new_model.collection
             if collection != @
                 return
 
             attr_name = options?.attr_name ? default_attr_name
             @selecteds ?= {}
-            old = @selecteds[attr_name]
-            @selecteds[attr_name] = model
-            if old
-                old.trigger 'deselected', old, @, attr_name:attr_name
-            model.trigger 'selected', model, @, attr_name:attr_name
+            old_model = @selecteds[attr_name]
+            @selecteds[attr_name] = new_model
+            info =
+                attr_name:attr_name,
+                new_selected:new_model
+            if old_model == new_model or options?.trigger == false
+                return
+            if old_model
+                old_model.trigger 'deselected', old_model, @, info
+            if new_model
+                new_model.trigger 'selected', new_model, @, info
+            @trigger 'selected_change', @, info
 
     getSelected: (attr_name) ->
         attr_name ?= default_attr_name
@@ -390,6 +396,8 @@ class root.CandidateView extends root.ListViewItem
     initialize: ->
         super(arguments...)
         @model.on 'change', @render
+        @model.on 'selected', @changeSelection
+        @model.on 'deselected', @changeSelection
     get_template: ->
         $("#candidate_template").html()
     digestData : (data) ->
@@ -402,11 +410,12 @@ class root.CandidateView extends root.ListViewItem
         data
     render : =>
         super()
-        @.$el.toggleClass "selected", @model.get "selected"
+    changeSelection: (model, collection, info) =>
+        @.$el.toggleClass "selected", info.new_selected == @model
         @
     onClick : ->
         super arguments...
-        @model.set selected : true
+        @model.trigger "select", @model
 
 class root.ListView extends root.TemplateView
     initialize: ->
@@ -619,8 +628,7 @@ class root.RecommendationsView extends root.PartyFilteredListView
 
     initialize: ->
         super arguments...
-        @collection.on 'selected', @applyChange, @
-        @collection.on 'deselected', @applyChange, @
+        @collection.on 'selected_change', @applyChange, @
 
     partyChangeFilter: (party) ->
         super(party).concat @unfilteredCollection.where party_name: undefined
@@ -729,8 +737,35 @@ class root.AppView extends Backbone.View
             newbies: root.lists.newbies
 
         root.lists.agendas.on 'change:uservalue', _.debounce @calculate, 500
-        root.lists.members.on "change:selected", @updateSelectedCandidate
-        root.lists.newbies.on "change:selected", @updateSelectedCandidate
+        @candidates = @multiSelectedSetup([root.lists.members, root.lists.newbies])
+        @candidates.on 'selected_change', @updateSelectedCandidate
+
+    multiSelectedSetup: (collections) ->
+        updateSelected = (changed_collection, options) ->
+            if not options.new_selected
+                return
+            for collection in collections
+                if collection != changed_collection
+                    collection.trigger 'select', undefined, collection
+        create_delegate = (object, func_names...) ->
+            _.each func_names, (func_name) ->
+                object[func_name] = (args...) ->
+                    collect = []
+                    for collection in collections
+                        new_args = _.map args, (item) ->
+                            if item == "REPLACE_COLLECTION" then collection else item
+                        collect.push collection[func_name].apply(collection, new_args)
+                    collect
+        create_delegate (delegator = {}), 'on', 'trigger'
+
+        delegator.getSelected = (args...) ->
+            for collection in collections
+                if selected = collection.getSelected()
+                    return selected
+            return undefined
+
+        delegator.on 'selected_change', updateSelected
+        delegator
 
     events:
         'click .fb_share': (event) ->
@@ -746,9 +781,11 @@ class root.AppView extends Backbone.View
             instructions = "\u05DC\u05D4\u05E2\u05EA\u05E7\u05D4\u0020\u05DC\u05D7\u05E5\u0020\u05E2\u05DC\u0020\u05E6\u05D9\u05E8\u05D5\u05E3\u0020\u05D4\u05DE\u05E7\u05E9\u05D9\u05DD\u000A\u0043\u0074\u0072\u006C\u002B\u0043"
             window.prompt instructions, encode_weights root.lists.agendas.getWeights()
         'click #change_party': (event) ->
-            if @selected_candidate
-                @selected_candidate.set 'selected', false
+            @candidates.trigger 'select', undefined, "REPLACE_COLLECTION"
             root.router.navigate '', trigger: true
+
+    getSelected: ->
+        root.lists.members.getSelected() or root.lists.newbies.getSelected()
 
     calculate: (agenda) =>
         @candidatesView.calculate()
@@ -756,20 +793,16 @@ class root.AppView extends Backbone.View
             'change_party_' + root.global.party.id,
             'agenda_' + agenda.id, agenda.get('uservalue')
 
-    updateSelectedCandidate : (candidate_model, selected_attr_value) =>
-        if not selected_attr_value
-            @selected_candidate = undefined
+    updateSelectedCandidate : (collection, options) =>
+        if not options.new_selected
             @agendaListView.clearMarkers()
             return
 
-        if @selected_candidate
-            @selected_candidate.set 'selected', false, trigger:false
-        @selected_candidate = candidate_model
-        @agendaListView.showMarkersForCandidate candidate_model
-        type = if candidate_model instanceof root.Member then 'member' else 'newbie'
+        @agendaListView.showMarkersForCandidate options.new_selected
+        type = if options.new_selected instanceof root.Member then 'member' else 'newbie'
         ga.event 'candidates',
             "select_party_#{root.global.party.id}",
-            "#{type}_#{candidate_model.id}"
+            "#{type}_#{options.new_selected.id}"
 
 ############### ROUTERS ##############
 class root.Router extends Backbone.Router
