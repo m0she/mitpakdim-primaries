@@ -229,6 +229,11 @@ class root.Newbie extends root.Candidate
             ret.agendas = parse_weights ret.agendas
         ret
 class root.PartyDeclaration extends root.Newbie
+    parse: (response, xhr) ->
+        ret = super arguments...
+        if party = root.lists.parties.where({ name: ret.name })[0]
+            ret = _.extend party.toJSON(), ret
+        ret
 
 class root.Recommendation extends Backbone.Model
     defaults:
@@ -377,7 +382,7 @@ class root.NewbiesList extends root.CandidatesList
     model: root.Newbie
     syncOptions:
         disable_repo: window.mit.combined_newbies
-    url: "http://www.mitpakdim.co.il/site/primaries/candidates/json.php"
+    url: "http://www.mitpakdim.co.il/site/primaries/candidates_new/json.php"
     fetchAgendas: ->
         @agendas_fetching = $.Deferred().resolve()
 

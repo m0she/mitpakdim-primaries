@@ -435,6 +435,17 @@
       return PartyDeclaration.__super__.constructor.apply(this, arguments);
     }
 
+    PartyDeclaration.prototype.parse = function(response, xhr) {
+      var party, ret;
+      ret = PartyDeclaration.__super__.parse.apply(this, arguments);
+      if (party = root.lists.parties.where({
+        name: ret.name
+      })[0]) {
+        ret = _.extend(party.toJSON(), ret);
+      }
+      return ret;
+    };
+
     return PartyDeclaration;
 
   })(root.Newbie);
@@ -760,7 +771,7 @@
       disable_repo: window.mit.combined_newbies
     };
 
-    NewbiesList.prototype.url = "http://www.mitpakdim.co.il/site/primaries/candidates/json.php";
+    NewbiesList.prototype.url = "http://www.mitpakdim.co.il/site/primaries/candidates_new/json.php";
 
     NewbiesList.prototype.fetchAgendas = function() {
       return this.agendas_fetching = $.Deferred().resolve();

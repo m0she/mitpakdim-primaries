@@ -3,11 +3,11 @@ window.mit.party_declarations_extra = {
     "objects": [
         {
             "disabled": true, 
-            "id": 2
+            "id": 666
         }, 
         {
-            "picture_url": "http://upload.wikimedia.org/wikipedia/commons/9/99/Likud_Logo.png", 
-            "id": 1035
+            "picture_url": "http://graph.facebook.com/AleYarokLiberal/picture?type=square", 
+            "id": 1022
         }
     ]
 }

@@ -1,12 +1,12 @@
 {
     "objects" : [
         {
-            "id": 2,
+            "id": 666,
             "disabled": true
         },
         {
-            "id": 1035,
-			"picture_url" : "http://upload.wikimedia.org/wikipedia/commons/9/99/Likud_Logo.png"
+            "id": 1022,
+			"picture_url" : "http://graph.facebook.com/AleYarokLiberal/picture?type=square"
         }
     ]
 }
