@@ -1,0 +1,13 @@
+if (!window.mit) window.mit = {};
+window.mit.party_declarations_extra = {
+    "objects": [
+        {
+            "disabled": true, 
+            "id": 2
+        }, 
+        {
+            "picture_url": "http://upload.wikimedia.org/wikipedia/commons/9/99/Likud_Logo.png", 
+            "id": 1035
+        }
+    ]
+}

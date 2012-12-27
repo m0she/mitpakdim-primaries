@@ -135,6 +135,15 @@ smartSync = (method, model, options) ->
         return promise
     return (options.sync or Backbone.sync)(method, model, options)
 
+extendArrayWithId = (dest, sources...) ->
+    for src in sources
+        for item in src
+            id = item.id
+            if dest_item = _.where(dest, id: id)[0]
+                _.extend dest_item, item
+            else
+                dest.push item
+
 multiSync = (method, model, options) ->
     multiSyncOptions = model?.multiSync or options?.multiSync
     requests = for multi_options in multiSyncOptions
@@ -143,15 +152,9 @@ multiSync = (method, model, options) ->
             error: undefined,
         )
     $.when(requests...).done (responses...) ->
-        extendArrayWithId = (dest, sources...) ->
-            for src in sources
-                for item in src
-                    id = item.id
-                    if dest_item = _.where(dest, id: id)[0]
-                        _.extend dest_item, item
-                    else
-                        dest.push item
-        extendArrayWithId (_.chain(responses).pluck(0).pluck('objects').value())...
+        parsed = for response, index in responses
+            (multiSyncOptions[index].parse or model.parse) response[0]
+        extendArrayWithId parsed...
 
         if _.isFunction options.success
             options.success responses[0]...
@@ -381,9 +384,20 @@ class root.NewbiesList extends root.CandidatesList
 class root.PartyDeclarationList extends root.NewbiesList
     model: root.PartyDeclaration 
     DECLARATION_PARTY_ID: "רשימת המפלגות"
-    parse: (data, xhr) ->
-        _.filter super(arguments...), (obj) =>
-            obj.party_name == @DECLARATION_PARTY_ID
+    multiSync: [{
+        url: root.NewbiesList::url
+        repo: root.NewbiesList::syncOptions.repo
+        sync: root.NewbiesList::syncOptions.sync
+    }, {
+        repo: window.mit.party_declarations_extra
+    }]
+    sync: multiSync
+    parse: (data, xhr) =>
+        ret = _.filter super(arguments...), (obj) =>
+            not obj.party_name? or obj.party_name == @DECLARATION_PARTY_ID
+        _.each ret, (obj) ->
+            obj.id = parseInt obj.id
+        ret
     initialize: ->
         super arguments...
         @agendas_fetching = $.Deferred().resolve()
