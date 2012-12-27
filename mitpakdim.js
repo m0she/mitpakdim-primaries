@@ -14,6 +14,12 @@
     };
   }
 
+  root.logfunc = function(name) {
+    return function() {
+      return console.log(name, this, arguments);
+    };
+  };
+
   String.prototype.repeat = function(num) {
     return new Array(num + 1).join(this);
   };
@@ -90,12 +96,6 @@
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       return _gaq.push(['_trackSocial'].concat(args));
     }
-  };
-
-  root.logfunc = function(name) {
-    return function() {
-      return console.log(name, this, arguments);
-    };
   };
 
   $.widget("mit.agendaSlider", $.extend({}, $.ui.slider.prototype, {

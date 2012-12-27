@@ -1,7 +1,3 @@
-root = window.mit ?= {}
-window.console ?=
-    log: ->
-
 ############### UTILITIES ##############
 
 String::repeat = ( num ) ->
@@ -52,9 +48,6 @@ ga =
         _gaq.push ['_trackEvent'].concat args
     social: (args...) ->
         _gaq.push ['_trackSocial'].concat args
-
-root.logfunc = (name) -> ->
-    console.log name, @, arguments
 
 ############### JQUERY UI EXTENSIONS ##############
 

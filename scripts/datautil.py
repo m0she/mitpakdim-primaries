@@ -3,7 +3,7 @@ import json, os, re, sys
 
 print 'args: ', sys.argv
 current_dir = os.getcwd()
-os.chdir(os.path.join(os.path.dirname(sys.argv[0]), 'data'))
+os.chdir(os.path.join(os.path.dirname(sys.argv[0]), '../data'))
 
 paths = dict(
     member = r'member.json',
