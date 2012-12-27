@@ -199,7 +199,7 @@ class root.Candidate extends Backbone.Model
             data.oknesset_link_url = "http://oknesset.org" + data.absolute_url
         data
 
-    parse : (data) ->
+    parse : (data, xhr) ->
         data = super(data)
         @parseLinks data
         data
@@ -220,11 +220,12 @@ class root.Candidate extends Backbone.Model
 
 class root.Member extends root.Candidate
 class root.Newbie extends root.Candidate
-    parse: (response) ->
+    parse: (response, xhr) ->
         ret = super arguments...
         if _.isString ret.agendas
             ret.agendas = parse_weights ret.agendas
         ret
+class root.PartyDeclaration extends root.Newbie
 
 class root.Recommendation extends Backbone.Model
     defaults:
@@ -280,7 +281,7 @@ class root.JSONPCollection extends root.PromisedCollection
     sync: smartSync
     initialize: ->
         super(arguments...)
-    parse: (response) ->
+    parse: (response, xhr) ->
         return response.objects
 
 class root.PartyList extends root.JSONPCollection
@@ -340,8 +341,8 @@ class root.MemberList extends root.CandidatesList
     }]
     sync: multiSync
 
-    parse: (data) ->
-        _.filter super(data), (obj) =>
+    parse: (data, xhr) ->
+        _.filter super(arguments...), (obj) ->
             obj.participating ? true
 
     fetchAgendas: ->
@@ -375,6 +376,16 @@ class root.NewbiesList extends root.CandidatesList
         disable_repo: window.mit.combined_newbies
     url: "http://www.mitpakdim.co.il/site/primaries/candidates/json.php"
     fetchAgendas: ->
+        @agendas_fetching = $.Deferred().resolve()
+
+class root.PartyDeclarationList extends root.NewbiesList
+    model: root.PartyDeclaration 
+    DECLARATION_PARTY_ID: "רשימת המפלגות"
+    parse: (data, xhr) ->
+        _.filter super(arguments...), (obj) =>
+            obj.party_name == @DECLARATION_PARTY_ID
+    initialize: ->
+        super arguments...
         @agendas_fetching = $.Deferred().resolve()
 
 class root.RecommendationList extends root.JSONPCollection
@@ -495,43 +506,64 @@ class root.CurrentPartyView extends Backbone.View
         if root.global.party
             @$('.current_party_logo_back').html "<img class='current_party_logo' src='#{root.global.party.get('picture_url')}'/>"
 
-class root.CandidatesMainView extends Backbone.View
-    el: ".candidates_container"
+class root.CandidatesMultiView extends Backbone.View
     initialize: ->
-        @currentPartyView = new root.CurrentPartyView
-        root.global.on 'change_party', =>
-            @currentPartyView.render()
-        #@filteringView = new root.FilterView
-        @membersView = new root.CandidateListView
-            el: ".members"
-            collection: @.options.members
-            autofetch: false
-        @newbiesView = new root.CandidateListView
-            el: ".newbies"
-            collection: @.options.newbies
-            autofetch: false
-
-        @membersView.on 'all', @propagate
-        @newbiesView.on 'all', @propagate
-        #@filteringView.on 'change', (filter) =>
-        #    @filterChange filter
+        for sublist in @sublists
+            sublist.on 'all', @propagate
 
     propagate: =>
         @trigger arguments...
 
 create_delegation = (func_name) ->
     delegate = ->
-        @membersView[func_name](arguments...)
-        @newbiesView[func_name](arguments...)
+        for sublist in @sublists
+            sublist[func_name](arguments...)
     @::[func_name] = delegate
 
-root.CandidatesMainView.create_delegation = create_delegation
-root.CandidatesMainView.create_delegation 'calculate'
-root.CandidatesMainView.create_delegation 'filterChange'
+root.CandidatesMultiView.create_delegation = create_delegation
+root.CandidatesMultiView.create_delegation 'calculate'
+root.CandidatesMultiView.create_delegation 'filterChange'
+
+class root.CandidatesMainView extends root.CandidatesMultiView
+    el: ".candidates_container"
+    initialize: ->
+        @sublists = [
+            new root.CandidateListView
+                el: ".members"
+                collection: @.options.members
+                autofetch: false
+            new root.CandidateListView
+                el: ".newbies"
+                collection: @.options.newbies
+                autofetch: false
+        ]
+
+        super arguments...
+        @currentPartyView = new root.CurrentPartyView
+        root.global.on 'change_party', =>
+            @currentPartyView.render()
+        #@filteringView = new root.FilterView
+        #@filteringView.on 'change', (filter) =>
+        #    @filterChange filter
+
+class root.PartyCandidatesView extends root.CandidatesMultiView
+    initialize: ->
+        @sublists = [
+            new root.PartyCandidatesListView
+                el: ".parties_activity"
+                collection: @.options.activity
+                autofetch: false
+            new root.PartyCandidatesListView
+                el: ".parties_declaration"
+                collection: @.options.declarations
+                autofetch: false
+        ]
+
+        super arguments...
 
 class root.PartyFilteredListView extends root.ListView
     initialize: ->
-        super(arguments...)
+        super arguments...
         @unfilteredCollection = @.collection
         @setCollection new @unfilteredCollection.constructor undefined,
             comparator: (candidate) ->
@@ -552,7 +584,7 @@ class root.CandidateListView extends root.PartyFilteredListView
         itemView: root.CandidateView
 
     partyChange: (party) =>
-        super(arguments...)
+        super arguments...
         if not party?
             return
         @collection.fetchAgendas()
@@ -569,6 +601,9 @@ class root.CandidateListView extends root.PartyFilteredListView
             @calculate_inner()
             @collection.sort()
 
+    getCandidateAgendas: (candidate) ->
+        candidate.getAgendas()
+
     calculate_inner: () ->
         weights = root.lists.agendas.getWeights()
         abs_sum = (arr) ->
@@ -581,12 +616,12 @@ class root.CandidateListView extends root.PartyFilteredListView
         console.log "Weights: ", weights, weight_sum
         @collection.each (candidate) =>
             #console.log "calc: ", candidate, candidate.get('name')
-            candidate.set 'score', _.reduce candidate.getAgendas(), (memo, score, id) ->
+            candidate.set 'score', _.reduce @getCandidateAgendas(candidate), (memo, score, id) ->
                 #console.log "agenda: ", (weights[id] or 0), score, weight_sum, (weights[id] or 0) * score / weight_sum
                 memo += (weights[id] or 0) * score / weight_sum
             , 0
 
-class root.PartyCandidatesView extends root.CandidateListView
+class root.PartyCandidatesListView extends root.CandidateListView
     el: ".party_candidates_container .parties"
     options:
         itemView: root.PartyCandidateView
@@ -763,8 +798,8 @@ class root.AppView extends Backbone.View
             members: root.lists.members
             newbies: root.lists.newbies
         @partyCandidatesView = new root.PartyCandidatesView
-            collection: root.lists.parties
-            autofetch: false
+            activity: root.lists.parties
+            declarations: root.lists.party_declarations
 
         @recommendations = new root.RecommendationList
         @recommendationsView = new root.RecommendationsView
@@ -773,7 +808,7 @@ class root.AppView extends Backbone.View
             newbies: root.lists.newbies
 
         root.lists.agendas.on 'change:uservalue', _.debounce @calculate, 500
-        @candidates = @multiSelectedSetup([root.lists.members, root.lists.newbies, root.lists.parties])
+        @candidates = @multiSelectedSetup([root.lists.members, root.lists.newbies, root.lists.parties, root.lists.party_declarations])
         @candidates.on 'selected_change', @updateSelectedCandidate
 
     multiSelectedSetup: (collections) ->
@@ -842,8 +877,11 @@ class root.AppView extends Backbone.View
 
         @agendaListView.showMarkersForCandidate options.new_selected
 
-        if options.new_selected instanceof root.Party
-            ga.event 'candidates', "select", "party_#{options.new_selected.id}"
+        is_party = options.new_selected instanceof root.Party
+        is_party_declaration = options.new_selected instanceof root.PartyDeclaration
+        if is_party or is_party_declaration
+            type = if is_party then "activity" else "declaration"
+            ga.event 'candidates', "select", "party_#{type}_#{options.new_selected.id}"
             return
         type = if options.new_selected instanceof root.Member then 'member' else 'newbie'
         ga.event 'candidates',
@@ -903,11 +941,13 @@ setupPartyList = ->
     root.lists ?= {}
     root.lists.agendas = new root.AgendaList
     root.lists.parties = new root.PartyList
+    root.lists.party_declarations = new root.PartyDeclarationList
     root.lists.members = new root.MemberList
     root.lists.newbies = new root.NewbiesList
     return [
         root.lists.agendas.fetch()
         root.lists.parties.fetch()
+        root.lists.party_declarations.fetch()
         root.lists.members.fetch()
         root.lists.newbies.fetch()
     ]

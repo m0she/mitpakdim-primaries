@@ -404,19 +404,12 @@ body {
 .newbies_container .title strong {
     font-weight : 700;
 }
-.members_container {
+.half_candidates_pane {
     display : inline-block;
-    width : 50%;
     padding-top : 10px;
-    vertical-align : top;
     position : relative;
-}
-.newbies_container {
-    padding-top : 10px;
-    display : inline-block;
+    vertical-align : top;
     width : 50%;
-    vertical-align : top;
-    position : relative;
 }
 .candidate_instance {
     border-color : #03537e;

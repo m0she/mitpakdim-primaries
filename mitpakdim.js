@@ -354,7 +354,7 @@
       return data;
     };
 
-    Candidate.prototype.parse = function(data) {
+    Candidate.prototype.parse = function(data, xhr) {
       data = Candidate.__super__.parse.call(this, data);
       this.parseLinks(data);
       return data;
@@ -404,7 +404,7 @@
       return Newbie.__super__.constructor.apply(this, arguments);
     }
 
-    Newbie.prototype.parse = function(response) {
+    Newbie.prototype.parse = function(response, xhr) {
       var ret;
       ret = Newbie.__super__.parse.apply(this, arguments);
       if (_.isString(ret.agendas)) {
@@ -416,6 +416,18 @@
     return Newbie;
 
   })(root.Candidate);
+
+  root.PartyDeclaration = (function(_super) {
+
+    __extends(PartyDeclaration, _super);
+
+    function PartyDeclaration() {
+      return PartyDeclaration.__super__.constructor.apply(this, arguments);
+    }
+
+    return PartyDeclaration;
+
+  })(root.Newbie);
 
   root.Recommendation = (function(_super) {
 
@@ -537,7 +549,7 @@
       return JSONPCollection.__super__.initialize.apply(this, arguments);
     };
 
-    JSONPCollection.prototype.parse = function(response) {
+    JSONPCollection.prototype.parse = function(response, xhr) {
       return response.objects;
     };
 
@@ -671,9 +683,8 @@
 
     MemberList.prototype.sync = multiSync;
 
-    MemberList.prototype.parse = function(data) {
-      var _this = this;
-      return _.filter(MemberList.__super__.parse.call(this, data), function(obj) {
+    MemberList.prototype.parse = function(data, xhr) {
+      return _.filter(MemberList.__super__.parse.apply(this, arguments), function(obj) {
         var _ref2;
         return (_ref2 = obj.participating) != null ? _ref2 : true;
       });
@@ -748,6 +759,34 @@
     return NewbiesList;
 
   })(root.CandidatesList);
+
+  root.PartyDeclarationList = (function(_super) {
+
+    __extends(PartyDeclarationList, _super);
+
+    function PartyDeclarationList() {
+      return PartyDeclarationList.__super__.constructor.apply(this, arguments);
+    }
+
+    PartyDeclarationList.prototype.model = root.PartyDeclaration;
+
+    PartyDeclarationList.prototype.DECLARATION_PARTY_ID = "רשימת המפלגות";
+
+    PartyDeclarationList.prototype.parse = function(data, xhr) {
+      var _this = this;
+      return _.filter(PartyDeclarationList.__super__.parse.apply(this, arguments), function(obj) {
+        return obj.party_name === _this.DECLARATION_PARTY_ID;
+      });
+    };
+
+    PartyDeclarationList.prototype.initialize = function() {
+      PartyDeclarationList.__super__.initialize.apply(this, arguments);
+      return this.agendas_fetching = $.Deferred().resolve();
+    };
+
+    return PartyDeclarationList;
+
+  })(root.NewbiesList);
 
   root.RecommendationList = (function(_super) {
 
@@ -1043,12 +1082,60 @@
 
   })(Backbone.View);
 
+  root.CandidatesMultiView = (function(_super) {
+
+    __extends(CandidatesMultiView, _super);
+
+    function CandidatesMultiView() {
+      this.propagate = __bind(this.propagate, this);
+      return CandidatesMultiView.__super__.constructor.apply(this, arguments);
+    }
+
+    CandidatesMultiView.prototype.initialize = function() {
+      var sublist, _i, _len, _ref2, _results;
+      _ref2 = this.sublists;
+      _results = [];
+      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+        sublist = _ref2[_i];
+        _results.push(sublist.on('all', this.propagate));
+      }
+      return _results;
+    };
+
+    CandidatesMultiView.prototype.propagate = function() {
+      return this.trigger.apply(this, arguments);
+    };
+
+    return CandidatesMultiView;
+
+  })(Backbone.View);
+
+  create_delegation = function(func_name) {
+    var delegate;
+    delegate = function() {
+      var sublist, _i, _len, _ref2, _results;
+      _ref2 = this.sublists;
+      _results = [];
+      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+        sublist = _ref2[_i];
+        _results.push(sublist[func_name].apply(sublist, arguments));
+      }
+      return _results;
+    };
+    return this.prototype[func_name] = delegate;
+  };
+
+  root.CandidatesMultiView.create_delegation = create_delegation;
+
+  root.CandidatesMultiView.create_delegation('calculate');
+
+  root.CandidatesMultiView.create_delegation('filterChange');
+
   root.CandidatesMainView = (function(_super) {
 
     __extends(CandidatesMainView, _super);
 
     function CandidatesMainView() {
-      this.propagate = __bind(this.propagate, this);
       return CandidatesMainView.__super__.constructor.apply(this, arguments);
     }
 
@@ -1056,47 +1143,54 @@
 
     CandidatesMainView.prototype.initialize = function() {
       var _this = this;
+      this.sublists = [
+        new root.CandidateListView({
+          el: ".members",
+          collection: this.options.members,
+          autofetch: false
+        }), new root.CandidateListView({
+          el: ".newbies",
+          collection: this.options.newbies,
+          autofetch: false
+        })
+      ];
+      CandidatesMainView.__super__.initialize.apply(this, arguments);
       this.currentPartyView = new root.CurrentPartyView;
-      root.global.on('change_party', function() {
+      return root.global.on('change_party', function() {
         return _this.currentPartyView.render();
       });
-      this.membersView = new root.CandidateListView({
-        el: ".members",
-        collection: this.options.members,
-        autofetch: false
-      });
-      this.newbiesView = new root.CandidateListView({
-        el: ".newbies",
-        collection: this.options.newbies,
-        autofetch: false
-      });
-      this.membersView.on('all', this.propagate);
-      return this.newbiesView.on('all', this.propagate);
-    };
-
-    CandidatesMainView.prototype.propagate = function() {
-      return this.trigger.apply(this, arguments);
     };
 
     return CandidatesMainView;
 
-  })(Backbone.View);
+  })(root.CandidatesMultiView);
 
-  create_delegation = function(func_name) {
-    var delegate;
-    delegate = function() {
-      var _ref2, _ref3;
-      (_ref2 = this.membersView)[func_name].apply(_ref2, arguments);
-      return (_ref3 = this.newbiesView)[func_name].apply(_ref3, arguments);
+  root.PartyCandidatesView = (function(_super) {
+
+    __extends(PartyCandidatesView, _super);
+
+    function PartyCandidatesView() {
+      return PartyCandidatesView.__super__.constructor.apply(this, arguments);
+    }
+
+    PartyCandidatesView.prototype.initialize = function() {
+      this.sublists = [
+        new root.PartyCandidatesListView({
+          el: ".parties_activity",
+          collection: this.options.activity,
+          autofetch: false
+        }), new root.PartyCandidatesListView({
+          el: ".parties_declaration",
+          collection: this.options.declarations,
+          autofetch: false
+        })
+      ];
+      return PartyCandidatesView.__super__.initialize.apply(this, arguments);
     };
-    return this.prototype[func_name] = delegate;
-  };
 
-  root.CandidatesMainView.create_delegation = create_delegation;
+    return PartyCandidatesView;
 
-  root.CandidatesMainView.create_delegation('calculate');
-
-  root.CandidatesMainView.create_delegation('filterChange');
+  })(root.CandidatesMultiView);
 
   root.PartyFilteredListView = (function(_super) {
 
@@ -1176,6 +1270,10 @@
       });
     };
 
+    CandidateListView.prototype.getCandidateAgendas = function(candidate) {
+      return candidate.getAgendas();
+    };
+
     CandidateListView.prototype.calculate_inner = function() {
       var abs_sum, weight_sum, weights,
         _this = this;
@@ -1193,7 +1291,7 @@
       }
       console.log("Weights: ", weights, weight_sum);
       return this.collection.each(function(candidate) {
-        return candidate.set('score', _.reduce(candidate.getAgendas(), function(memo, score, id) {
+        return candidate.set('score', _.reduce(_this.getCandidateAgendas(candidate), function(memo, score, id) {
           return memo += (weights[id] || 0) * score / weight_sum;
         }, 0));
       });
@@ -1203,30 +1301,30 @@
 
   })(root.PartyFilteredListView);
 
-  root.PartyCandidatesView = (function(_super) {
+  root.PartyCandidatesListView = (function(_super) {
 
-    __extends(PartyCandidatesView, _super);
+    __extends(PartyCandidatesListView, _super);
 
-    function PartyCandidatesView() {
+    function PartyCandidatesListView() {
       this.partyChange = __bind(this.partyChange, this);
-      return PartyCandidatesView.__super__.constructor.apply(this, arguments);
+      return PartyCandidatesListView.__super__.constructor.apply(this, arguments);
     }
 
-    PartyCandidatesView.prototype.el = ".party_candidates_container .parties";
+    PartyCandidatesListView.prototype.el = ".party_candidates_container .parties";
 
-    PartyCandidatesView.prototype.options = {
+    PartyCandidatesListView.prototype.options = {
       itemView: root.PartyCandidateView
     };
 
-    PartyCandidatesView.prototype.initialize = function() {
-      return PartyCandidatesView.__super__.initialize.apply(this, arguments);
+    PartyCandidatesListView.prototype.initialize = function() {
+      return PartyCandidatesListView.__super__.initialize.apply(this, arguments);
     };
 
-    PartyCandidatesView.prototype.partyChange = function(party) {
+    PartyCandidatesListView.prototype.partyChange = function(party) {
       return this.collection.reset(this.unfilteredCollection.models);
     };
 
-    return PartyCandidatesView;
+    return PartyCandidatesListView;
 
   })(root.CandidateListView);
 
@@ -1540,8 +1638,8 @@
         newbies: root.lists.newbies
       });
       this.partyCandidatesView = new root.PartyCandidatesView({
-        collection: root.lists.parties,
-        autofetch: false
+        activity: root.lists.parties,
+        declarations: root.lists.party_declarations
       });
       this.recommendations = new root.RecommendationList;
       this.recommendationsView = new root.RecommendationsView({
@@ -1550,7 +1648,7 @@
         newbies: root.lists.newbies
       });
       root.lists.agendas.on('change:uservalue', _.debounce(this.calculate, 500));
-      this.candidates = this.multiSelectedSetup([root.lists.members, root.lists.newbies, root.lists.parties]);
+      this.candidates = this.multiSelectedSetup([root.lists.members, root.lists.newbies, root.lists.parties, root.lists.party_declarations]);
       return this.candidates.on('selected_change', this.updateSelectedCandidate);
     };
 
@@ -1654,14 +1752,17 @@
     };
 
     AppView.prototype.updateSelectedCandidate = function(collection, options) {
-      var type;
+      var is_party, is_party_declaration, type;
       if (!options.new_selected) {
         this.agendaListView.clearMarkers();
         return;
       }
       this.agendaListView.showMarkersForCandidate(options.new_selected);
-      if (options.new_selected instanceof root.Party) {
-        ga.event('candidates', "select", "party_" + options.new_selected.id);
+      is_party = options.new_selected instanceof root.Party;
+      is_party_declaration = options.new_selected instanceof root.PartyDeclaration;
+      if (is_party || is_party_declaration) {
+        type = is_party ? "activity" : "declaration";
+        ga.event('candidates', "select", "party_" + type + "_" + options.new_selected.id);
         return;
       }
       type = options.new_selected instanceof root.Member ? 'member' : 'newbie';
@@ -1753,9 +1854,10 @@
     }
     root.lists.agendas = new root.AgendaList;
     root.lists.parties = new root.PartyList;
+    root.lists.party_declarations = new root.PartyDeclarationList;
     root.lists.members = new root.MemberList;
     root.lists.newbies = new root.NewbiesList;
-    return [root.lists.agendas.fetch(), root.lists.parties.fetch(), root.lists.members.fetch(), root.lists.newbies.fetch()];
+    return [root.lists.agendas.fetch(), root.lists.parties.fetch(), root.lists.party_declarations.fetch(), root.lists.members.fetch(), root.lists.newbies.fetch()];
   };
 
   $(function() {
