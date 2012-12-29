@@ -19,11 +19,11 @@
     return FB.ui({
       display: 'popup',
       method: 'feed',
-      name: 'מדח"כ',
+      name: 'בחירומטר',
       link: link,
       caption: 'הפעם בוחרים חכם',
-      description: 'בואו תראו איזה מתמודדים באמת עובדים בשבילכם',
-      picture: base_url + '/static/thumbnail-01.jpg'
+      description: 'בואו תראו איזה מהמפלגות באמת עובדת בשבילכם',
+      picture: 'http://oknesset.org/static/img/oknesset-logo-small.png'
     }, function() {
       return console.log('Facebook callback', this, arguments);
     });
@@ -33,16 +33,15 @@
     ga.social('Twitter', 'share', link);
     return window.open("https://twitter.com/share?" + $.param({
       url: link,
-      text: "ראו את דירוג המתמודדים שלי לפריימריז במפלגת " + (root.global.party.get('name')) + " באמצעות המדח\"כ"
+      text: "ראו את דירוג המפלגות שלי לבחירות"
     }), 'tweet', 'width=575,height=400,left=672,top=320,scrollbars=1');
   };
 
   getShareLink = function(weights) {
-    var base, district, fragment, party;
+    var base, district, fragment;
     base = window.location.href.replace(/#.*$/, '');
-    party = root.global.party.id;
     district = root.global.district ? root.global.district.id : 'x';
-    fragment = "" + party + "/" + district + "/" + (encode_weights(weights));
+    fragment = "" + (encode_weights(weights));
     return base + '#' + fragment;
   };
 
@@ -968,9 +967,19 @@
       return this;
     };
 
-    CandidateView.prototype.onClick = function() {
-      CandidateView.__super__.onClick.apply(this, arguments);
-      return this.model.trigger("select", this.model);
+    CandidateView.prototype.events = {
+      'click': function(event) {
+        console.log(1);
+        this.trigger('click', this.model, this);
+        return this.model.trigger("select", this.model);
+      },
+      'click .mdhk': function(event) {
+        var id, weights;
+        id = this.model.id;
+        weights = encode_weights(root.lists.agendas.getWeights());
+        window.location = 'index.html#' + id + '//' + weights;
+        return event.stopPropagation;
+      }
     };
 
     return CandidateView;
@@ -1836,9 +1845,7 @@
     Router.prototype.routes = {
       '': 'parties',
       'parties': 'parties',
-      ':party/:district': 'byParty',
-      ':party/:district/:weights': 'byParty',
-      ':party//:weights': 'byPartyNoDistrict'
+      ':weights': 'parties'
     };
 
     Router.prototype.entrance = function() {
@@ -1854,38 +1861,12 @@
       return this.mode = mode;
     };
 
-    Router.prototype.parties = function() {
-      root.global.trigger('change_party', void 0);
-      return this.setMode(this.MODE_PARTIES);
-    };
-
-    Router.prototype.byPartyNoDistrict = function(party_id, weights) {
-      return this.party(party_id, void 0, weights);
-    };
-
-    Router.prototype.byParty = function(party_id, district_id, weights) {
-      var district_model, model;
-      console.log('party', arguments);
-      model = root.lists.parties.where({
-        id: Number(party_id)
-      })[0];
-      if (!model) {
-        return root.router.navigate('', {
-          trigger: true
-        });
-      }
-      root.global.party = model;
-      root.global.trigger('change_party', model);
-      if (district_model = root.lists.parties.where({
-        id: Number(district_id)
-      })[0]) {
-        root.global.district = district_model;
-      }
+    Router.prototype.parties = function(weights) {
       if (weights = parse_weights(weights)) {
         root.lists.agendas.resetWeights(weights);
-        root.router.navigate(party_id);
       }
-      return this.setMode(this.MODE_MEMBERS);
+      root.global.trigger('change_party', void 0);
+      return this.setMode(this.MODE_PARTIES);
     };
 
     return Router;

@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta property="og:title" content='בחירומטר' />
         <meta property="og:type" content='website' />
-        <meta property="og:image" content='#TODO' />
+        <meta property="og:image" content='http://oknesset.org/static/img/oknesset-logo-small.png' />
         <meta property="fb:app_id" content='362298483856854' />
         <meta property="og:description" content=
             "הבחירומטר הינו למעשה פיתוח טכנולוגי חכם אשר שואב את המידע מאתר כנסת פתוחה ומציג פרופיל עדכני של כל מפלגה,
@@ -95,30 +95,6 @@
                             <div class="half_candidates_pane">
                                 <div class="title">סדר המפלגות לפי הצהרותיהן</div><div class="parties_declaration"></div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="candidates_container">
-                        <div class="current_party">
-                            <div class="current_party_logo_back"></div>
-                            <div id="change_party">החלף מפלגה</div>
-                        </div>
-                        <div class="lists_wrapper">
-                            <div class="left_background"></div>
-                            <div class="social_bar top">
-                                <div class="vertical_aligner"></div>
-                                <div class="caption">שתף את הרשימה שלך:</div>
-                                <div class="fb_share"></div>
-                                <div class="tweet_share"></div>
-                                <div class="separator"></div>
-                                <div class="caption">הדפס:</div>
-                                <div class="print"></div>
-                            </div>
-                            <div class="members_container half_candidates_pane"><div class="title">סדר המתמודדים<strong> המכהנים </strong>לפי בחירותך</div><div class="members"></div></div
-                            ><div class="newbies_container half_candidates_pane"><div class="title">סדר המתמודדים<strong> החדשים </strong>לפי בחירותך</div><div class="newbies"></div><div class="title" ><br>המתמודדים המופיעים בראש הרשימה הם אלה <strong>שבחרו</strong> להכניס את הנתונים שלהם על ידי הרשמה לכלי
-                            בעזרת שליחת דוא"ל לכתובת:
-                            <a href="mailto:primaries@mitpakdim.co.il?Subject=בקשה להרשמה לבחירומטר">primaries@mitpakdim.co.il</a><br/>
-                            יתר המפלגות ברשימה זו, המופיעות באפור, לא נרשמו לכלי ואינן מדורגות לפי בחירותך.
-                            </div></div>
                             <div class="social_bar bottom">
                                 <div class="vertical_aligner"></div>
                                 <div class="caption">שתף את הרשימה שלך:</div>
@@ -129,47 +105,10 @@
                                 <div class="print"></div>
                             </div>
                         </div>
-                    </div>
+                    </div>                   
                 </div>
             </div>
         </div>
-        <script type="text/template" id='candidate_template'>
-            <% if (is_placeholder) { %>
-              <div class="content placeholder" title="מועמד זה לא הכניס נתונים לכלי ולכן הוא אינו מדורג">
-            <% } else { %>
-              <div class="content" title="לחץ על המתמודד, ותראה מה הן עמדותיו">
-            <% } %>
-                <div class="image"><% if (typeof img_url != 'undefined') { %><img src="<%= img_url %>" /><% } %></div>
-                <div class="info">
-                    <%
-                        print("+".repeat(_.size(recommendation_positive)));
-                        print("-".repeat(_.size(recommendation_negative)));
-                    %><span class="name"><%= name %></span>
-                    <div class="score<% if (score > 0) { %> positive<% } %>"><%if (!is_placeholder) {%><%= simplified_score %><%}%></div>
-                    <div class="links">
-                        <% if (typeof facebook_link_url != 'undefined') { %><a class="facebook" href="<%= facebook_link_url %>" target="_blank"><div class="sprite icon icon-fb"></div>לדף הפייסבוק</a><% } %>
-                        <% if (typeof resume_link_url != 'undefined' && !is_placeholder) { %><a class="resume" href="<%= resume_link_url %>" target="_blank"><div class="sprite icon icon-person"></div>קורות חיים</a><% } %>
-                        <% if (typeof oknesset_link_url != 'undefined') { %><a class="oknesset" href="<%= oknesset_link_url %>" target="_blank"><div class="sprite icon icon-ok"></div>הח&quot;כ <strong>בכנסת פתוחה</strong></a><% } %>
-                    </div>
-                    <div class="role_description"><% if (typeof current_role_descriptions != 'undefined') { %><%= current_role_descriptions %><% } %></div>
-                    <% if (typeof minister_work_plans != 'undefined') { %>
-                        <div class="work_plan">תוכניות העבודה לשנים:<br>
-                        <% _.each(minister_work_plans, function (url, year) { %>
-                            <a class="resume" href="<%= url %>" target="_blank"><%= year %></a>
-                        <% }); %>
-                        </div>
-                    <% } %>
-                    <div class="remarks">
-                        <% if (typeof change_party_remark != 'undefined') { %>
-                            <div class="remark_icon change_party" title="<%= change_party_remark %>"></div>
-                        <% } %>
-                        <% if (typeof minister_remark != 'undefined') { %>
-                            <div class="remark_icon minister_remark" title="<%= minister_remark %>"></div>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-        </script>
         <script type="text/template" id='party_candidate_template'>
             <div class="content" title="לחץ על המפלגה, ותראה מה הן עמדותיה">                
                 <div class="party-info">
@@ -192,6 +131,9 @@
                                 <div class="sprite icon icon-fb"></div>עמוד הפייסבוק</strong>
                             </a>
                         <% } %>
+                        <a class="mdhk" href="#">
+                                <div class="sprite icon icon-notice"></div>המפלגה במדח&quot;ק</strong>
+                        </a>
                     </div>
                 </div>
             </div>

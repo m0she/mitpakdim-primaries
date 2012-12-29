@@ -968,7 +968,7 @@ class root.Router extends Backbone.Router
         root.global.trigger 'change_party', undefined
         @setMode @MODE_PARTIES
 
-    byPartyNoDistrict: (party_id, weights) -> @party(party_id, undefined, weights)
+    byPartyNoDistrict: (party_id, weights) -> @byParty(party_id, undefined, weights)
     byParty: (party_id, district_id, weights) ->
         console.log 'party', arguments
         model = root.lists.parties.where(id: Number(party_id))[0]

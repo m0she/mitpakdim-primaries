@@ -10,11 +10,11 @@ root.facebookShare = (link) ->
     FB.ui
             display: 'popup'
             method: 'feed'
-            name: 'מדח"כ'
+            name: 'בחירומטר'
             link: link
             caption: 'הפעם בוחרים חכם'
-            description: 'בואו תראו איזה מתמודדים באמת עובדים בשבילכם'
-            picture: base_url + '/static/thumbnail-01.jpg'
+            description: 'בואו תראו איזה מהמפלגות באמת עובדת בשבילכם'
+            picture: 'http://oknesset.org/static/img/oknesset-logo-small.png'
         ,
             -> console.log('Facebook callback', @, arguments)
 
@@ -22,14 +22,13 @@ root.twitterShare = (link) ->
     ga.social 'Twitter', 'share', link
     window.open "https://twitter.com/share?" + $.param(
         url: link
-        text: "ראו את דירוג המתמודדים שלי לפריימריז במפלגת #{root.global.party.get('name')} באמצעות המדח\"כ"
+        text: "ראו את דירוג המפלגות שלי לבחירות"
     ), 'tweet', 'width=575,height=400,left=672,top=320,scrollbars=1'
 
 getShareLink = (weights) ->
     base = window.location.href.replace /#.*$/, ''
-    party = root.global.party.id
     district = if root.global.district then root.global.district.id else 'x'
-    fragment = "#{party}/#{district}/#{encode_weights(weights)}"
+    fragment = "#{encode_weights(weights)}"
     base + '#' + fragment
 
 parse_weights = (weights) ->
@@ -487,13 +486,20 @@ class root.CandidateView extends root.ListViewItem
     changeSelection: (model, collection, info) =>
         @.$el.toggleClass "selected", info.new_selected == @model
         @
-    onClick : ->
-        super arguments...
-        @model.trigger "select", @model
+    events:
+        'click': (event) ->
+            console.log 1
+            @trigger 'click', @model, @            
+            @model.trigger "select", @model
+        'click .mdhk': (event) ->
+            id = this.model.id
+            weights = encode_weights root.lists.agendas.getWeights()
+            window.location = 'index.html#'+id+'//'+weights
+            event.stopPropagation
 
 class root.PartyCandidateView extends root.CandidateView
     get_template: ->
-        $("#party_candidate_template").html()
+        $("#party_candidate_template").html()     
 
 class root.ListView extends root.TemplateView
     initialize: ->
@@ -948,9 +954,8 @@ class root.Router extends Backbone.Router
     routes:
         '': 'parties'        
         'parties': 'parties'
-        ':party/:district': 'byParty'
-        ':party/:district/:weights': 'byParty'
-        ':party//:weights': 'byPartyNoDistrict'
+        ':weights': 'parties'
+
 
     entrance: ->
         console.log 'entrance'
@@ -963,27 +968,11 @@ class root.Router extends Backbone.Router
         $('.candidates_container').toggle mode==@MODE_MEMBERS
         @mode = mode
 
-    parties: ->
+    parties: (weights) ->
+        if weights = parse_weights(weights)
+            root.lists.agendas.resetWeights weights        
         root.global.trigger 'change_party', undefined
         @setMode @MODE_PARTIES
-
-    byPartyNoDistrict: (party_id, weights) -> @party(party_id, undefined, weights)
-    byParty: (party_id, district_id, weights) ->
-        console.log 'party', arguments
-        model = root.lists.parties.where(id: Number(party_id))[0]
-        if not model
-            return root.router.navigate '', trigger: true
-        root.global.party = model
-        root.global.trigger 'change_party', model
-
-        if district_model = root.lists.parties.where(id: Number(district_id))[0]
-            root.global.district = district_model
-
-        if weights = parse_weights(weights)
-            root.lists.agendas.resetWeights weights
-            root.router.navigate party_id
-
-        @setMode @MODE_MEMBERS
 
 ############### INIT ##############
 
