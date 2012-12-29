@@ -1,4 +1,5 @@
 ############### UTILITIES ##############
+root = (window.mit = window.mit || {})
 
 String::repeat = ( num ) ->
     new Array( num + 1 ).join( this )
