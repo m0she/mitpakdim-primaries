@@ -1861,7 +1861,7 @@
     };
 
     Router.prototype.byPartyNoDistrict = function(party_id, weights) {
-      return this.party(party_id, void 0, weights);
+      return this.byParty(party_id, void 0, weights);
     };
 
     Router.prototype.byParty = function(party_id, district_id, weights) {
