@@ -2,6 +2,8 @@ if (!window.mit) window.mit = {};
 window.mit.party_extra = {
     "objects": [
         {
+            "CA_FACEBOOK": "https://www.facebook.com/LikudNetanyahu?ref=ts&fref=ts", 
+            "CA_WIKI": "http://www.bechirot.gov.il/elections19/heb/list/List.aspx?ListId=119", 
             "picture_url": "http://upload.wikimedia.org/wikipedia/commons/9/99/Likud_Logo.png", 
             "id": 2
         }, 

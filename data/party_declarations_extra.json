@@ -6,7 +6,9 @@
         },
         {
             "id": 1022,
-			"picture_url" : "http://graph.facebook.com/AleYarokLiberal/picture?type=square"
+			"picture_url" : "http://graph.facebook.com/AleYarokLiberal/picture?type=square",
+			"CA_WEBSITE" : "http://aleyarok.org.il",
+			"CA_FACEBOOK" : "https://www.facebook.com/AleYarokLiberal"
         }
     ]
 }

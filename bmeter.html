@@ -198,9 +198,19 @@
                     <span class="name"><%= name %></span>
                     <span class="party-score score<% if (score > 0) { %> positive<% } %>"><%= simplified_score %></span>
                     <div class="links">
-                        <% if (typeof absolute_url != 'undefined') { %>
-                            <a class="oknesset" href="http://www.oknesset.org<%= absolute_url %>" target="_blank">
+                        <% if (typeof oknesset_link_url != 'undefined') { %>
+                            <a class="oknesset" href="<%= oknesset_link_url %>" target="_blank">
                                 <div class="sprite icon icon-ok"></div>מידע <strong>בכנסת פתוחה</strong>
+                            </a>
+                        <% } %>
+                        <% if (typeof homepage_link_url != 'undefined') { %>
+                            <a class="oknesset" href="<%= homepage_link_url %>" target="_blank">
+                                <div class="sprite icon icon-web"></div>האתר הרשמי</strong>
+                            </a>
+                        <% } %>
+                        <% if (typeof facebook_link_url != 'undefined') { %>
+                            <a class="oknesset" href="<%= facebook_link_url %>" target="_blank">
+                                <div class="sprite icon icon-fb"></div>עמוד הפייסבוק</strong>
                             </a>
                         <% } %>
                     </div>

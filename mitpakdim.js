@@ -298,6 +298,29 @@
       selected: false
     };
 
+    Party.prototype.parseLinks = function(data) {
+      if (data.links && _.isArray(data.links)) {
+        _.each(data.links, function(link) {
+          var _ref, _ref1;
+          if ((link != null ? (_ref = link.title) != null ? _ref.search('פייסבוק') : void 0 : void 0) !== -1 || (link != null ? (_ref1 = link.title) != null ? _ref1.search(/facebook/i) : void 0 : void 0) !== -1) {
+            return data.facebook_link_url = link.url;
+          }
+        });
+      }
+      data.facebook_link_url = data.facebook_link_url || data.CA_FACEBOOK;
+      data.homepage_link_url = data.CA_WEBSITE;
+      if (data.absolute_url) {
+        data.oknesset_link_url = "http://oknesset.org" + data.absolute_url;
+      }
+      return data;
+    };
+
+    Party.prototype.parse = function(data, xhr) {
+      data = Party.__super__.parse.call(this, data);
+      this.parseLinks(data);
+      return data;
+    };
+
     Party.prototype.getAgendas = function() {
       var name, ret;
       ret = {};
@@ -422,6 +445,23 @@
     function PartyDeclaration() {
       return PartyDeclaration.__super__.constructor.apply(this, arguments);
     }
+
+    PartyDeclaration.prototype.parseLinks = function(data) {
+      if (data.links && _.isArray(data.links)) {
+        _.each(data.links, function(link) {
+          var _ref, _ref1;
+          if ((link != null ? (_ref = link.title) != null ? _ref.search('פייסבוק') : void 0 : void 0) !== -1 || (link != null ? (_ref1 = link.title) != null ? _ref1.search(/facebook/i) : void 0 : void 0) !== -1) {
+            return data.facebook_link_url = link.url;
+          }
+        });
+      }
+      data.facebook_link_url = data.facebook_link_url || data.CA_FACEBOOK;
+      data.homepage_link_url = data.CA_WEBSITE;
+      if (data.absolute_url) {
+        data.oknesset_link_url = "http://oknesset.org" + data.absolute_url;
+      }
+      return data;
+    };
 
     PartyDeclaration.prototype.parse = function(response, xhr) {
       var party, ret;
