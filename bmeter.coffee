@@ -947,6 +947,7 @@ class root.Router extends Backbone.Router
 
     routes:
         '': 'parties'        
+        'parties': 'parties'
         ':party/:district': 'byParty'
         ':party/:district/:weights': 'byParty'
         ':party//:weights': 'byPartyNoDistrict'

@@ -1835,6 +1835,7 @@
 
     Router.prototype.routes = {
       '': 'parties',
+      'parties': 'parties',
       ':party/:district': 'byParty',
       ':party/:district/:weights': 'byParty',
       ':party//:weights': 'byPartyNoDistrict'
