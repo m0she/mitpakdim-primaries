@@ -667,16 +667,17 @@ class root.CandidateListView extends root.PartyFilteredListView
             do_sum = (memo, item) ->
                 memo += Math.abs item
             _.reduce(arr, do_sum, 0)
-        weight_sum = abs_sum(weights)
+        weight_sum = abs_sum(weights) 
         return if not weight_sum
 
         console.log "Weights: ", weights, weight_sum
         @collection.each (candidate) =>
             #console.log "calc: ", candidate, candidate.get('name')
-            candidate.set 'score', _.reduce @getCandidateAgendas(candidate), (memo, score, id) ->
-                #console.log "agenda: ", (weights[id] or 0), score, weight_sum, (weights[id] or 0) * score / weight_sum
-                memo += (weights[id] or 0) * score / weight_sum
-            , 0
+            if not candidate.get('is_placeholder')
+                candidate.set 'score', _.reduce @getCandidateAgendas(candidate), (memo, score, id) ->
+                    #console.log "agenda: ", (weights[id] or 0), score, weight_sum, (weights[id] or 0) * score / weight_sum
+                    memo += (weights[id] or 0) * score / weight_sum
+                , 0
 
 class root.PartyCandidatesListView extends root.CandidateListView
     el: ".party_candidates_container .parties"

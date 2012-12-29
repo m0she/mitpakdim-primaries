@@ -6,7 +6,6 @@
         <meta property="og:title" content='בחירומטר' />
         <meta property="og:type" content='website' />
         <meta property="og:image" content='http://oknesset.org/static/img/oknesset-logo-small.png' />
-        <meta property="fb:app_id" content='362298483856854' />
         <meta property="og:description" content=
             "הבחירומטר הינו למעשה פיתוח טכנולוגי חכם אשר שואב את המידע מאתר כנסת פתוחה ומציג פרופיל עדכני של כל מפלגה,
              על-פי הפעילות הפרלמנטרית שלה בכנסת, או הצהרת הכוונות שלה, במידה והיא מפלגה חדשה. " />
@@ -52,7 +51,7 @@
                     <a class="mitpakdim" href="http://mitpakdim.co.il/" target="_blank"></a>
                 </div>
                 <div class="fblike_container">
-                    <div class="fb-like" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-href="https://www.facebook.com/pages/%D7%9E%D7%93%D7%97%D7%9B/305773159538856"></div>
+                    <div class="fb-like" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-href="https://www.facebook.com/open.knesset?ref=ts&amp;fref=ts"></div>
                 </div>
                 <div class="text">
                     <a class="sprite main-logo" href="./bmeter.html"></a>
@@ -110,7 +109,11 @@
             </div>
         </div>
         <script type="text/template" id='party_candidate_template'>
-            <div class="content" title="לחץ על המפלגה, ותראה מה הן עמדותיה">                
+            <% if ((typeof is_placeholder != 'undefined') && is_placeholder){ %>
+              <div class="content placeholder" title="מפלגה זו לא הכניסה נתונים לכלי ולכן היא אינה מדורגת">
+            <% } else { %>
+              <div class="content" title="לחץ על המתמודד, ותראה מה הן עמדותיו">
+            <% } %>
                 <div class="party-info">
                     <div class="party-image"><% if (typeof picture_url != 'undefined') { %><img src="<%= picture_url %>" /><% } %></div>
                     <span class="name"><%= name %></span>

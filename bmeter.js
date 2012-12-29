@@ -1353,9 +1353,11 @@
       }
       console.log("Weights: ", weights, weight_sum);
       return this.collection.each(function(candidate) {
-        return candidate.set('score', _.reduce(_this.getCandidateAgendas(candidate), function(memo, score, id) {
-          return memo += (weights[id] || 0) * score / weight_sum;
-        }, 0));
+        if (!candidate.get('is_placeholder')) {
+          return candidate.set('score', _.reduce(_this.getCandidateAgendas(candidate), function(memo, score, id) {
+            return memo += (weights[id] || 0) * score / weight_sum;
+          }, 0));
+        }
       });
     };
 
