@@ -6,8 +6,16 @@ window.mit.party_declarations_extra = {
             "id": 666
         }, 
         {
+            "CA_FACEBOOK": "https://www.facebook.com/AleYarokLiberal", 
             "picture_url": "http://graph.facebook.com/AleYarokLiberal/picture?type=square", 
+            "CA_WEBSITE": "http://aleyarok.org.il", 
             "id": 1022
+        }, 
+        {
+            "CA_FACEBOOK": "https://www.facebook.com/nanach4y", 
+            "picture_url": "http://graph.facebook.com/nanach4y/picture?type=square", 
+            "CA_WEBSITE": "http://www.nanach.co.il", 
+            "id": 1006
         }
     ]
 }
