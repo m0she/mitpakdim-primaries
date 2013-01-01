@@ -1009,7 +1009,7 @@ $ ->
         , 6*1000
     if window.location.protocol != "file:"
         FB.init
-            appId: 362298483856854
+            appId: 102113249964274
         FB.Event.subscribe 'message.send', (targetUrl) ->
             ga.social 'facebook', 'send', targetUrl
         FB.XFBML.parse()
