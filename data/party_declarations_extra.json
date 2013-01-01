@@ -9,6 +9,12 @@
 			"picture_url" : "http://graph.facebook.com/AleYarokLiberal/picture?type=square",
 			"CA_WEBSITE" : "http://aleyarok.org.il",
 			"CA_FACEBOOK" : "https://www.facebook.com/AleYarokLiberal"
+        },
+        {
+            "id": 1006,
+			"picture_url" : "http://graph.facebook.com/nanach4y/picture?type=square",
+			"CA_WEBSITE" : "http://www.nanach.co.il",
+			"CA_FACEBOOK" : "https://www.facebook.com/nanach4y"
         }
     ]
 }
