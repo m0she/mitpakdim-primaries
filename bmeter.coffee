@@ -494,7 +494,7 @@ class root.CandidateView extends root.ListViewItem
         'click .mdhk': (event) ->
             id = this.model.id
             weights = encode_weights root.lists.agendas.getWeights()
-            window.location = 'index.html#'+id+'//'+weights
+            window.location = 'madhak.html#'+id+'//'+weights
             event.stopPropagation
 
 class root.PartyCandidateView extends root.CandidateView
