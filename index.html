@@ -144,9 +144,11 @@
                                 <div class="sprite icon icon-fb"></div>עמוד הפייסבוק</strong>
                             </a>
                         <% } %>
-                        <a class="mdhk" href="#">
-                                <div class="sprite icon icon-notice"></div>המפלגה במדח&quot;כ</strong>
-                        </a>
+                        <% if ((typeof is_placeholder != 'undefined') && is_placeholder){ %>
+                            <a class="mdhk" href="#">
+                                    <div class="sprite icon icon-notice"></div>המפלגה במדח&quot;כ</strong>
+                            </a>
+                        <% } %>
                     </div>
                 </div>
             </div>
