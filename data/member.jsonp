@@ -28,8 +28,8 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/214/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/liberman_avigdor-s.jpg", 
-            "id": 214, 
-            "current_role_descriptions": "\u05e1\u05d2\u05df \u05e8\u05d0\u05e9 \u05d4\u05de\u05de\u05e9\u05dc\u05d4, \u05e9\u05e8 \u05d4\u05d7\u05d5\u05e5"
+            "id": "214", 
+            "current_role_descriptions": null
         }, 
         {
             "name": "\u05d0\u05d1\u05d9 (\u05de\u05e9\u05d4) \u05d3\u05d9\u05db\u05d8\u05e8", 
@@ -55,7 +55,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/771/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/dicter_abraham-s.jpg", 
-            "id": 771, 
+            "id": "771", 
             "current_role_descriptions": null
         }, 
         {
@@ -78,7 +78,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
             "resource_uri": "/api/v2/member/797/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/braverman_avishay-s.jpg", 
-            "id": 797, 
+            "id": "797", 
             "current_role_descriptions": null
         }, 
         {
@@ -97,7 +97,7 @@ window.mit.member = {
             "party_name": "\u05e8\u05e2\"\u05de-\u05ea\u05e2\"\u05dc", 
             "resource_uri": "/api/v2/member/800/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/sarsur_ibrahim-s.jpg", 
-            "id": 800, 
+            "id": "800", 
             "current_role_descriptions": null
         }, 
         {
@@ -116,7 +116,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/852/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Avraham_Duan-s.jpg", 
-            "id": 852, 
+            "id": "852", 
             "current_role_descriptions": null
         }, 
         {
@@ -139,7 +139,7 @@ window.mit.member = {
             "party_name": "\u05e9\"\u05e1", 
             "resource_uri": "/api/v2/member/784/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/michaeli_avraham-s.jpg", 
-            "id": 784, 
+            "id": "784", 
             "current_role_descriptions": null
         }, 
         {
@@ -166,7 +166,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05e2\u05e6\u05de\u05d0\u05d5\u05ea", 
             "resource_uri": "/api/v2/member/28/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/barak_ehud-s.jpg", 
-            "id": 28, 
+            "id": "28", 
             "current_role_descriptions": "\u05e1\u05d2\u05df \u05e8\u05d0\u05e9 \u05d4\u05de\u05de\u05e9\u05dc\u05d4, \u05e9\u05e8 \u05d4\u05d1\u05d9\u05d8\u05d7\u05d5\u05df"
         }, 
         {
@@ -197,7 +197,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/830/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/akunis_ofir-s.jpg", 
-            "id": 830, 
+            "id": "830", 
             "current_role_descriptions": null
         }, 
         {
@@ -220,7 +220,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
             "resource_uri": "/api/v2/member/100/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/pinespaz_ofir-s.jpg", 
-            "id": 100, 
+            "id": "100", 
             "current_role_descriptions": null
         }, 
         {
@@ -251,7 +251,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05d1\u05d9\u05ea \u05d4\u05d9\u05d4\u05d5\u05d3\u05d9", 
             "resource_uri": "/api/v2/member/845/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Orbach_Uri-s.jpg", 
-            "id": 845, 
+            "id": "845", 
             "current_role_descriptions": null
         }, 
         {
@@ -274,7 +274,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05d0\u05d9\u05d7\u05d5\u05d3 \u05d4\u05dc\u05d0\u05d5\u05de\u05d9", 
             "resource_uri": "/api/v2/member/713/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/ariel_uri-yehuda-s.jpg", 
-            "id": 713, 
+            "id": "713", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05d4 \u05dc\u05e2\u05e0\u05d9\u05d9\u05e0\u05d9 \u05d1\u05d9\u05e7\u05d5\u05e8\u05ea \u05d4\u05de\u05d3\u05d9\u05e0\u05d4"
         }, 
         {
@@ -293,7 +293,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05d4\u05d3\u05d5\u05ea \u05d4\u05ea\u05d5\u05e8\u05d4", 
             "resource_uri": "/api/v2/member/814/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/uri_maklev-s.jpg", 
-            "id": 814, 
+            "id": "814", 
             "current_role_descriptions": null
         }, 
         {
@@ -316,7 +316,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/822/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Zuaretz_Orit-s.jpg", 
-            "id": 822, 
+            "id": "822", 
             "current_role_descriptions": null
         }, 
         {
@@ -339,7 +339,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05e2\u05e6\u05de\u05d0\u05d5\u05ea", 
             "resource_uri": "/api/v2/member/717/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/noked_orit-s.jpg", 
-            "id": 717, 
+            "id": "717", 
             "current_role_descriptions": "\u05e9\u05e8\u05ea \u05d4\u05d7\u05e7\u05dc\u05d0\u05d5\u05ea \u05d5\u05e4\u05d9\u05ea\u05d5\u05d7 \u05d4\u05db\u05e4\u05e8"
         }, 
         {
@@ -362,7 +362,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/832/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Levy_Orli-s.jpg", 
-            "id": 832, 
+            "id": "832", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05d4 \u05dc\u05d6\u05db\u05d5\u05d9\u05d5\u05ea \u05d4\u05d9\u05dc\u05d3"
         }, 
         {
@@ -389,7 +389,7 @@ window.mit.member = {
             "party_name": "\u05e8\u05e2\"\u05de-\u05ea\u05e2\"\u05dc", 
             "resource_uri": "/api/v2/member/208/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/tibi_ahmed-s.jpg", 
-            "id": 208, 
+            "id": "208", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05ea \u05d7\u05e7\u05d9\u05e8\u05d4 \u05e4\u05e8\u05dc\u05de\u05e0\u05d8\u05e8\u05d9\u05ea \u05d1\u05e0\u05d5\u05e9\u05d0 \u05e7\u05dc\u05d9\u05d8\u05ea \u05e2\u05d5\u05d1\u05d3\u05d9\u05dd \u05e2\u05e8\u05d1\u05d9\u05dd \u05d1\u05e9\u05d9\u05e8\u05d5\u05ea \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8\u05d9"
         }, 
         {
@@ -416,7 +416,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/230/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/kara_ayoob-s.jpg", 
-            "id": 230, 
+            "id": "230", 
             "current_role_descriptions": "\u05e1\u05d2\u05df \u05e9\u05e8 \u05dc\u05e4\u05d9\u05ea\u05d5\u05d7 \u05d4\u05e0\u05d2\u05d1 \u05d5\u05d4\u05d2\u05dc\u05d9\u05dc"
         }, 
         {
@@ -443,7 +443,7 @@ window.mit.member = {
             "party_name": "\u05de\u05e8\u05e6", 
             "resource_uri": "/api/v2/member/200/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/gilon_ilan-s.jpg", 
-            "id": 200, 
+            "id": "200", 
             "current_role_descriptions": null
         }, 
         {
@@ -474,7 +474,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
             "resource_uri": "/api/v2/member/64/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/cabel_eitan-s.jpg", 
-            "id": 64, 
+            "id": "64", 
             "current_role_descriptions": null
         }, 
         {
@@ -493,7 +493,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/854/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Akram_Hasoon-s.jpg", 
-            "id": 854, 
+            "id": "854", 
             "current_role_descriptions": null
         }, 
         {
@@ -516,7 +516,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/730/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/aflalo_eli-s.jpg", 
-            "id": 730, 
+            "id": "730", 
             "current_role_descriptions": null
         }, 
         {
@@ -543,7 +543,7 @@ window.mit.member = {
             "party_name": "\u05e9\"\u05e1", 
             "resource_uri": "/api/v2/member/63/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/yishai_eli-s.jpg", 
-            "id": 63, 
+            "id": "63", 
             "current_role_descriptions": "\u05e1\u05d2\u05df \u05e8\u05d0\u05e9 \u05d4\u05de\u05de\u05e9\u05dc\u05d4, \u05e9\u05e8 \u05d4\u05e4\u05e0\u05d9\u05dd"
         }, 
         {
@@ -570,7 +570,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/785/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Miller_Alex-s.jpg", 
-            "id": 785, 
+            "id": "785", 
             "current_role_descriptions": null
         }, 
         {
@@ -597,7 +597,7 @@ window.mit.member = {
             "party_name": "\u05e9\"\u05e1", 
             "resource_uri": "/api/v2/member/210/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/cohen_amnon-s.jpg", 
-            "id": 210, 
+            "id": "210", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05ea \u05d4\u05e4\u05e0\u05d9\u05dd \u05d5\u05d4\u05d2\u05e0\u05ea \u05d4\u05e1\u05d1\u05d9\u05d1\u05d4"
         }, 
         {
@@ -620,7 +620,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/834/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Michaeli_Anastassia-s.jpg", 
-            "id": 834, 
+            "id": "834", 
             "current_role_descriptions": null
         }, 
         {
@@ -643,7 +643,7 @@ window.mit.member = {
             "party_name": "\u05e9\"\u05e1", 
             "resource_uri": "/api/v2/member/791/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/atias_ariel-s.jpg", 
-            "id": 791, 
+            "id": "791", 
             "current_role_descriptions": "\u05e9\u05e8 \u05d4\u05d1\u05d9\u05e0\u05d5\u05d9 \u05d5\u05d4\u05e9\u05d9\u05db\u05d5\u05df"
         }, 
         {
@@ -670,7 +670,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05d0\u05d9\u05d7\u05d5\u05d3 \u05d4\u05dc\u05d0\u05d5\u05de\u05d9", 
             "resource_uri": "/api/v2/member/752/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/eldad_aryeh-s.jpg", 
-            "id": 752, 
+            "id": "752", 
             "current_role_descriptions": null
         }, 
         {
@@ -689,7 +689,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/821/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Bibi_Arie-s.jpg", 
-            "id": 821, 
+            "id": "821", 
             "current_role_descriptions": null
         }, 
         {
@@ -724,14 +724,14 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/90/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/netanyahu_bibi-s.jpg", 
-            "id": 90, 
-            "current_role_descriptions": "\u05e8\u05d0\u05e9 \u05de\u05de\u05e9\u05dc\u05d4, \u05e9\u05e8 \u05dc\u05d0\u05e1\u05d8\u05e8\u05d8\u05d2\u05d9\u05d4 \u05db\u05dc\u05db\u05dc\u05d9\u05ea, \u05e9\u05e8 \u05dc\u05d0\u05d6\u05e8\u05d7\u05d9\u05dd \u05d5\u05ea\u05d9\u05e7\u05d9\u05dd, \u05e9\u05e8 \u05d4\u05d1\u05e8\u05d9\u05d0\u05d5\u05ea"
+            "id": "90", 
+            "current_role_descriptions": "\u05e8\u05d0\u05e9 \u05de\u05de\u05e9\u05dc\u05d4, \u05e9\u05e8 \u05d4\u05d7\u05d5\u05e5, \u05e9\u05e8 \u05dc\u05d0\u05e1\u05d8\u05e8\u05d8\u05d2\u05d9\u05d4 \u05db\u05dc\u05db\u05dc\u05d9\u05ea, \u05e9\u05e8 \u05dc\u05d0\u05d6\u05e8\u05d7\u05d9\u05dd \u05d5\u05ea\u05d9\u05e7\u05d9\u05dd, \u05e9\u05e8 \u05d4\u05d1\u05e8\u05d9\u05d0\u05d5\u05ea"
         }, 
         {
             "name": "\u05d1\u05e0\u05d9\u05de\u05d9\u05df (\u05e4\u05d5\u05d0\u05d3) \u05d1\u05df-\u05d0\u05dc\u05d9\u05e2\u05d6\u05e8", 
             "links": [
                 {
-                    "url": "http://www.facebook.com/profile.php?id=100000520773753&ref=ts#!/profile.php?id=1004869614&ref=ts", 
+                    "url": "https://www.facebook.com/FouadBenEliezer?fref=ts", 
                     "title": "\u05d1\u05e0\u05d9\u05de\u05d9\u05df (\u05e4\u05d5\u05d0\u05d3) \u05d1\u05df-\u05d0\u05dc\u05d9\u05e2\u05d6\u05e8 \u05d1\u05e4\u05d9\u05d9\u05e1\u05d1\u05d5\u05e7"
                 }, 
                 {
@@ -747,7 +747,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
             "resource_uri": "/api/v2/member/20/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/beneliezer_binyamin-s.jpg", 
-            "id": 20, 
+            "id": "20", 
             "current_role_descriptions": null
         }, 
         {
@@ -778,7 +778,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/725/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/saar_gidon-s.jpg", 
-            "id": 725, 
+            "id": "725", 
             "current_role_descriptions": "\u05e9\u05e8 \u05d4\u05d7\u05d9\u05e0\u05d5\u05da"
         }, 
         {
@@ -797,7 +797,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/96/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/ezra_gidon-s.jpg", 
-            "id": 96, 
+            "id": "96", 
             "current_role_descriptions": null
         }, 
         {
@@ -824,7 +824,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/723/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/gamliel_gila-s.jpg", 
-            "id": 723, 
+            "id": "723", 
             "current_role_descriptions": "\u05e1\u05d2\u05e0\u05d9\u05ea \u05e9\u05e8 \u05dc\u05e7\u05d9\u05d3\u05d5\u05dd \u05e6\u05e2\u05d9\u05e8\u05d9\u05dd, \u05e1\u05d8\u05d5\u05d3\u05e0\u05d8\u05d9\u05dd \u05d5\u05e0\u05e9\u05d9\u05dd \u05d1\u05de\u05e9\u05e8\u05d3 \u05e8\u05d0\u05e9 \u05d4\u05de\u05de\u05e9\u05dc\u05d4"
         }, 
         {
@@ -851,7 +851,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/734/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/erdan_gilad-s.jpg", 
-            "id": 734, 
+            "id": "734", 
             "current_role_descriptions": "\u05e9\u05e8 \u05dc\u05d4\u05d2\u05e0\u05ea \u05d4\u05e1\u05d1\u05d9\u05d1\u05d4"
         }, 
         {
@@ -870,7 +870,7 @@ window.mit.member = {
             "party_name": "\u05d1\u05dc\"\u05d3", 
             "resource_uri": "/api/v2/member/756/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/zahalka_jamal-s.jpg", 
-            "id": 756, 
+            "id": "756", 
             "current_role_descriptions": null
         }, 
         {
@@ -905,7 +905,7 @@ window.mit.member = {
             "party_name": "\u05d7\u05d3\"\u05e9", 
             "resource_uri": "/api/v2/member/780/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/khenin_dov-s.jpg", 
-            "id": 780, 
+            "id": "780", 
             "current_role_descriptions": null
         }, 
         {
@@ -928,7 +928,7 @@ window.mit.member = {
             "party_name": "\u05e9\"\u05e1", 
             "resource_uri": "/api/v2/member/7/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/azoulay_david-s.jpg", 
-            "id": 7, 
+            "id": "7", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05d4 \u05de\u05d9\u05d5\u05d7\u05d3\u05ea \u05dc\u05e4\u05e0\u05d9\u05d5\u05ea \u05d4\u05e6\u05d9\u05d1\u05d5\u05e8"
         }, 
         {
@@ -947,7 +947,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/805/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/David_Rotem-s.jpg", 
-            "id": 805, 
+            "id": "805", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05ea \u05d4\u05d7\u05d5\u05e7\u05d4, \u05d7\u05d5\u05e7 \u05d5\u05de\u05e9\u05e4\u05d8"
         }, 
         {
@@ -964,13 +964,17 @@ window.mit.member = {
                 {
                     "url": "http://www.knesset.gov.il/mk/heb/mk.asp?mk_individual_id_t=851", 
                     "title": "\u05d3\u05d5\u05e8\u05d5\u05df \u05d0\u05d1\u05d9\u05d8\u05dc \u05d1\u05d0\u05ea\u05e8 \u05d4\u05db\u05e0\u05e1\u05ea"
+                }, 
+                {
+                    "url": "http://he.wikipedia.org/wiki/%D7%93%D7%95%D7%A8%D7%95%D7%9F_%D7%90%D7%91%D7%99%D7%98%D7%9C", 
+                    "title": "\u05d4\u05e2\u05e8\u05da \"\u05d3\u05d5\u05e8\u05d5\u05df \u05d0\u05d1\u05d9\u05d8\u05dc\" \u05d1\u05d5\u05d9\u05e7\u05d9\u05e4\u05d3\u05d9\u05d4"
                 }
             ], 
             "absolute_url": "/member/851/%D7%93%D7%95%D7%A8%D7%95%D7%9F-%D7%90%D7%91%D7%99%D7%98%D7%9C/", 
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/851/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/avital_doron-s.jpg", 
-            "id": 851, 
+            "id": "851", 
             "current_role_descriptions": null
         }, 
         {
@@ -989,7 +993,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/8/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/itzik_dalia-s.jpg", 
-            "id": 8, 
+            "id": "8", 
             "current_role_descriptions": null
         }, 
         {
@@ -1016,7 +1020,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/88/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/meridor_dan-s.jpg", 
-            "id": 88, 
+            "id": "88", 
             "current_role_descriptions": "\u05e1\u05d2\u05df \u05e8\u05d0\u05e9 \u05d4\u05de\u05de\u05e9\u05dc\u05d4, \u05e9\u05e8 \u05d4\u05de\u05d5\u05e4\u05e7\u05d3 \u05e2\u05dc \u05e9\u05d9\u05e8\u05d5\u05ea\u05d9 \u05d4\u05de\u05d5\u05d3\u05d9\u05e2\u05d9\u05df \u05d5\u05d4\u05d5\u05d5\u05e2\u05d3\u05d4 \u05dc\u05d0\u05e0\u05e8\u05d2\u05d9\u05d4 \u05d0\u05d8\u05d5\u05de\u05d9\u05ea"
         }, 
         {
@@ -1039,14 +1043,14 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/833/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Ayalon_Daniel-s.jpg", 
-            "id": 833, 
+            "id": "833", 
             "current_role_descriptions": "\u05e1\u05d2\u05df \u05e9\u05e8 \u05d4\u05d7\u05d5\u05e5"
         }, 
         {
             "name": "\u05d3\u05e0\u05d9\u05d0\u05dc \u05d1\u05df-\u05e1\u05d9\u05de\u05d5\u05df", 
             "links": [
                 {
-                    "url": "http://www.facebook.com/pages/rwz-lknst-dbrw-m-hhkym-bpyysbwq/361038228813?v=wall#!/profile.php?id=1616387892&ref=ts", 
+                    "url": "https://www.facebook.com/knesset.Daniel.Ben.Simon?fref=ts", 
                     "title": "\u05d3\u05e0\u05d9\u05d0\u05dc \u05d1\u05df-\u05e1\u05d9\u05de\u05d5\u05df \u05d1\u05e4\u05d9\u05d9\u05e1\u05d1\u05d5\u05e7"
                 }, 
                 {
@@ -1062,7 +1066,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
             "resource_uri": "/api/v2/member/836/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Ben_Simon_Daniel-s.jpg", 
-            "id": 836, 
+            "id": "836", 
             "current_role_descriptions": null
         }, 
         {
@@ -1085,7 +1089,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05d1\u05d9\u05ea \u05d4\u05d9\u05d4\u05d5\u05d3\u05d9", 
             "resource_uri": "/api/v2/member/847/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Hershkowitz_Daniel-s.jpg", 
-            "id": 847, 
+            "id": "847", 
             "current_role_descriptions": "\u05e9\u05e8 \u05d4\u05de\u05d3\u05e2 \u05d5\u05d4\u05d8\u05db\u05e0\u05d5\u05dc\u05d5\u05d2\u05d9\u05d4"
         }, 
         {
@@ -1120,7 +1124,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/828/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/danon_danny-s.jpg", 
-            "id": 828, 
+            "id": "828", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05ea \u05d4\u05e2\u05dc\u05d9\u05d9\u05d4, \u05d4\u05e7\u05dc\u05d9\u05d8\u05d4 \u05d5\u05d4\u05ea\u05e4\u05d5\u05e6\u05d5\u05ea"
         }, 
         {
@@ -1143,7 +1147,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/768/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/elkin_zeev-s.jpg", 
-            "id": 768, 
+            "id": "768", 
             "current_role_descriptions": null
         }, 
         {
@@ -1166,7 +1170,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/16/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/boim_zev-s.jpg", 
-            "id": 16, 
+            "id": "16", 
             "current_role_descriptions": null
         }, 
         {
@@ -1193,7 +1197,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/817/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Bielski_Zeev-s.jpg", 
-            "id": 817, 
+            "id": "817", 
             "current_role_descriptions": null
         }, 
         {
@@ -1216,7 +1220,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/14/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/begin_beni-s.jpg", 
-            "id": 14, 
+            "id": "14", 
             "current_role_descriptions": "\u05e9\u05e8"
         }, 
         {
@@ -1243,7 +1247,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05d1\u05d9\u05ea \u05d4\u05d9\u05d4\u05d5\u05d3\u05d9", 
             "resource_uri": "/api/v2/member/194/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/orlev_zevulun-s.jpg", 
-            "id": 194, 
+            "id": "194", 
             "current_role_descriptions": null
         }, 
         {
@@ -1253,7 +1257,7 @@ window.mit.member = {
             "party_name": "\u05de\u05e8\u05e6", 
             "resource_uri": "/api/v2/member/201/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/galon_zahava-s.jpg", 
-            "id": 201, 
+            "id": "201", 
             "current_role_descriptions": null
         }, 
         {
@@ -1280,7 +1284,7 @@ window.mit.member = {
             "party_name": "\u05de\u05e8\u05e6", 
             "resource_uri": "/api/v2/member/5/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/oron_chaim-s.jpg", 
-            "id": 5, 
+            "id": "5", 
             "current_role_descriptions": null
         }, 
         {
@@ -1307,7 +1311,7 @@ window.mit.member = {
             "party_name": "\u05e9\"\u05e1", 
             "resource_uri": "/api/v2/member/795/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/amsalem_haim-s.jpg", 
-            "id": 795, 
+            "id": "795", 
             "current_role_descriptions": null
         }, 
         {
@@ -1334,7 +1338,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/212/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/katz_haim-s.jpg", 
-            "id": 212, 
+            "id": "212", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05ea \u05d4\u05e2\u05d1\u05d5\u05d3\u05d4, \u05d4\u05e8\u05d5\u05d5\u05d7\u05d4 \u05d5\u05d4\u05d1\u05e8\u05d9\u05d0\u05d5\u05ea"
         }, 
         {
@@ -1353,7 +1357,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/115/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/ramon_haim-s.jpg", 
-            "id": 115, 
+            "id": "115", 
             "current_role_descriptions": null
         }, 
         {
@@ -1376,7 +1380,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/837/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Amar_Hamad-s.jpg", 
-            "id": 837, 
+            "id": "837", 
             "current_role_descriptions": null
         }, 
         {
@@ -1395,7 +1399,7 @@ window.mit.member = {
             "party_name": "\u05d7\u05d3\"\u05e9", 
             "resource_uri": "/api/v2/member/789/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/swaid_hana-s.jpg", 
-            "id": 789, 
+            "id": "789", 
             "current_role_descriptions": null
         }, 
         {
@@ -1414,7 +1418,7 @@ window.mit.member = {
             "party_name": "\u05d1\u05dc\"\u05d3", 
             "resource_uri": "/api/v2/member/846/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Zuabi_Hanin-s.jpg", 
-            "id": 846, 
+            "id": "846", 
             "current_role_descriptions": null
         }, 
         {
@@ -1433,7 +1437,7 @@ window.mit.member = {
             "party_name": "\u05e8\u05e2\"\u05de-\u05ea\u05e2\"\u05dc", 
             "resource_uri": "/api/v2/member/13/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/elsana_taleb-s.jpg", 
-            "id": 13, 
+            "id": "13", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05d4 \u05de\u05d9\u05d5\u05d7\u05d3\u05ea \u05dc\u05de\u05d0\u05d1\u05e7 \u05d1\u05e0\u05d2\u05e2 \u05d4\u05e1\u05de\u05d9\u05dd"
         }, 
         {
@@ -1460,7 +1464,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/772/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/hasson_yoel-s.jpg", 
-            "id": 772, 
+            "id": "772", 
             "current_role_descriptions": null
         }, 
         {
@@ -1479,7 +1483,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/853/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/ZellnerYuval.jpg", 
-            "id": 853, 
+            "id": "853", 
             "current_role_descriptions": null
         }, 
         {
@@ -1510,7 +1514,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/695/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/steinitz_yuval-s.jpg", 
-            "id": 695, 
+            "id": "695", 
             "current_role_descriptions": "\u05e9\u05e8 \u05d4\u05d0\u05d5\u05e6\u05e8"
         }, 
         {
@@ -1537,7 +1541,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/809/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Plesner_yohanan-s.jpg", 
-            "id": 809, 
+            "id": "809", 
             "current_role_descriptions": null
         }, 
         {
@@ -1560,7 +1564,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/848/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Shamalov_Berkovich_Yulia-s.jpg", 
-            "id": 848, 
+            "id": "848", 
             "current_role_descriptions": null
         }, 
         {
@@ -1583,7 +1587,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/1/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/edelstein_yoel-s.jpg", 
-            "id": 1, 
+            "id": "1", 
             "current_role_descriptions": "\u05e9\u05e8 \u05d4\u05d4\u05e1\u05d1\u05e8\u05d4 \u05d5\u05d4\u05ea\u05e4\u05d5\u05e6\u05d5\u05ea"
         }, 
         {
@@ -1602,7 +1606,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
             "resource_uri": "/api/v2/member/697/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/tamir_yuli-s.jpg", 
-            "id": 697, 
+            "id": "697", 
             "current_role_descriptions": null
         }, 
         {
@@ -1625,7 +1629,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/824/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Peled_Yossi-s.jpg", 
-            "id": 824, 
+            "id": "824", 
             "current_role_descriptions": null
         }, 
         {
@@ -1644,7 +1648,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/728/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/edri_yaakov-s.jpg", 
-            "id": 728, 
+            "id": "728", 
             "current_role_descriptions": null
         }, 
         {
@@ -1667,7 +1671,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05d0\u05d9\u05d7\u05d5\u05d3 \u05d4\u05dc\u05d0\u05d5\u05de\u05d9", 
             "resource_uri": "/api/v2/member/840/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Yaakov_Katzeleh_Katz-s.jpg", 
-            "id": 840, 
+            "id": "840", 
             "current_role_descriptions": null
         }, 
         {
@@ -1686,7 +1690,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05d4\u05d3\u05d5\u05ea \u05d4\u05ea\u05d5\u05e8\u05d4", 
             "resource_uri": "/api/v2/member/216/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/lizman_yaakov-s.jpg", 
-            "id": 216, 
+            "id": "216", 
             "current_role_descriptions": "\u05e1\u05d2\u05df \u05e9\u05e8 \u05d4\u05d1\u05e8\u05d9\u05d0\u05d5\u05ea"
         }, 
         {
@@ -1705,7 +1709,7 @@ window.mit.member = {
             "party_name": "\u05e9\"\u05e1", 
             "resource_uri": "/api/v2/member/751/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/margi_yaakov-s.jpg", 
-            "id": 751, 
+            "id": "751", 
             "current_role_descriptions": "\u05e9\u05e8 \u05dc\u05e9\u05d9\u05e8\u05d5\u05ea\u05d9 \u05d3\u05ea"
         }, 
         {
@@ -1720,7 +1724,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/790/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/aharonovitch_yitzhak-s.jpg", 
-            "id": 790, 
+            "id": "790", 
             "current_role_descriptions": "\u05e9\u05e8 \u05dc\u05d1\u05d9\u05d8\u05d7\u05d5\u05df \u05e4\u05e0\u05d9\u05dd"
         }, 
         {
@@ -1733,13 +1737,17 @@ window.mit.member = {
                 {
                     "url": "http://www.herzog.co.il/index.asp", 
                     "title": "\u05d0\u05ea\u05e8 \u05d4\u05d0\u05d9\u05e0\u05d8\u05e8\u05e0\u05d8 \u05e9\u05dc \u05d9\u05e6\u05d7\u05e7 \u05d4\u05e8\u05e6\u05d5\u05d2"
+                }, 
+                {
+                    "url": "https://www.facebook.com/IsaacHerzogKneset?fref=ts", 
+                    "title": "\u05d9\u05e6\u05d7\u05e7 \u05d4\u05e8\u05e6\u05d5\u05d2 \u05d1\u05e4\u05d9\u05d9\u05e1\u05d1\u05d5\u05e7"
                 }
             ], 
             "absolute_url": "/member/740/%D7%99%D7%A6%D7%97%D7%A7-%D7%94%D7%A8%D7%A6%D7%95%D7%92/", 
             "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
             "resource_uri": "/api/v2/member/740/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/herzog_yitzhak-s.jpg", 
-            "id": 740, 
+            "id": "740", 
             "current_role_descriptions": null
         }, 
         {
@@ -1754,7 +1762,7 @@ window.mit.member = {
             "party_name": "\u05e9\"\u05e1", 
             "resource_uri": "/api/v2/member/50/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/vaknin_yizhak-s.jpg", 
-            "id": 50, 
+            "id": "50", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05ea \u05d4\u05d0\u05ea\u05d9\u05e7\u05d4"
         }, 
         {
@@ -1773,7 +1781,7 @@ window.mit.member = {
             "party_name": "\u05e9\"\u05e1", 
             "resource_uri": "/api/v2/member/65/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/cohen_yitzhak-s.jpg", 
-            "id": 65, 
+            "id": "65", 
             "current_role_descriptions": "\u05e1\u05d2\u05df \u05e9\u05e8 \u05d4\u05d0\u05d5\u05e6\u05e8"
         }, 
         {
@@ -1800,7 +1808,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/826/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/levin_yariv-s.jpg", 
-            "id": 826, 
+            "id": "826", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05ea \u05d4\u05db\u05e0\u05e1\u05ea"
         }, 
         {
@@ -1819,7 +1827,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05d4\u05d3\u05d5\u05ea \u05d4\u05ea\u05d5\u05e8\u05d4", 
             "resource_uri": "/api/v2/member/754/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/eichler_israel-s.jpg", 
-            "id": 754, 
+            "id": "754", 
             "current_role_descriptions": null
         }, 
         {
@@ -1842,7 +1850,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/781/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/hasson_israel-s.jpg", 
-            "id": 781, 
+            "id": "781", 
             "current_role_descriptions": null
         }, 
         {
@@ -1865,7 +1873,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/69/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/katz_yisrael-s.jpg", 
-            "id": 69, 
+            "id": "69", 
             "current_role_descriptions": "\u05e9\u05e8 \u05d4\u05ea\u05d7\u05d1\u05d5\u05e8\u05d4, \u05d4\u05ea\u05e9\u05ea\u05d9\u05d5\u05ea \u05d4\u05dc\u05d0\u05d5\u05de\u05d9\u05d5\u05ea \u05d5\u05d4\u05d1\u05d8\u05d9\u05d7\u05d5\u05ea \u05d1\u05d3\u05e8\u05db\u05d9\u05dd"
         }, 
         {
@@ -1888,7 +1896,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/829/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Shama_Carmel-s.jpg", 
-            "id": 829, 
+            "id": "829", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05ea \u05d4\u05db\u05dc\u05db\u05dc\u05d4"
         }, 
         {
@@ -1907,7 +1915,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/738/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/nass_lea-s.jpg", 
-            "id": 738, 
+            "id": "738", 
             "current_role_descriptions": "\u05e1\u05d2\u05e0\u05d9\u05ea \u05e9\u05e8 \u05dc\u05d0\u05d6\u05e8\u05d7\u05d9\u05dd \u05d5\u05ea\u05d9\u05e7\u05d9\u05dd"
         }, 
         {
@@ -1930,7 +1938,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/802/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/shemtov_lia-s.jpg", 
-            "id": 802, 
+            "id": "802", 
             "current_role_descriptions": null
         }, 
         {
@@ -1953,7 +1961,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/70/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/livnat_limor-s.jpg", 
-            "id": 70, 
+            "id": "70", 
             "current_role_descriptions": "\u05e9\u05e8\u05ea \u05d4\u05ea\u05e8\u05d1\u05d5\u05ea \u05d5\u05d4\u05e1\u05e4\u05d5\u05e8\u05d8"
         }, 
         {
@@ -1968,7 +1976,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05d4\u05d3\u05d5\u05ea \u05d4\u05ea\u05d5\u05e8\u05d4", 
             "resource_uri": "/api/v2/member/103/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/porush_meir-s.jpg", 
-            "id": 103, 
+            "id": "103", 
             "current_role_descriptions": null
         }, 
         {
@@ -1983,7 +1991,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/119/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/shitrit_meir-s.jpg", 
-            "id": 119, 
+            "id": "119", 
             "current_role_descriptions": null
         }, 
         {
@@ -1998,7 +2006,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/727/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/whbee_majalli-s.jpg", 
-            "id": 727, 
+            "id": "727", 
             "current_role_descriptions": null
         }, 
         {
@@ -2013,7 +2021,7 @@ window.mit.member = {
             "party_name": "\u05d7\u05d3\"\u05e9", 
             "resource_uri": "/api/v2/member/197/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/baraka_mohamed-s.jpg", 
-            "id": 197, 
+            "id": "197", 
             "current_role_descriptions": null
         }, 
         {
@@ -2044,7 +2052,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/9/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/eitan_michael-s.jpg", 
-            "id": 9, 
+            "id": "9", 
             "current_role_descriptions": "\u05e9\u05e8 \u05d4\u05de\u05d5\u05e4\u05e7\u05d3 \u05e2\u05dc \u05e9\u05d9\u05e4\u05d5\u05e8 \u05d4\u05e9\u05d9\u05e8\u05d5\u05ea \u05d4\u05de\u05de\u05e9\u05dc\u05ea\u05d9 \u05dc\u05e6\u05d9\u05d1\u05d5\u05e8"
         }, 
         {
@@ -2067,7 +2075,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05d0\u05d9\u05d7\u05d5\u05d3 \u05d4\u05dc\u05d0\u05d5\u05de\u05d9", 
             "resource_uri": "/api/v2/member/841/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Ben_Ari_Michael-s.jpg", 
-            "id": 841, 
+            "id": "841", 
             "current_role_descriptions": null
         }, 
         {
@@ -2094,7 +2102,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/831/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/regev_miri-s.jpg", 
-            "id": 831, 
+            "id": "831", 
             "current_role_descriptions": null
         }, 
         {
@@ -2109,7 +2117,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05d4\u05d3\u05d5\u05ea \u05d4\u05ea\u05d5\u05e8\u05d4", 
             "resource_uri": "/api/v2/member/839/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/moses_menachem-s.jpg", 
-            "id": 839, 
+            "id": "839", 
             "current_role_descriptions": "\u05e1\u05d2\u05df \u05e9\u05e8 \u05d4\u05d7\u05d9\u05e0\u05d5\u05da"
         }, 
         {
@@ -2124,7 +2132,7 @@ window.mit.member = {
             "party_name": "\u05e8\u05e2\"\u05de-\u05ea\u05e2\"\u05dc", 
             "resource_uri": "/api/v2/member/844/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Ganaim_Masud-s.jpg", 
-            "id": 844, 
+            "id": "844", 
             "current_role_descriptions": null
         }, 
         {
@@ -2151,7 +2159,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/91/", 
             "img_url": "http://oknesset.org/static/img/mks/marina-solodkin.jpg", 
-            "id": 91, 
+            "id": "91", 
             "current_role_descriptions": null
         }, 
         {
@@ -2166,7 +2174,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05d4\u05d3\u05d5\u05ea \u05d4\u05ea\u05d5\u05e8\u05d4", 
             "resource_uri": "/api/v2/member/35/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/gafni_moshe-s.jpg", 
-            "id": 35, 
+            "id": "35", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05ea \u05d4\u05db\u05e1\u05e4\u05d9\u05dd"
         }, 
         {
@@ -2189,7 +2197,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/823/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/yaalon_moshe-s.jpg", 
-            "id": 823, 
+            "id": "823", 
             "current_role_descriptions": "\u05de\u05e9\u05e0\u05d4 \u05dc\u05e8\u05d0\u05e9 \u05d4\u05de\u05de\u05e9\u05dc\u05d4, \u05e9\u05e8 \u05dc\u05e0\u05d5\u05e9\u05d0\u05d9\u05dd \u05d0\u05e1\u05d8\u05e8\u05d8\u05d2\u05d9\u05d9\u05dd"
         }, 
         {
@@ -2212,7 +2220,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/731/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/cahlon_moshe-s.jpg", 
-            "id": 731, 
+            "id": "731", 
             "current_role_descriptions": "\u05e9\u05e8 \u05d4\u05ea\u05e7\u05e9\u05d5\u05e8\u05ea, \u05e9\u05e8 \u05d4\u05e8\u05d5\u05d5\u05d7\u05d4 \u05d5\u05d4\u05e9\u05e8\u05d5\u05ea\u05d9\u05dd \u05d4\u05d7\u05d1\u05e8\u05ea\u05d9\u05d9\u05dd"
         }, 
         {
@@ -2227,7 +2235,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/838/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/matalon_moshe_mutz-s.jpg", 
-            "id": 838, 
+            "id": "838", 
             "current_role_descriptions": null
         }, 
         {
@@ -2246,7 +2254,7 @@ window.mit.member = {
             "party_name": "\u05e9\"\u05e1", 
             "resource_uri": "/api/v2/member/222/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/nahari_meshulam-s.jpg", 
-            "id": 222, 
+            "id": "222", 
             "current_role_descriptions": "\u05e9\u05e8"
         }, 
         {
@@ -2273,7 +2281,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05e2\u05e6\u05de\u05d0\u05d5\u05ea", 
             "resource_uri": "/api/v2/member/204/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/vilnai_matan-s.jpg", 
-            "id": 204, 
+            "id": "204", 
             "current_role_descriptions": null
         }, 
         {
@@ -2296,7 +2304,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/818/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/nachman_shai-s.jpg", 
-            "id": 818, 
+            "id": "818", 
             "current_role_descriptions": null
         }, 
         {
@@ -2327,7 +2335,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/850/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Nino_Abesadze-s.jpg", 
-            "id": 850, 
+            "id": "850", 
             "current_role_descriptions": null
         }, 
         {
@@ -2358,7 +2366,7 @@ window.mit.member = {
             "party_name": "\u05de\u05e8\u05e6", 
             "resource_uri": "/api/v2/member/843/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Horowitz_Nitzan-s.jpg", 
-            "id": 843, 
+            "id": "843", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05d4 \u05de\u05d9\u05d5\u05d7\u05d3\u05ea \u05dc\u05d1\u05e2\u05d9\u05d9\u05ea \u05d4\u05e2\u05d5\u05d1\u05d3\u05d9\u05dd \u05d4\u05d6\u05e8\u05d9\u05dd"
         }, 
         {
@@ -2381,7 +2389,7 @@ window.mit.member = {
             "party_name": "\u05e9\"\u05e1", 
             "resource_uri": "/api/v2/member/206/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/zeev_nissim-s.jpg", 
-            "id": 206, 
+            "id": "206", 
             "current_role_descriptions": null
         }, 
         {
@@ -2396,7 +2404,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/78/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/landver_sofa-s.jpg", 
-            "id": 78, 
+            "id": "78", 
             "current_role_descriptions": "\u05e9\u05e8\u05d4 \u05dc\u05e7\u05dc\u05d9\u05d8\u05ea \u05e2\u05dc\u05d9\u05d9\u05d4"
         }, 
         {
@@ -2419,7 +2427,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/786/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/miznikov_stas-s.jpg", 
-            "id": 786, 
+            "id": "786", 
             "current_role_descriptions": "\u05e9\u05e8 \u05d4\u05ea\u05d9\u05d9\u05e8\u05d5\u05ea"
         }, 
         {
@@ -2446,7 +2454,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/122/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/shalom_silvan-s.jpg", 
-            "id": 122, 
+            "id": "122", 
             "current_role_descriptions": "\u05de\u05e9\u05e0\u05d4 \u05dc\u05e8\u05d0\u05e9 \u05d4\u05de\u05de\u05e9\u05dc\u05d4, \u05e9\u05e8 \u05dc\u05e9\u05d9\u05ea\u05d5\u05e3 \u05e4\u05e2\u05d5\u05dc\u05d4 \u05d0\u05d9\u05d6\u05d5\u05e8\u05d9, \u05e9\u05e8 \u05dc\u05e4\u05d9\u05ea\u05d5\u05d7 \u05d4\u05e0\u05d2\u05d1 \u05d5\u05d4\u05d2\u05dc\u05d9\u05dc"
         }, 
         {
@@ -2461,7 +2469,7 @@ window.mit.member = {
             "party_name": "\u05d1\u05dc\"\u05d3", 
             "resource_uri": "/api/v2/member/807/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/naffa_said-s.jpg", 
-            "id": 807, 
+            "id": "807", 
             "current_role_descriptions": null
         }, 
         {
@@ -2484,7 +2492,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/77/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/landau_uzi-s.jpg", 
-            "id": 77, 
+            "id": "77", 
             "current_role_descriptions": "\u05e9\u05e8 \u05d4\u05d0\u05e0\u05e8\u05d2\u05d9\u05d4 \u05d5\u05d4\u05de\u05d9\u05dd"
         }, 
         {
@@ -2515,7 +2523,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05e2\u05e6\u05de\u05d0\u05d5\u05ea", 
             "resource_uri": "/api/v2/member/849/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Einat_Wilf-s.jpg", 
-            "id": 849, 
+            "id": "849", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05ea \u05d4\u05d7\u05d9\u05e0\u05d5\u05da, \u05d4\u05ea\u05e8\u05d1\u05d5\u05ea \u05d5\u05d4\u05e1\u05e4\u05d5\u05e8\u05d8"
         }, 
         {
@@ -2526,23 +2534,23 @@ window.mit.member = {
                     "title": "\u05d4\u05d0\u05ea\u05e8 \u05e9\u05dc \u05e2\u05de\u05d9\u05e8 \u05e4\u05e8\u05e5"
                 }, 
                 {
-                    "url": "http://www.facebook.com/profile.php?id=1007059687\n", 
-                    "title": "\u05e2\u05de\u05d9\u05e8 \u05e4\u05e8\u05e5 \u05d1\u05e4\u05d9\u05d9\u05e1\u05d1\u05d5\u05e7"
-                }, 
-                {
                     "url": "http://www.amirperetz.co.il/?feed=atom", 
                     "title": "\u05d4\u05e8\u05e1\u05e1 \u05e9\u05dc \u05e2\u05de\u05d9\u05e8 \u05e4\u05e8\u05e5"
                 }, 
                 {
                     "url": "http://www.knesset.gov.il/mk/heb/mk.asp?mk_individual_id_t=105", 
                     "title": "\u05e2\u05de\u05d9\u05e8 \u05e4\u05e8\u05e5 \u05d1\u05d0\u05ea\u05e8 \u05d4\u05db\u05e0\u05e1\u05ea"
+                }, 
+                {
+                    "url": "https://www.facebook.com/Peretz.Amir?fref=ts", 
+                    "title": "\u05e2\u05de\u05d9\u05e8 \u05e4\u05e8\u05e5 \u05d1\u05e4\u05d9\u05d9\u05e1\u05d1\u05d5\u05e7"
                 }
             ], 
             "absolute_url": "/member/105/%D7%A2%D7%9E%D7%99%D7%A8-%D7%A4%D7%A8%D7%A5/", 
             "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
             "resource_uri": "/api/v2/member/105/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/peretz_amir-s.jpg", 
-            "id": 105, 
+            "id": "105", 
             "current_role_descriptions": null
         }, 
         {
@@ -2557,7 +2565,7 @@ window.mit.member = {
             "party_name": "\u05d7\u05d3\"\u05e9", 
             "resource_uri": "/api/v2/member/842/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Agbaria_Afou-s.jpg", 
-            "id": 842, 
+            "id": "842", 
             "current_role_descriptions": null
         }, 
         {
@@ -2576,7 +2584,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/776/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/schneller_otniel-s.jpg", 
-            "id": 776, 
+            "id": "776", 
             "current_role_descriptions": null
         }, 
         {
@@ -2591,7 +2599,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/835/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Kirshenbaum_Faina-s.jpg", 
-            "id": 835, 
+            "id": "835", 
             "current_role_descriptions": null
         }, 
         {
@@ -2614,7 +2622,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/45/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/hanegbi_tzahi-s.jpg", 
-            "id": 45, 
+            "id": "45", 
             "current_role_descriptions": null
         }, 
         {
@@ -2637,7 +2645,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/827/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Pinyan_Zion-s.jpg", 
-            "id": 827, 
+            "id": "827", 
             "current_role_descriptions": null
         }, 
         {
@@ -2668,7 +2676,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/825/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Hotovely_Tzipi-s.jpg", 
-            "id": 825, 
+            "id": "825", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05d4 \u05dc\u05e7\u05d9\u05d3\u05d5\u05dd \u05de\u05e2\u05de\u05d3 \u05d4\u05d0\u05d9\u05e9\u05d4"
         }, 
         {
@@ -2695,7 +2703,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/213/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/livnee_zipi-s.jpg", 
-            "id": 213, 
+            "id": "213", 
             "current_role_descriptions": null
         }, 
         {
@@ -2722,7 +2730,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05dc\u05d9\u05db\u05d5\u05d3", 
             "resource_uri": "/api/v2/member/114/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/rivlin_rubi-s.jpg", 
-            "id": 114, 
+            "id": "114", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05ea \u05d4\u05e4\u05d9\u05e8\u05d5\u05e9\u05d9\u05dd"
         }, 
         {
@@ -2737,7 +2745,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
             "resource_uri": "/api/v2/member/758/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/majadele_ralev-s.jpg", 
-            "id": 758, 
+            "id": "758", 
             "current_role_descriptions": null
         }, 
         {
@@ -2756,7 +2764,7 @@ window.mit.member = {
             "party_name": "\u05d9\u05e9\u05e8\u05d0\u05dc \u05d1\u05d9\u05ea\u05e0\u05d5", 
             "resource_uri": "/api/v2/member/793/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/ilatov_robert-s.jpg", 
-            "id": 793, 
+            "id": "793", 
             "current_role_descriptions": null
         }, 
         {
@@ -2775,7 +2783,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/819/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Tiviaev_Robert-s.jpg", 
-            "id": 819, 
+            "id": "819", 
             "current_role_descriptions": null
         }, 
         {
@@ -2794,7 +2802,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/724/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/avraham_ruhama-s.jpg", 
-            "id": 724, 
+            "id": "724", 
             "current_role_descriptions": null
         }, 
         {
@@ -2809,7 +2817,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/735/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/baron_roni-s.jpg", 
-            "id": 735, 
+            "id": "735", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05ea \u05d4\u05d7\u05d5\u05e5 \u05d5\u05d4\u05d1\u05d9\u05d8\u05d7\u05d5\u05df"
         }, 
         {
@@ -2828,7 +2836,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/774/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/tirosh_ronit-s.jpg", 
-            "id": 774, 
+            "id": "774", 
             "current_role_descriptions": "\u05d9\u05d5\"\u05e8 \u05d5\u05e2\u05d3\u05ea  \u05d4\u05de\u05d3\u05e2  \u05d5\u05d4\u05d8\u05db\u05e0\u05d5\u05dc\u05d5\u05d2\u05d9\u05d4"
         }, 
         {
@@ -2855,7 +2863,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/820/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Adatto_Rachel-s.jpg", 
-            "id": 820, 
+            "id": "820", 
             "current_role_descriptions": null
         }, 
         {
@@ -2874,7 +2882,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/720/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/mofaz_shaul-s.jpg", 
-            "id": 720, 
+            "id": "720", 
             "current_role_descriptions": null
         }, 
         {
@@ -2893,7 +2901,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/804/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/hermesh_shai-s.jpg", 
-            "id": 804, 
+            "id": "804", 
             "current_role_descriptions": null
         }, 
         {
@@ -2908,7 +2916,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05e2\u05e6\u05de\u05d0\u05d5\u05ea", 
             "resource_uri": "/api/v2/member/812/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/Shnaan_Shachiv-s.jpg", 
-            "id": 812, 
+            "id": "812", 
             "current_role_descriptions": null
         }, 
         {
@@ -2931,7 +2939,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05e2\u05e6\u05de\u05d0\u05d5\u05ea", 
             "resource_uri": "/api/v2/member/123/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/simhon_shalom-s.jpg", 
-            "id": 123, 
+            "id": "123", 
             "current_role_descriptions": "\u05e9\u05e8 \u05d4\u05ea\u05e2\u05e9\u05d9\u05d9\u05d4, \u05d4\u05de\u05e1\u05d7\u05e8 \u05d5\u05d4\u05ea\u05e2\u05e1\u05d5\u05e7\u05d4"
         }, 
         {
@@ -2962,7 +2970,7 @@ window.mit.member = {
             "party_name": "\u05d4\u05e2\u05d1\u05d5\u05d3\u05d4", 
             "resource_uri": "/api/v2/member/782/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/yacimovich_shelly-s.jpg", 
-            "id": 782, 
+            "id": "782", 
             "current_role_descriptions": null
         }, 
         {
@@ -2981,7 +2989,7 @@ window.mit.member = {
             "party_name": "\u05e7\u05d3\u05d9\u05de\u05d4", 
             "resource_uri": "/api/v2/member/810/", 
             "img_url": "http://www.knesset.gov.il/mk/images/members/molla_shlomo-s.jpg", 
-            "id": 810, 
+            "id": "810", 
             "current_role_descriptions": null
         }
     ]
