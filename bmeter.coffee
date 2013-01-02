@@ -321,7 +321,10 @@ class root.JSONPCollection extends root.PromisedCollection
     initialize: ->
         super(arguments...)
     parse: (response, xhr) ->
-        return response.objects
+        ret = response.objects
+        _.each ret, (obj) ->
+            obj.id = parseInt obj.id
+        ret
 
 class root.PartyList extends root.JSONPCollection
     model: root.Party
@@ -344,7 +347,7 @@ class root.AgendaList extends root.JSONPCollection
     comparator: (agenda) ->
         -agenda.get 'num_followers'
     syncOptions:
-        xxrepo: window.mit.agenda
+        repo: window.mit.agenda
         sync: root.JSONPCachableSync('agendas')
 
     resetWeights: (weights) ->
@@ -429,11 +432,8 @@ class root.PartyDeclarationList extends root.NewbiesList
     }]
     sync: multiSync
     parse: (data, xhr) =>
-        ret = _.filter super(arguments...), (obj) =>
+        _.filter super(arguments...), (obj) =>
             not obj.party_name? or obj.party_name == @DECLARATION_PARTY_ID
-        _.each ret, (obj) ->
-            obj.id = parseInt obj.id
-        ret
     initialize: ->
         super arguments...
         @agendas_fetching = $.Deferred().resolve()

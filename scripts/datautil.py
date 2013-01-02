@@ -46,8 +46,8 @@ def process_member_agenda(member_agenda):
 def combine_agendas(member_path, member_agendas_path, output_path):
     data = json.load(open(member_path))
     for member in data['objects']:
-        #print 'Handling member: %d' % member['id']
-        member_agenda = json.load(open(member_agendas_path % member['id']))
+        #print 'Handling member: %r' % member['id']
+        member_agenda = json.load(open(member_agendas_path % int(member['id'])))
         member['name'] = member['name']
         member['agendas'] = process_member_agenda(member_agenda)
     json.dump(data, open(output_path, 'w'), indent=4)
