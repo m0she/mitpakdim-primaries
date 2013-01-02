@@ -2,15 +2,21 @@
     "objects" : [
         {
             "id": 2,
-			"picture_url" : "http://upload.wikimedia.org/wikipedia/commons/9/99/Likud_Logo.png"
+			"picture_url" : "http://upload.wikimedia.org/wikipedia/commons/9/99/Likud_Logo.png",
+			"CA_WEBSITE" : "https://www.likud.org.il",
+			"CA_FACEBOOK" : "https://www.facebook.com/LikudNetanyahu?ref=ts&fref=ts"
         },
 		{
             "id": 5,
-			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/0/01/Israelblogo.JPG"
+			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/0/01/Israelblogo.JPG",
+			"CA_WEBSITE" : "http://www.beytenu.org.il",
+			"CA_FACEBOOK" : "https://www.facebook.com/beytenu?fref=ts"
         },
 		{
             "id": 7,
-			"picture_url" : "http://www.nrg.co.il/images/archive/300x225/1/002/608.jpg"
+			"picture_url" : "http://www.nrg.co.il/images/archive/300x225/1/002/608.jpg",
+			"CA_WEBSITE" : "http://shas.org.il/Web/He/Default.aspx",
+			"CA_FACEBOOK" : "https://www.facebook.com/pages/%D7%9E%D7%A4%D7%9C%D7%92%D7%AA-%D7%A9%D7%A1-%D7%93%D7%A3-%D7%94%D7%AA%D7%95%D7%9E%D7%9B%D7%99%D7%9D/456218841084113"
         },
 		{
             "id": 13,
@@ -18,39 +24,57 @@
         },
 		{
             "id": 4,
-			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/a/a6/Yahadutlogo.JPG"
+			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/a/a6/Yahadutlogo.JPG",
+			"CA_WEBSITE" : "http://he.wikipedia.org/wiki/%D7%99%D7%94%D7%93%D7%95%D7%AA_%D7%94%D7%AA%D7%95%D7%A8%D7%94",
+			"CA_FACEBOOK" : "https://www.facebook.com/pages/%D7%99%D7%94%D7%93%D7%95%D7%AA-%D7%94%D7%AA%D7%95%D7%A8%D7%94-%D7%A2%D7%9E%D7%95%D7%93-%D7%94%D7%AA%D7%9E%D7%99%D7%9B%D7%94/170579816415448?fref=ts"			
         },
 		{
             "id": 12,
-			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/4/43/%D7%94%D7%91%D7%99%D7%AA-%D7%94%D7%99%D7%94%D7%95%D7%93%D7%99-%D7%9E%D7%A4%D7%93%D7%9C-%D7%94%D7%97%D7%93%D7%A9%D7%94-1.png"
+			"picture_url" : "http://www.mafdali.co.il/main/src/logo.jpg",
+			"CA_WEBSITE" : "http://www.mafdali.co.il/index.php",
+			"CA_FACEBOOK" : "https://www.facebook.com/young.bait.yehudi"
         },
 		{
             "id": 6,
-			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/e/ec/Logo_of_the_Kadima_Party.svg"
+			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/e/ec/Logo_of_the_Kadima_Party.svg",
+			"CA_WEBSITE" : "http://www.kadima.org.il",
+			"CA_FACEBOOK" : "https://www.facebook.com/kadimaparty"
         },
 		{
             "id": 3,
-			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/a/a6/Logo_of_the_Israeli_Labor_Party.svg"
+			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/a/a6/Logo_of_the_Israeli_Labor_Party.svg",
+			"CA_WEBSITE" : "http://havoda.org.il/Web/Default.aspx",
+			"CA_FACEBOOK" : "https://www.facebook.com/havoda"
         },
 		{
             "id": 8,
-			"picture_url" : "http://upload.wikimedia.org/wikipedia/commons/1/1c/NewWorld.jpg"
+			"picture_url" : "http://upload.wikimedia.org/wikipedia/commons/1/1c/NewWorld.jpg",
+			"CA_WEBSITE" : "http://hadash.org.il/",
+			"CA_FACEBOOK" : "https://www.facebook.com/hadash.org.il"
         },
 		{
             "id": 10,
-			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/d/d1/Raamtaallogo.jpg"
+			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/d/d1/Raamtaallogo.jpg",
+			"CA_WEBSITE" : "http://www.a-m-c.org/?path=article&file=archive",
+			"CA_FACEBOOK" : "http://he.wikipedia.org/wiki/%D7%A8%D7%A2%22%D7%9E-%D7%AA%D7%A2%22%D7%9C"
         },
 		{
             "id": 1,
-			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/6/68/%D7%94%D7%90%D7%99%D7%97%D7%95%D7%93-%D7%94%D7%9C%D7%90%D7%95%D7%9E%D7%99-02.png"
+			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/6/68/%D7%94%D7%90%D7%99%D7%97%D7%95%D7%93-%D7%94%D7%9C%D7%90%D7%95%D7%9E%D7%99-02.png",
+			"CA_WEBSITE" : "http://www.leumi.org.il/",
+			"CA_FACEBOOK" : "https://www.facebook.com/ichoodLeumi"
         },
 		{
             "id": 11,
-			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/8/8b/Meretz_2012_Logo.jpg"
+			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/8/8b/Meretz_2012_Logo.jpg",
+			"CA_WEBSITE" : "http://meretz.org.il/",
+			"CA_FACEBOOK" : "https://www.facebook.com/Meretz"
         },
 		{
             "id": 9,
-			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/d/d9/Baladlogo.jpg"
+			"picture_url" : "http://upload.wikimedia.org/wikipedia/he/d/d9/Baladlogo.jpg",
+			"CA_WEBSITE" : "http://he.wikipedia.org/wiki/%D7%91%D7%A8%D7%99%D7%AA_%D7%9C%D7%90%D7%95%D7%9E%D7%99%D7%AA_%D7%93%D7%9E%D7%95%D7%A7%D7%A8%D7%98%D7%99%D7%AA",
+			"CA_FACEBOOK" : "https://www.facebook.com/balad2013"
         }
     ]
 }

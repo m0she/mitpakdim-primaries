@@ -1,7 +1,9 @@
 #!/bin/bash
 
-$scripts_dir = $(dirname $0)
-$data_dir = $scripts_dir/../data
+scripts_dir=$(cd $(dirname $0); pwd ); 
+data_dir=${scripts_dir}/../data
+datautils="python $scripts_dir/datautil.py"
+
 cd $data_dir
 if [ ! -e member_extra.json ]; then
     echo 'data directory should contain member.ids file'
@@ -16,13 +18,13 @@ function get_with_retry {
 get_with_retry http://oknesset.org/api/v2/party/ party.json
 get_with_retry "http://www.oknesset.org/api/v2/member/?extra_fields=current_role_descriptions,party_name,links" member.json
 get_with_retry "http://oknesset.org/api/v2/agenda/?extra_fields=num_followers,image,parties" agenda.json
-python $scripts_dir/datautil.py jsonp party.json
-python $scripts_dir/datautil.py jsonp party_extra.json
-python $scripts_dir/datautil.py jsonp member.json
-python $scripts_dir/datautil.py jsonp member_extra.json
-python $scripts_dir/datautil.py jsonp agenda.json
+$datautils jsonp party.json
+$datautils jsonp party_extra.json
+$datautils jsonp member.json
+$datautils jsonp member_extra.json
+$datautils jsonp agenda.json
 
-grep '"id"' member.jsonp | awk '{print $2'} | cut -d, -f1 > member.ids
+grep '"id"' member.jsonp | awk '{print $2'} | cut -d, -f1 | sed -e 's/\"//g' > member.ids
 
 cd member-agendas
 for i in $(cat ../member.ids); do
@@ -30,5 +32,5 @@ for i in $(cat ../member.ids); do
 done
 cd ..
 
-python $scripts_dir/datautil.py combine combined_members.json
-python $scripts_dir/datautil.py jsonp combined_members.json
+$datautils combine combined_members.json
+$datautils jsonp combined_members.json

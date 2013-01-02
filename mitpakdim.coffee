@@ -1,4 +1,5 @@
 ############### UTILITIES ##############
+root = (window.mit = window.mit || {})
 
 String::repeat = ( num ) ->
     new Array( num + 1 ).join( this )
@@ -173,6 +174,24 @@ class root.Party extends Backbone.Model
     defaults:
         score : 'N/A'
         selected: false
+    parseLinks : (data) ->
+        if data.links and _.isArray data.links
+            _.each data.links, (link) ->
+                if link?.title?.search('פייסבוק') isnt -1 or link?.title?.search(/facebook/i) isnt -1
+                    data.facebook_link_url = link.url
+
+        data.facebook_link_url = data.facebook_link_url || data.CA_FACEBOOK;
+        data.homepage_link_url = data.CA_WEBSITE;
+
+        if data.absolute_url
+            data.oknesset_link_url = "http://oknesset.org" + data.absolute_url
+        data
+
+    parse : (data, xhr) ->
+        data = super(data)
+        @parseLinks data
+        data
+
     getAgendas: ->
         ret = {}
         name = @get 'name'
@@ -229,6 +248,19 @@ class root.Newbie extends root.Candidate
             ret.agendas = parse_weights ret.agendas
         ret
 class root.PartyDeclaration extends root.Newbie
+    parseLinks : (data) ->
+        if data.links and _.isArray data.links
+            _.each data.links, (link) ->
+                if link?.title?.search('פייסבוק') isnt -1 or link?.title?.search(/facebook/i) isnt -1
+                    data.facebook_link_url = link.url
+
+        data.facebook_link_url = data.facebook_link_url || data.CA_FACEBOOK;
+        data.homepage_link_url = data.CA_WEBSITE;
+
+        if data.absolute_url
+            data.oknesset_link_url = "http://oknesset.org" + data.absolute_url
+        data
+
     parse: (response, xhr) ->
         ret = super arguments...
         if party = root.lists.parties.where({ name: ret.name })[0]
@@ -936,7 +968,7 @@ class root.Router extends Backbone.Router
         root.global.trigger 'change_party', undefined
         @setMode @MODE_PARTIES
 
-    byPartyNoDistrict: (party_id, weights) -> @party(party_id, undefined, weights)
+    byPartyNoDistrict: (party_id, weights) -> @byParty(party_id, undefined, weights)
     byParty: (party_id, district_id, weights) ->
         console.log 'party', arguments
         model = root.lists.parties.where(id: Number(party_id))[0]

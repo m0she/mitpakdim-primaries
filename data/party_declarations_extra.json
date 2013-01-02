@@ -6,7 +6,27 @@
         },
         {
             "id": 1022,
-			"picture_url" : "http://graph.facebook.com/AleYarokLiberal/picture?type=square"
+			"picture_url" : "http://graph.facebook.com/AleYarokLiberal/picture?type=square",
+			"CA_WEBSITE" : "http://aleyarok.org.il",
+			"CA_FACEBOOK" : "https://www.facebook.com/AleYarokLiberal"
+        },
+        {
+            "id": 1006,
+			"picture_url" : "http://graph.facebook.com/nanach4y/picture?type=square",
+			"CA_WEBSITE" : "http://www.nanach.co.il",
+			"CA_FACEBOOK" : "https://www.facebook.com/nanach4y"
+        },
+        {
+            "id": 1027,
+			"picture_url" : "https://graph.facebook.com/Hatnua/picture?type=square",
+			"CA_WEBSITE" : "http://www.tzipilivni.co.il/",
+			"CA_FACEBOOK" : "https://www.facebook.com/Hatnua"
+        },
+        {
+            "id": 1001,
+			"picture_url" : "https://graph.facebook.com/Or.party/picture?type=square",
+			"CA_WEBSITE" : "http://www.orr.org.il/",
+			"CA_FACEBOOK" : "https://www.facebook.com/Or.party"
         }
     ]
 }

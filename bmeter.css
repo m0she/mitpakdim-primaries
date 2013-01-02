@@ -1,0 +1,136 @@
+.sprite,
+.agenda_item .ui-slider-plus-button,
+.agenda_item .ui-slider-minus-button,
+.agenda_item .ui-slider.minus .ui-slider-handle.ui-state-default,
+.agenda_item .ui-slider.plus .ui-slider-handle.ui-state-default,
+.agenda_item .ui-slider-handle.ui-state-default {
+    background-image: url(./static/sprite-02.png) !important; /*needed to bypase madac style*/
+}
+.icon-notice{ background-position: 0 -225px; width: 20px; height: 20px; }
+.icon-fb{ background-position: 0 -295px; width: 20px; height: 21px; }
+.icon-ok{ background-position: 0 -366px; width: 20px; height: 21px; }
+.icon-person{ background-position: 0 -437px; width: 20px; height: 20px; }
+.icon-web{ background-position: 0 -507px; width: 20px; height: 18px; }
+.icon-minus,
+.agenda_item .ui-slider-minus-button{
+    background-position: 0 -658px; width: 22px; height: 22px;
+}
+.icon-plus,
+.agenda_item .ui-slider-plus-button{
+    background-position: 0 -730px; width: 22px; height: 22px;
+}
+.icon-extra-info{
+    background-position: 0 0; width: 20px; height: 21px;
+}
+.icon-grey_handle,
+.agenda_item .ui-slider-handle.ui-state-default{
+    background-position: 0 -148px; width: 27px; height: 27px;
+}
+.icon-blue_handle,
+.agenda_item .ui-slider.plus .ui-slider-handle.ui-state-default{
+    background-position: 0 -71px; width: 27px; height: 27px;
+}
+.icon-yellow_handle,
+.agenda_item .ui-slider.minus .ui-slider-handle.ui-state-default{
+    background-position: 0 -802px; width: 28px; height: 28px;
+}
+
+.main-logo{ background-position: 0 -575px; width: 142px; height: 33px; }
+
+.page_top_bar .text .main-logo {
+    display : inline-block;
+    margin-top : -5px;
+    margin-right : 19px;
+    vertical-align : middle;
+}
+
+.main_top {
+    background-image: none;
+    height: auto;
+}
+.instructions {
+    margin : 0 17px 0 0;
+    width: 100%;
+}
+.instructions .caption {
+    width : auto;
+}
+.instructions .remark {
+    width : auto;
+}
+.instructions .clear_selection {
+    color : #00507F;
+    font-size : 10px;
+    text-decoration: underline;
+    font-weight : 400;
+    margin : 3px 12px 0 0;
+    opacity: 0.5;
+}
+.agenda_item .icon-extra-info {
+    display : inline-block;
+    position : relative;
+    vertical-align : top;
+}
+.half_candidates_pane .title{
+    color: #03537e;
+    margin-right: 10px;
+}
+
+
+.candidate_instance.selected .content {
+    background-color: white;
+    border-color : #00a651;
+    border-width : 3px;
+    box-shadow: 0 0 0 1px black;
+}
+.candidate_instance .party-image img {
+    max-height : 60px;
+    max-width: 120px;
+}
+
+.candidate_instance .party-image {
+    display: inline-block;
+    margin-left : 10px;
+}
+
+.candidate_instance.selected .party-image {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.candidate_instance.selected .party-image img {
+    max-height : 80px;
+    max-width: 200px;
+}
+.candidate_instance .party-info {
+    position : relative;
+    width: 100%;
+    display: inline-block;
+}
+.candidate_instance .party-info .name {
+    vertical-align : top;
+}
+.candidate_instance.selected .party-info .name {
+    margin-right: 30px;
+    width: 120px;
+    display: inline-block;
+}
+.candidate_instance.selected .links {
+    margin-right : 30px;
+}
+.candidate_instance .party-score {
+    left : 0;
+    top : 0;
+}
+.candidate_instance.selected .party-score {
+    position: static;
+    display: inline-block;
+    margin-right: 10px;
+}
+.candidate_instance .links .icon {
+    margin: 5px -6px -7px 3px
+}
+.social_bar.top {
+    margin-top : 0;
+}
