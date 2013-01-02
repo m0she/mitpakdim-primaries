@@ -598,7 +598,12 @@
     };
 
     JSONPCollection.prototype.parse = function(response, xhr) {
-      return response.objects;
+      var ret;
+      ret = response.objects;
+      _.each(ret, function(obj) {
+        return obj.id = parseInt(obj.id);
+      });
+      return ret;
     };
 
     return JSONPCollection;
@@ -834,15 +839,10 @@
     PartyDeclarationList.prototype.sync = multiSync;
 
     PartyDeclarationList.prototype.parse = function(data, xhr) {
-      var ret,
-        _this = this;
-      ret = _.filter(PartyDeclarationList.__super__.parse.apply(this, arguments), function(obj) {
+      var _this = this;
+      return _.filter(PartyDeclarationList.__super__.parse.apply(this, arguments), function(obj) {
         return !(obj.party_name != null) || obj.party_name === _this.DECLARATION_PARTY_ID;
       });
-      _.each(ret, function(obj) {
-        return obj.id = parseInt(obj.id);
-      });
-      return ret;
     };
 
     PartyDeclarationList.prototype.initialize = function() {
