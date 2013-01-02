@@ -345,7 +345,7 @@ class root.AgendaList extends root.JSONPCollection
     comparator: (agenda) ->
         -agenda.get 'num_followers'
     syncOptions:
-        xxrepo: window.mit.agenda
+        repo: window.mit.agenda
         sync: root.JSONPCachableSync('agendas')
 
     resetWeights: (weights) ->
